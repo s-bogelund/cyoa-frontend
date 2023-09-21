@@ -9,6 +9,7 @@ i18n
 	.use(LanguageDetector) // detect user language
 	.use(initReactI18next) // passes i18next down to react-i18next
 	.init({
+		load: 'languageOnly', // detect only language - not region!
 		fallbackLng: 'en',
 		interpolation: {
 			escapeValue: false, // react already safes from xss
