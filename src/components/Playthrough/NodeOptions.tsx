@@ -6,14 +6,18 @@ type NodeOptionsProps = {
 };
 
 const NodeOptions: FC<NodeOptionsProps> = ({ options }) => {
+	let gridClass =
+		options && options.length % 2
+			? `grid-cols-1 grid-rows-${options.length} sm:grid-rows-2 sm:grid-cols-2`
+			: 'grid-rows-2 grid-cols-2 ';
+
 	return (
-		<div className="flex h-[40%] w-full gap-2 flex-wrap">
+		<div className={`grid h-fit w-full gap-2 ${gridClass}`}>
 			{options
-				? options?.map(option => (
-						<OptionButton
-							className="w-[45%] h-full"
-							onClick={() => console.log('Hello')}
-						></OptionButton>
+				? options.map((option, index) => (
+						<OptionButton key={index} onClick={() => console.log('Hello')} className="">
+							{option}
+						</OptionButton>
 				  ))
 				: renderFallBackOptions()}
 		</div>
@@ -25,10 +29,10 @@ export default NodeOptions;
 function renderFallBackOptions(): ReactNode {
 	return (
 		<>
-			<OptionButton className="w-[45%] h-full" onClick={() => console.log('Hello')}></OptionButton>
-			<OptionButton className="w-[45%] h-full" onClick={() => console.log('Hello')}></OptionButton>
-			<OptionButton className="w-[45%] h-full" onClick={() => console.log('Hello')}></OptionButton>
-			<OptionButton className="w-[45%] h-full" onClick={() => console.log('Hello')}></OptionButton>
+			<OptionButton className="w-full h-full" onClick={() => console.log('Hello')}></OptionButton>
+			<OptionButton className="w-full h-full" onClick={() => console.log('Hello')}></OptionButton>
+			<OptionButton className="w-full h-full" onClick={() => console.log('Hello')}></OptionButton>
+			{/* <OptionButton className="w-full h-full" onClick={() => console.log('Hello')}></OptionButton> */}
 		</>
 	);
 }

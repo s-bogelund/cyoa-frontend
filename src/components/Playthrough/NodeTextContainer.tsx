@@ -17,12 +17,7 @@ const NodeTextContainer: FC<NodeTextContainerProps> = ({}) => {
 	
 	What do	you do?`;
 
-	return (
-		<Card className="flex flex-col gap-2 items-center justify-center w-full h-fit py-6 px-4 m-0 ">
-			<CardTitle>Trolls 'n stuff</CardTitle>
-			<CardContent dangerouslySetInnerHTML={{ __html: htmlString }}></CardContent>
-		</Card>
-	);
+	return <CardContent dangerouslySetInnerHTML={{ __html: htmlString }}></CardContent>;
 };
 
 export default NodeTextContainer;
