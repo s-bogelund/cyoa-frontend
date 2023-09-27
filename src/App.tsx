@@ -1,6 +1,10 @@
 import i18next from 'i18next';
-import { Button } from './components/ui/button';
+import { Button } from './components/ui/buttons/button';
 import { useTranslation } from 'react-i18next';
+import OptionButton from './components/ui/buttons/OptionButton';
+import AppContainer from './components/ui/AppContainer';
+import PageContainer from './components/ui/PageContainer';
+import Node from './components/Playthrough/Node';
 
 function App() {
 	const { t } = useTranslation();
@@ -11,14 +15,9 @@ function App() {
 	};
 
 	return (
-		<div
-			className="flex container flex-col justify-center items-center min-h-[100vh] gap-2
-      "
-		>
-			<h1>Hello World</h1>
-			<Button>{t('hello')}</Button>
-			<Button onClick={changeLanguage}>{t('changeLanguage')}</Button>
-		</div>
+		<AppContainer>
+			<Node></Node>
+		</AppContainer>
 	);
 }
 

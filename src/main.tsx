@@ -7,7 +7,7 @@ import './index.css';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n.ts';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { Button } from './components/ui/button.tsx';
+import { Button } from './components/ui/buttons/button.tsx';
 // await i18next.init({
 // 	lng: 'en', // if you're using a language detector, do not define the lng option
 // 	debug: true,
