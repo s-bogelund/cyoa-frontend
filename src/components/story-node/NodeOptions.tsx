@@ -1,5 +1,5 @@
 import React, { FC, ReactNode } from 'react';
-import OptionButton from '../ui/buttons/OptionButton';
+import OptionButton from '../OptionButton';
 
 type NodeOptionsProps = {
 	options?: string[];

@@ -1,10 +1,13 @@
 import i18next from 'i18next';
-import { Button } from './components/ui/buttons/button';
+import { Button, buttonVariants } from './components/shadcn/ui/button';
 import { useTranslation } from 'react-i18next';
-import OptionButton from './components/ui/buttons/OptionButton';
-import AppContainer from './components/ui/AppContainer';
-import PageContainer from './components/ui/PageContainer';
-import Node from './components/Playthrough/Node';
+import OptionButton from './components/OptionButton';
+import AppContainer from './components/AppContainer';
+import PageContainer from './components/PageContainer';
+import StoryNode from './pages/StoryNode';
+import { Link, Route, Routes } from 'react-router-dom';
+import { cn } from './lib/utils';
+import StoryPage from './pages/StoryPage';
 
 function App() {
 	const { t } = useTranslation();
@@ -15,9 +18,25 @@ function App() {
 	};
 
 	return (
-		<AppContainer>
-			<Node></Node>
-		</AppContainer>
+		<PageContainer>
+			<Routes>
+				<Route path="/" element={<StoryNode />} />
+				<Route path="/node" element={<StoryNode />} />
+				<Route path="/story-page" element={<StoryPage />} />
+				<Route path="/something" element={<StoryNode />} />
+				<Route
+					path="*"
+					element={
+						<div className="flex flex-col min-w-full min-h-[100vh] justify-center items-center text-4xl gap-8">
+							Something's wrong here mate...
+							<Link to="/" className={cn(buttonVariants())}>
+								Go back
+							</Link>
+						</div>
+					}
+				/>
+			</Routes>
+		</PageContainer>
 	);
 }
 
