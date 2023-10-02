@@ -15,7 +15,7 @@ import { Label } from '@/components/shadcn/ui/label';
 
 export function SignUpForm() {
 	return (
-		<Card className="w-full lg:border-0">
+		<Card className="w-full">
 			<CardHeader className="space-y-1">
 				<CardTitle className="text-2xl">Create an account</CardTitle>
 				<CardDescription>Link a user to an existing account</CardDescription>
@@ -39,18 +39,25 @@ export function SignUpForm() {
 						<span className="bg-background px-2 text-muted-foreground">Or continue with</span>
 					</div>
 				</div>
-				<div className="grid gap-2">
-					<Label htmlFor="email">Email</Label>
-					<Input id="email" type="email" placeholder="m@example.com" />
-				</div>
-				<div className="grid gap-2">
-					<Label htmlFor="password">Password</Label>
-					<Input id="password" type="password" />
-				</div>
+				<form onSubmit={() => console.log('submit')}>
+					<div className="grid gap-2">
+						<Label htmlFor="email">Email</Label>
+						<Input id="email" type="email" placeholder="m@example.com" />
+					</div>
+					<div className="grid gap-2 mb-8">
+						<Label htmlFor="password">Password</Label>
+						<Input
+							id="password"
+							type="password"
+							autoComplete="new-password"
+							placeholder="Password"
+						/>
+					</div>
+					<Button className="w-full" type="submit">
+						Create account
+					</Button>
+				</form>
 			</CardContent>
-			<CardFooter>
-				<Button className="w-full">Create account</Button>
-			</CardFooter>
 		</Card>
 	);
 }

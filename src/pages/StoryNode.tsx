@@ -21,7 +21,7 @@ const dummyOptions = [
 
 const StoryNode: FC<StoryNodeProps> = ({}) => {
 	return (
-		<Card className="flex flex-col h-fit w-full md:w-[70%] lg:w-[60%] xl:w-[50%] items-center justify-center gap-4 px-6 py-8">
+		<Card className="flex flex-col h-fit w-full md:w-[70%] lg:w-[60%] xl:w-[50%] items-center justify-center gap-4 px-6 py-8 lg:border-2">
 			<CardTitle>Trolls 'n stuff</CardTitle>
 			<NodeTextContainer></NodeTextContainer>
 			<NodeOptions options={dummyOptions}></NodeOptions>
