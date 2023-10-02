@@ -11,7 +11,7 @@ type StoryPageProps = {
 
 const StoryPage: FC<StoryPageProps> = ({ title }) => {
 	return (
-		<Card className="flex flex-col w-[95%] h-full mt-8 gap-5 items-center md:w-[80%] lg:w-[65%] xl:w-[50%]">
+		<Card className="flex flex-col w-full h-full mt-8 gap-5 items-center md:w-[80%] lg:w-[65%] xl:w-[50%]">
 			<CardTitle>{title || 'Story Name'}</CardTitle>
 			<CardContent className="flex flex-col w-full h-full gap-5 items-center">
 				<StoryInfo {...dummy} />
