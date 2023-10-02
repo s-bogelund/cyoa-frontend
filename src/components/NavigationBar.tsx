@@ -41,7 +41,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ elements }) => {
 				<NavigationMenuList className="hover:bg-transparent">
 					{/* TODO: Add auth-based view or something here */}
 					<NavigationMenuItem
-						className={`${navigationMenuTriggerStyle()} hover:bg-transparent`}
+						className={`${navigationMenuTriggerStyle()}`}
 						onClick={() => navigate('/login')}
 					>
 						LoginView

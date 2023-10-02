@@ -56,6 +56,9 @@ export const theme = {
 			md: 'calc(var(--radius) - 2px)',
 			sm: 'calc(var(--radius) - 4px)',
 		},
+		screens: {
+			betterhover: { raw: '(hover: hover)' },
+		},
 		keyframes: {
 			'accordion-down': {
 				from: { height: 0 },
