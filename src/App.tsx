@@ -7,7 +7,7 @@ import PageContainer from './components/PageContainer';
 import StoryNode from './pages/StoryNode';
 import { Link, Route, Routes } from 'react-router-dom';
 import { cn } from './lib/utils';
-import StoryPage from './pages/StoryPage';
+import StoryPage from './pages/StoryHomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 

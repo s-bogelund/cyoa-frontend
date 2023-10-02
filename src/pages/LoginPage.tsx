@@ -6,10 +6,9 @@ type LoginPageProps = {};
 
 const LoginPage: FC<LoginPageProps> = ({}) => {
 	return (
-		<Card className="flex flex-col lg:border-0 h-full justify-center items-center mt-[-10px] w-[80%] md:w-[50%] lg:w-[35%] xl:w-[30%]">
-			<CardTitle>Login</CardTitle>
+		<div className="flex flex-col h-full justify-center items-center mt-[-10px] w-[80%] md:w-[50%] lg:w-[35%] xl:w-[30%]">
 			<LoginForm />
-		</Card>
+		</div>
 	);
 };
 

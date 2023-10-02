@@ -9,6 +9,8 @@ import i18n from './i18n.ts';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Button } from './components/shadcn/ui/button.tsx';
 import AppContainer from './components/AppContainer.tsx';
+import { Toaster } from './components/shadcn/ui/toaster.tsx';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
 
 const client = new ApolloClient({
 	// TODO: Change below to the real API
@@ -21,15 +23,18 @@ const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<I18nextProvider i18n={i18n}>
-				<ApolloProvider client={client}>
-					<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-						<AppContainer>
-							<App />
-						</AppContainer>
-					</ThemeProvider>
-				</ApolloProvider>
-			</I18nextProvider>
+			<Toaster />
+			<TooltipProvider>
+				<I18nextProvider i18n={i18n}>
+					<ApolloProvider client={client}>
+						<ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+							<AppContainer>
+								<App />
+							</AppContainer>
+						</ThemeProvider>
+					</ApolloProvider>
+				</I18nextProvider>
+			</TooltipProvider>
 		</BrowserRouter>
 	</React.StrictMode>
 );
