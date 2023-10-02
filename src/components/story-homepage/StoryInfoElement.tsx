@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 import { IconType } from 'react-icons';
+
 import { cn } from '@/lib/utils';
-import { Icons } from '../icons/Icons';
+
 import Tooltip from '../generics/Tooltip';
+import { Icons } from '../icons/Icons';
 
 type StoryInfoElementProps = {
 	icon: IconType;

@@ -1,6 +1,6 @@
-import { LoginForm } from '@/components/auth/LoginForm';
-import { Card, CardTitle } from '@/components/shadcn/ui/card';
 import React, { FC } from 'react';
+
+import { LoginForm } from '@/components/auth/LoginForm';
 
 type LoginPageProps = {};
 

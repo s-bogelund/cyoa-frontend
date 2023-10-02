@@ -1,10 +1,9 @@
 import React, { FC } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../shadcn/ui/card';
-import { Icons } from '../icons/Icons';
-import StoryInfoElement from './StoryInfoElement';
-import Tooltip from '../generics/Tooltip';
-import AgeIcon from '../icons/age-icons';
+
 import getAgeIcon from '../icons/age-icons';
+import { Icons } from '../icons/Icons';
+import { Card, CardContent } from '../shadcn/ui/card';
+import StoryInfoElement from './StoryInfoElement';
 
 type StoryInfoContainerProps = {
 	rating?: number;

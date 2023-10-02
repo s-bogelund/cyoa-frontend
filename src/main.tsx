@@ -1,16 +1,18 @@
+import './index.css';
+
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ThemeProvider } from '@/components/shadcn/ui/theme-provider.tsx';
-import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
-import App from './App.tsx';
-import './index.css';
 import { I18nextProvider } from 'react-i18next';
-import i18n from './i18n.ts';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { Button } from './components/shadcn/ui/button.tsx';
+import { BrowserRouter } from 'react-router-dom';
+
+import { ThemeProvider } from '@/components/shadcn/ui/theme-provider.tsx';
+
+import App from './App.tsx';
 import AppContainer from './components/AppContainer.tsx';
 import { Toaster } from './components/shadcn/ui/toaster.tsx';
-import { TooltipProvider } from '@radix-ui/react-tooltip';
+import i18n from './i18n.ts';
 
 const client = new ApolloClient({
 	// TODO: Change below to the real API

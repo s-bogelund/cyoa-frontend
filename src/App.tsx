@@ -1,15 +1,14 @@
 import i18next from 'i18next';
-import { Button, buttonVariants } from './components/shadcn/ui/button';
 import { useTranslation } from 'react-i18next';
-import OptionButton from './components/OptionButton';
-import AppContainer from './components/AppContainer';
-import PageContainer from './components/PageContainer';
-import StoryNode from './pages/StoryNode';
 import { Link, Route, Routes } from 'react-router-dom';
+
+import PageContainer from './components/PageContainer';
+import { buttonVariants } from './components/shadcn/ui/button';
 import { cn } from './lib/utils';
-import StoryPage from './pages/StoryHomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import StoryPage from './pages/StoryHomePage';
+import StoryNode from './pages/StoryNode';
 
 function App() {
 	const { t } = useTranslation();

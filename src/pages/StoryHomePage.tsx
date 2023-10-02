@@ -1,7 +1,8 @@
+import React, { FC } from 'react';
+
 import { Card, CardContent, CardTitle } from '@/components/shadcn/ui/card';
 import StoryDescription from '@/components/story-homepage/StoryDescription';
 import StoryInfo from '@/components/story-homepage/StoryInfoContainer';
-import React, { FC } from 'react';
 
 // TODO: Should probably not be prop - should receive from backend/slug
 type StoryPageProps = {

@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import NodeTextContainer from '../components/story-node/NodeTextContainer';
-import NodeOptions from '../components/story-node/NodeOptions';
-import PageContainer from '../components/PageContainer';
+
 import { Card, CardTitle } from '../components/shadcn/ui/card';
+import NodeOptions from '../components/story-node/NodeOptions';
+import NodeTextContainer from '../components/story-node/NodeTextContainer';
 
 type StoryNodeProps = {};
 

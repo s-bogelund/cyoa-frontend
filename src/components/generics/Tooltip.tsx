@@ -1,11 +1,6 @@
 import React, { FC } from 'react';
-import { Button } from '@/components/shadcn/ui/button';
-import {
-	TooltipComponent,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from '@/components/shadcn/ui/tooltip';
+
+import { TooltipComponent, TooltipContent, TooltipTrigger } from '@/components/shadcn/ui/tooltip';
 
 type TooltipProps = {
 	text: string;

@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React from 'react';
+
 import { IconProps } from './Icons';
 
 const getAgeIcon = (age: number) => {

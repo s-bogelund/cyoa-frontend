@@ -1,5 +1,6 @@
-import { SignUpForm } from '@/components/auth/SignUpForm';
 import React, { FC } from 'react';
+
+import { SignUpForm } from '@/components/auth/SignUpForm';
 
 type SignUpPageProps = {};
 

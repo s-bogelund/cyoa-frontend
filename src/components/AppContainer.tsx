@@ -1,4 +1,5 @@
 import React, { FC, HTMLProps } from 'react';
+
 import NavigationBar from './NavigationBar';
 
 const navbarElements = [

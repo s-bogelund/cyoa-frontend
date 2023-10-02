@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Card, CardContent, CardTitle } from '../shadcn/ui/card';
+
+import { CardContent } from '../shadcn/ui/card';
 
 type NodeTextContainerProps = {};
 
