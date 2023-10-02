@@ -9,6 +9,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { cn } from './lib/utils';
 import StoryPage from './pages/StoryPage';
 import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
 
 function App() {
 	const { t } = useTranslation();
@@ -24,7 +25,8 @@ function App() {
 				<Route path="/" element={<LoginPage />} />
 				<Route path="/node" element={<StoryNode />} />
 				<Route path="/story-page" element={<StoryPage />} />
-				<Route path="/something" element={<StoryNode />} />
+				<Route path="/sign-up" element={<SignUpPage />} />
+				<Route path="/login" element={<LoginPage />} />
 				<Route
 					path="*"
 					element={

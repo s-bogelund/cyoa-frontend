@@ -7,11 +7,11 @@ const navbarElements = [
 		linkTo: '/',
 	},
 	{
-		text: 'NodeTest',
+		text: 'NodeView',
 		linkTo: '/node',
 	},
 	{
-		text: 'StoryPageTest',
+		text: 'StoryPageView',
 		linkTo: '/story-page',
 	},
 ];

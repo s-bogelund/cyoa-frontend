@@ -1,8 +1,5 @@
-'use client';
-
-import * as React from 'react';
-
-import { cn } from '@/lib/utils';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
 	NavigationMenu,
 	NavigationMenuContent,
@@ -12,7 +9,6 @@ import {
 	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
 } from '@/components/shadcn/ui/navigation-menu';
-import { Link } from 'react-router-dom';
 
 export type NavigationBarElement = {
 	text: string;
@@ -24,19 +20,40 @@ export type NavigationBarProps = {
 };
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ elements }) => {
-	console.log(elements);
+	const navigate = useNavigate();
 
 	return (
 		<div className="fixed hidden md:flex top-0 left-0 w-full z-50 mb-10">
-			<NavigationMenu>
+			<NavigationMenu className="w-full">
 				<NavigationMenuList>
 					{elements
 						? elements.map(element => (
-								<NavigationMenuItem className={navigationMenuTriggerStyle()} key={element.linkTo}>
-									<Link to={element.linkTo}>{element.text}</Link>
+								<NavigationMenuItem
+									className={navigationMenuTriggerStyle()}
+									key={element.linkTo}
+									onClick={() => navigate(element.linkTo)}
+								>
+									{element.text}
 								</NavigationMenuItem>
 						  ))
 						: null}
+				</NavigationMenuList>
+			</NavigationMenu>
+			<NavigationMenu className="flex flex-1 justify-end mr-5">
+				<NavigationMenuList className="">
+					{/* TODO: Add auth-based view or something here */}
+					<NavigationMenuItem
+						className={navigationMenuTriggerStyle()}
+						onClick={() => navigate('/login')}
+					>
+						LoginView
+					</NavigationMenuItem>
+					<NavigationMenuItem
+						className={navigationMenuTriggerStyle()}
+						onClick={() => navigate('/sign-up')}
+					>
+						SignUpView
+					</NavigationMenuItem>
 				</NavigationMenuList>
 			</NavigationMenu>
 		</div>
