@@ -24,7 +24,7 @@ function App() {
 			<Routes>
 				<Route path="/" element={<LoginPage />} />
 				<Route path="/node" element={<StoryNode />} />
-				<Route path="/story-page" element={<StoryPage />} />
+				<Route path="/story-page" element={<StoryPage title={'Troldehulen'} />} />
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route
