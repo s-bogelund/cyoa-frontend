@@ -8,6 +8,7 @@ import StoryNode from './pages/StoryNode';
 import { Link, Route, Routes } from 'react-router-dom';
 import { cn } from './lib/utils';
 import StoryPage from './pages/StoryPage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
 	const { t } = useTranslation();
@@ -20,7 +21,7 @@ function App() {
 	return (
 		<PageContainer>
 			<Routes>
-				<Route path="/" element={<StoryNode />} />
+				<Route path="/" element={<LoginPage />} />
 				<Route path="/node" element={<StoryNode />} />
 				<Route path="/story-page" element={<StoryPage />} />
 				<Route path="/something" element={<StoryNode />} />
