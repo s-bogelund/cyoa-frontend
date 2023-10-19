@@ -8,4 +8,5 @@ module.exports = {
 	semi: true,
 	printWidth: 100,
 	jsxBracketSameLine: false,
+	endOfLine: 'lf',
 };

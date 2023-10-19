@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import StoryPage from './pages/StoryHomePage';
 import StoryNode from './pages/StoryNode';
+import SearchPage from './pages/SearchPage';
 
 function App() {
 	const { t } = useTranslation();
@@ -26,6 +27,7 @@ function App() {
 				<Route path="/story-page" element={<StoryPage title={'Troldehulen'} />} />
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />
+				<Route path="search-story" element={<SearchPage />} />
 				<Route
 					path="*"
 					element={
