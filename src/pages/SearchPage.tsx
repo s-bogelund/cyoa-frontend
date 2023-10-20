@@ -1,6 +1,6 @@
 import Badge from '@/components/generics/Badge';
-import FilterWrapper from '@/components/search-page/FilterWrapper';
-import FilterWrapperProps from '@/components/search-page/FilterWrapper';
+import FilterWrapper from '@/components/search-page/filters/FilterWrapper';
+import FilterWrapperProps from '@/components/search-page/filters/FilterWrapper';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
 import React, { FC } from 'react';
 
