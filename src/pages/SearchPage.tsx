@@ -46,7 +46,7 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 				i!
 			</CardDescription>
 			<Card id="search-and-filter-container" className="flex flex-col gap-4 w-full h-fit">
-				<SearchBar />
+				<SearchBar onInput={value => console.log(value)} />
 
 				<Card className="flex flex-wrap w-fit h-fit bg-transparent gap-4">
 					<AgeFilter onChange={value => console.log(value)} />
