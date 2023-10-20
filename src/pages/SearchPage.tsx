@@ -1,4 +1,5 @@
 import Badge from '@/components/generics/Badge';
+import SearchBar from '@/components/search-page/SearchBar';
 import AgeFilter from '@/components/search-page/filters/AgeFilter';
 import CompletionTimeFilter from '@/components/search-page/filters/CompletionTimeFilter';
 import DifficultyFilter from '@/components/search-page/filters/DifficultyFilter';
@@ -45,7 +46,7 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 				i!
 			</CardDescription>
 			<Card id="search-and-filter-container" className="flex flex-col gap-4 w-full h-fit">
-				<Card className="w-full h-[50%] bg-red-400">Search bar</Card>
+				<SearchBar />
 
 				<Card className="flex flex-wrap w-fit h-fit bg-transparent gap-4">
 					<AgeFilter onChange={value => console.log(value)} />
