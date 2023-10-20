@@ -1,4 +1,5 @@
 import Badge from '@/components/generics/Badge';
+import AgeFilter from '@/components/search-page/filters/AgeFilter';
 import FilterWrapper from '@/components/search-page/filters/FilterWrapper';
 import FilterWrapperProps from '@/components/search-page/filters/FilterWrapper';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
@@ -18,7 +19,8 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 				<Card className="w-full h-[50%] bg-red-400">Search bar</Card>
 
 				<Card className="flex flex-wrap w-fit h-fit bg-transparent gap-4">
-					<FilterWrapper text="Test" className="h-8"></FilterWrapper>
+					<FilterWrapper text="Test"></FilterWrapper>
+					<AgeFilter onChange={value => console.log(value)} />
 				</Card>
 			</Card>
 			<Card id="content-filter-container" className="flex w-full h-full gap-8">

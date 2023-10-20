@@ -4,6 +4,7 @@ import { PopoverComponent, PopoverTrigger, PopoverContent } from '../../shadcn/u
 
 type FilterWrapperProps = {
 	isActive?: boolean;
+	text?: string;
 } & BadgeProps;
 
 const FilterWrapper: FC<FilterWrapperProps> = ({ text, className, ...props }) => {
@@ -14,11 +15,11 @@ const FilterWrapper: FC<FilterWrapperProps> = ({ text, className, ...props }) =>
 			<PopoverTrigger>
 				<Badge
 					variant={isActive ? 'default' : 'outline'}
-					className={` ${className}`}
-					text="Hello"
+					className={`h-8 ${className}`}
+					text={text}
 				/>
 			</PopoverTrigger>
-			<PopoverContent sideOffset={-15} alignOffset={25} align="start">
+			<PopoverContent sideOffset={-10} alignOffset={65} align="start">
 				{props.children || 'No content'}
 			</PopoverContent>
 		</PopoverComponent>
