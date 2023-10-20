@@ -45,7 +45,7 @@ const CompletionTimeFilter: FC<CompletionTimeFilterProps> = ({ onChange }) => {
 				value={[time]}
 				onValueChange={value => handleValueChange(value[0])}
 				min={0}
-				className="mt-2"
+				className="mt-2 w-48"
 				defaultValue={[0]}
 				step={1}
 				max={12}

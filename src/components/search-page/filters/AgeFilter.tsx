@@ -33,7 +33,7 @@ const AgeFilter: FC<AgeFilterProps> = ({ onChange }) => {
 				value={[age]}
 				onValueChange={value => handleValueChange(value[0])}
 				min={2}
-				className="mt-2"
+				className="mt-2 w-48"
 				defaultValue={[2]}
 				step={2}
 				max={18}
