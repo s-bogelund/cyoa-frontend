@@ -5,11 +5,38 @@ import DifficultyFilter from '@/components/search-page/filters/DifficultyFilter'
 import FilterWrapper from '@/components/search-page/filters/FilterWrapper';
 import FilterWrapperProps from '@/components/search-page/filters/FilterWrapper';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
-import React, { FC } from 'react';
+import { Checkbox } from '@/components/shadcn/ui/checkbox';
+import React, { FC, useState } from 'react';
+
+type DifficultyFilter = {
+	easy: boolean;
+	medium: boolean;
+	hard: boolean;
+};
 
 type SearchPageProps = {};
 
 const SearchPage: FC<SearchPageProps> = ({}) => {
+	const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>({
+		easy: false,
+		medium: false,
+		hard: false,
+	});
+
+	const handleDifficultyChange = (selectedValues: string[]) => {
+		const newFilterState: DifficultyFilter = { easy: false, medium: false, hard: false };
+
+		selectedValues.forEach(key => {
+			if (key in newFilterState) {
+				newFilterState[key as keyof DifficultyFilter] = true;
+				console.log(key);
+			}
+		});
+		console.log(newFilterState);
+
+		setDifficultyFilter(newFilterState);
+	};
+
 	return (
 		<Card className="flex flex-col w-full lg:w-[75%] xl:w-[65%] h-full gap-4">
 			<CardTitle className="self-center lg:text-6xl md:text-4xl text-2xl">Søgeside</CardTitle>
@@ -23,7 +50,7 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 				<Card className="flex flex-wrap w-fit h-fit bg-transparent gap-4">
 					<AgeFilter onChange={value => console.log(value)} />
 					<CompletionTimeFilter onChange={value => console.log(value)} />
-					<DifficultyFilter onChange={value => console.log(value)} />
+					<DifficultyFilter selected={difficultyFilter} onChange={handleDifficultyChange} />
 				</Card>
 			</Card>
 			<Card id="content-filter-container" className="flex w-full h-full gap-8">

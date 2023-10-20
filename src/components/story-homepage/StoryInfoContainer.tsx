@@ -26,20 +26,20 @@ const StoryInfo: FC<StoryInfoContainerProps> = ({
 		<Card className="w-full border-2">
 			<CardContent className="grid grid-flow-col grid-cols-3 grid-rows-2 p-6 gap-y-10">
 				<StoryInfoElement
-					icon={Icons.rating}
+					icon={Icons.Rating}
 					description="Average rating"
 					text={`${rating || 3}/5`}
 				/>
 
 				<StoryInfoElement
 					description="Estimated time to complete"
-					icon={Icons.playtime}
+					icon={Icons.Playtime}
 					text={`${playtime || 3} hours`}
 				/>
 				<StoryInfoElement
 					className="justify-center"
 					description="Difficulty"
-					icon={Icons.skull}
+					icon={Icons.Skull}
 					text={`${difficulty || 4}/5`}
 				/>
 				<StoryInfoElement
@@ -49,14 +49,14 @@ const StoryInfo: FC<StoryInfoContainerProps> = ({
 					className="justify-center"
 				/>
 				<StoryInfoElement
-					icon={Icons.death}
+					icon={Icons.Death}
 					description="No of possible deaths"
 					className="justify-end"
 					text={`${deaths || 7}`}
 				/>
 				<StoryInfoElement
 					description="Total number of story nodes"
-					icon={Icons.nodes}
+					icon={Icons.Nodes}
 					className="justify-end"
 					text={`${nodes || 130}`}
 				/>
