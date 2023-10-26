@@ -26,7 +26,7 @@ const ContentList: FC<ContentListProps> = ({ onItemSelected: itemSelected, gameI
 	};
 
 	return (
-		<Card className="flex flex-col w-full h-full gap-2 p-4 border">
+		<Card className="flex flex-col w-full h-full gap-2 p-1 ">
 			{gameInfos.length > 0 && renderListItems()}
 		</Card>
 	);

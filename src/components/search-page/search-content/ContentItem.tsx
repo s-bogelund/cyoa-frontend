@@ -26,7 +26,7 @@ const ContentItem: FC<ContentItemProps> = ({
 
 	return (
 		<Card
-			className="grid grid-flow-row grid-cols-list-item border-2 bg-opacity-60 w-full h-14 gap-1 justify-between px-2 hover:scale-[103%] hover:bg-opacity-[0.02] hover:bg-white transition-transform  hover:cursor-pointer shadow-lg"
+			className="grid grid-flow-row grid-cols-list-item border-2 border-slate-700 bg-opacity-60 w-full h-14 gap-1 justify-between px-2 hover:scale-[103%] hover:bg-opacity-[0.02] hover:bg-white transition-transform hover:cursor-pointer shadow-lg"
 			onClick={() => onClick(id)}
 		>
 			<div className="flex justify-start items-center text-2xl">{title}</div>

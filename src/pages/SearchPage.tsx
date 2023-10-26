@@ -39,7 +39,7 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 	};
 
 	return (
-		<Card className="flex flex-col w-full lg:w-[75%] xl:w-[65%] h-full gap-4">
+		<Card className="flex flex-col w-full lg:w-[75%] xl:w-[65%] h-full gap-10">
 			<CardTitle className="self-center lg:text-6xl md:text-4xl text-2xl">Søgeside</CardTitle>
 			<CardDescription className="self-center lg:text-2xl md:text-xl text-md">
 				Her kan du finde en historie der er tilpasset til lige præcis det, du er mest interesseret
