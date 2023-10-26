@@ -1,0 +1,17 @@
+export const gameInfos: GameInfo[] = [
+	{ title: 'Moonlit Sorcery', age: 4, rating: 1, time: 1, difficulty: 1 },
+	{ title: 'Chronicles of the Lost Planet', age: 6, rating: 2, time: 2, difficulty: 2 },
+	{ title: 'The Wizard’s Enigma', age: 8, rating: 3, time: 3, difficulty: 3 },
+	{ title: 'Ghosts of the Nebula', age: 10, rating: 4, time: 4, difficulty: 1 },
+	{ title: 'Dragons in the Ether', age: 12, rating: 5, time: 5, difficulty: 2 },
+	{ title: 'Echoes from the Abyss', age: 14, rating: 1, time: 6, difficulty: 3 },
+	{ title: 'Forgotten Realms Reclaimed', age: 16, rating: 2, time: 7, difficulty: 1 },
+	{ title: 'Celestial Knights', age: 18, rating: 3, time: 8, difficulty: 2 },
+	{ title: 'Quest for the Mystic Relic', age: 4, rating: 4, time: 9, difficulty: 3 },
+	{ title: 'Guardians of the Starlight', age: 6, rating: 5, time: 10, difficulty: 1 },
+	{ title: 'Serpent’s Scale', age: 8, rating: 1, time: 11, difficulty: 2 },
+	{ title: 'Temporal Nexus', age: 10, rating: 2, time: 12, difficulty: 3 },
+	{ title: 'Winds of the Elders', age: 12, rating: 3, time: 1, difficulty: 1 },
+	{ title: 'Eclipsing Shadows', age: 14, rating: 4, time: 2, difficulty: 2 },
+	{ title: 'Oaths in the Dark', age: 16, rating: 5, time: 3, difficulty: 3 },
+];

@@ -1,13 +1,13 @@
-import Badge from '@/components/generics/Badge';
-import SearchBar from '@/components/search-page/SearchBar';
+import React, { FC, useState } from 'react';
+
 import AgeFilter from '@/components/search-page/filters/AgeFilter';
 import CompletionTimeFilter from '@/components/search-page/filters/CompletionTimeFilter';
 import DifficultyFilter from '@/components/search-page/filters/DifficultyFilter';
-import FilterWrapper from '@/components/search-page/filters/FilterWrapper';
-import FilterWrapperProps from '@/components/search-page/filters/FilterWrapper';
+import ContentList from '@/components/search-page/search-content/ContentList';
+import SearchBar from '@/components/search-page/SearchBar';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
 import { Checkbox } from '@/components/shadcn/ui/checkbox';
-import React, { FC, useState } from 'react';
+import { gameInfos } from '@/utils/dummyData';
 
 type DifficultyFilter = {
 	easy: boolean;
@@ -56,7 +56,12 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 			</Card>
 			<Card id="content-filter-container" className="flex w-full h-full gap-8">
 				{/* <Card id="filters" className="w-[20%] h-full self-start bg-red-400 md:flex hidden"></Card> */}
-				<Card id="search-content" className="w-full h-full bg-blue-400"></Card>
+				<Card id="search-content" className="w-full h-full">
+					<ContentList
+						onItemSelected={id => console.log('Id clicked:', id)}
+						gameInfos={gameInfos}
+					/>
+				</Card>
 			</Card>
 		</Card>
 	);

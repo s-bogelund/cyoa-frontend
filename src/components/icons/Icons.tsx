@@ -86,3 +86,13 @@ export const Icons = {
 	Playtime: (props: IconProps) => <PiClock {...props} />,
 	Nodes: (props: IconProps) => <AiOutlineNodeIndex {...props} />,
 };
+
+export const getDifficultyIcon = (difficulty: number, className: string) => {
+	const skulls = Array.from({ length: difficulty }, (_, i) => (
+		<Icons.Skull className={className} key={i} />
+	));
+
+	const DifficultyIcon = () => <>{skulls}</>;
+
+	return DifficultyIcon;
+};
