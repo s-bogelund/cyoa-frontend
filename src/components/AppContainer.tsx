@@ -15,6 +15,10 @@ const navbarElements = [
 		text: 'StoryPageView',
 		linkTo: '/story-page',
 	},
+	{
+		text: 'SearchPageView',
+		linkTo: '/search-story',
+	},
 ];
 
 const AppContainer: FC<HTMLProps<HTMLDivElement>> = ({ children }) => {

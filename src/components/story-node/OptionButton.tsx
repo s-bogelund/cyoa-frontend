@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Button } from './shadcn/ui/button';
+import { Button } from '../shadcn/ui/button';
 
 type OptionButtonProps = {} & React.ButtonHTMLAttributes<HTMLButtonElement>;
 

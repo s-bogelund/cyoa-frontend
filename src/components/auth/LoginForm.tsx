@@ -63,7 +63,7 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
 							/>
 						</div>
 						<Button disabled={isLoading}>
-							{isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
+							{isLoading && <Icons.Spinner className="mr-2 h-4 w-4 animate-spin" />}
 							Sign In with Email
 						</Button>
 					</div>
@@ -78,9 +78,9 @@ export function LoginForm({ className, ...props }: UserAuthFormProps) {
 				</div>
 				<Button variant="outline" type="button" disabled={isLoading}>
 					{isLoading ? (
-						<Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+						<Icons.Spinner className="mr-2 h-4 w-4 animate-spin" />
 					) : (
-						<Icons.google className="mr-2 h-4 w-4" />
+						<Icons.Google className="mr-2 h-4 w-4" />
 					)}{' '}
 					Google
 				</Button>

@@ -15,7 +15,7 @@ type StoryInfoElementProps = {
 };
 
 const StoryInfoElement: FC<StoryInfoElementProps> = ({
-	icon: Icon = Icons.rating,
+	icon: Icon = Icons.Rating,
 	text,
 	className,
 	isAgeIcon,
