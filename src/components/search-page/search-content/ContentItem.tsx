@@ -17,7 +17,7 @@ const ContentItem: FC<ContentItemProps> = ({
 	title,
 	age,
 	rating,
-	time,
+	completionTime,
 	difficulty,
 	onClick,
 	id,
@@ -71,10 +71,10 @@ const ContentItem: FC<ContentItemProps> = ({
 					<AgeIcon />
 				</div>
 			</Tooltip>
-			<Tooltip text={`Tager ca. ${time} timer at gennemføre`}>
+			<Tooltip text={`Tager ca. ${completionTime} timer at gennemføre`}>
 				<div className={`hidden md:flex justify-center items-center gap-1 ${textSize}`}>
 					<TimeIcon className="w-7 h-7" />
-					{time} timer
+					{completionTime} timer
 				</div>
 			</Tooltip>
 			<Tooltip text={`Sværhedsgrad: ${difficulty}/3`}>

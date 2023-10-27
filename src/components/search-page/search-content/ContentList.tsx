@@ -9,8 +9,8 @@ type ContentListProps = {
 	sortState?: SortState;
 };
 
-type SortBy = 'difficulty' | 'age' | 'rating' | 'time';
-type SortOrder = 'asc' | 'desc';
+export type SortBy = 'difficulty' | 'age' | 'rating' | 'completionTime';
+export type SortOrder = 'ascending' | 'descending';
 
 export type SortState = {
 	attribute: SortBy;
@@ -23,11 +23,11 @@ const ContentList: FC<ContentListProps> = ({
 	gameInfos = [],
 }) => {
 	const [sortBy, setSortBy] = React.useState<SortBy>(sortState?.attribute ?? 'rating');
-	const [sortOrder, setSortOrder] = React.useState<SortOrder>(sortState?.direction ?? 'desc');
+	const [sortOrder, setSortOrder] = React.useState<SortOrder>(sortState?.direction ?? 'descending');
 
 	const sortedGameInfos = () => {
 		return gameInfos.sort((a, b) => {
-			if (sortOrder === 'asc') {
+			if (sortOrder === 'ascending') {
 				if (a[sortBy] < b[sortBy]) return -1;
 				if (a[sortBy] > b[sortBy]) return 1;
 				return 0;
@@ -46,7 +46,7 @@ const ContentList: FC<ContentListProps> = ({
 				title={game.title}
 				age={game.age}
 				rating={game.rating}
-				time={game.time}
+				completionTime={game.completionTime}
 				difficulty={game.difficulty}
 				id={`content-${index}`}
 				onClick={id => {
