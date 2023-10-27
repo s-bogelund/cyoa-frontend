@@ -7,6 +7,7 @@ type FilterWrapperProps = {
 	text?: string;
 	alignOffset?: number;
 	sideOffset?: number;
+	badgeContent?: React.ReactNode;
 } & BadgeProps;
 
 const FilterWrapper: FC<FilterWrapperProps> = ({
@@ -14,6 +15,7 @@ const FilterWrapper: FC<FilterWrapperProps> = ({
 	className,
 	alignOffset,
 	sideOffset,
+
 	...props
 }) => {
 	const [isActive, setIsActive] = useState<boolean>(false);
@@ -25,11 +27,13 @@ const FilterWrapper: FC<FilterWrapperProps> = ({
 					variant={isActive ? 'default' : 'outline'}
 					className={`h-8 ${className}`}
 					text={text}
-				/>
+				>
+					{isActive ? 'x' : ''}
+				</Badge>
 			</PopoverTrigger>
 			<PopoverContent
-				sideOffset={sideOffset || -10}
-				alignOffset={alignOffset || 65}
+				sideOffset={sideOffset || 5}
+				alignOffset={alignOffset || 0}
 				align="start"
 				className="w-fit h-fit"
 			>

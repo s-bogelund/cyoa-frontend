@@ -23,10 +23,30 @@ const AgeFilter: FC<AgeFilterProps> = ({ onChange }) => {
 		setAge(value);
 	};
 
+	const handleWrapperValue = () => {
+		if (age === 2) {
+			return 'Alle Aldre';
+		} else if (age === 18) {
+			return `Alder: ${age}+`;
+		} else {
+			return `Max alder: ${age} år`;
+		}
+	};
+
+	const handleLabelValue = () => {
+		if (age <= 2) {
+			return 'Alle Aldre';
+		} else if (age === 18) {
+			return `${age}+`;
+		} else {
+			return `${age}`;
+		}
+	};
+
 	return (
-		<FilterWrapper text={'Max Alder'}>
+		<FilterWrapper text={handleWrapperValue()}>
 			<Label className="text-lg mb-5" htmlFor="age-slider">
-				{isSet && age !== 18 ? `${age} år` : 'Alle Aldre'}
+				{handleLabelValue()}
 			</Label>
 			<Slider
 				id="age-slider"
