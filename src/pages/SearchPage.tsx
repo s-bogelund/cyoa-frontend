@@ -8,6 +8,7 @@ import SearchBar from '@/components/search-page/SearchBar';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
 import { Checkbox } from '@/components/shadcn/ui/checkbox';
 import { gameInfos } from '@/utils/dummyData';
+import SortItem from '@/components/search-page/filters/SortItems';
 
 type DifficultyFilter = {
 	easy: boolean;
@@ -42,8 +43,7 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 		<Card className="flex flex-col w-full lg:w-[75%] xl:w-[65%] h-full gap-10">
 			<CardTitle className="self-center lg:text-6xl md:text-4xl text-2xl">Søgeside</CardTitle>
 			<CardDescription className="self-center lg:text-2xl md:text-xl text-md">
-				Her kan du finde en historie der er tilpasset til lige præcis det, du er mest interesseret
-				i!
+				Her kan du finde en historie der er tilpasset lige præcis det, du er mest interesseret i!
 			</CardDescription>
 			<Card id="search-and-filter-container" className="flex flex-col gap-4 w-full h-fit">
 				<SearchBar onInput={value => console.log(value)} />
@@ -54,14 +54,8 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 					<DifficultyFilter selected={difficultyFilter} onChange={handleDifficultyChange} />
 				</Card>
 			</Card>
-			<Card id="content-filter-container" className="flex w-full h-full gap-8">
-				{/* <Card id="filters" className="w-[20%] h-full self-start bg-red-400 md:flex hidden"></Card> */}
-				<Card id="search-content" className="w-full h-full">
-					<ContentList
-						onItemSelected={id => console.log('Id clicked:', id)}
-						gameInfos={gameInfos}
-					/>
-				</Card>
+			<Card id="content-filter-container" className="flex flex-col w-full h-full gap-8">
+				<ContentList onItemSelected={id => console.log('Id clicked:', id)} gameInfos={gameInfos} />
 			</Card>
 		</Card>
 	);

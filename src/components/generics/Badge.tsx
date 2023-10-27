@@ -12,7 +12,7 @@ const Badge: FC<BadgeProps> = ({ text, className, ...props }) => {
 			{...props}
 		>
 			<>
-				<button>{text}</button>
+				<div>{text}</div>
 				{props.children}
 			</>
 		</BadgeComponent>

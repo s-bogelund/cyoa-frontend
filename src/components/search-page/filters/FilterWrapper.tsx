@@ -5,9 +5,17 @@ import { PopoverComponent, PopoverTrigger, PopoverContent } from '../../shadcn/u
 type FilterWrapperProps = {
 	isActive?: boolean;
 	text?: string;
+	alignOffset?: number;
+	sideOffset?: number;
 } & BadgeProps;
 
-const FilterWrapper: FC<FilterWrapperProps> = ({ text, className, ...props }) => {
+const FilterWrapper: FC<FilterWrapperProps> = ({
+	text,
+	className,
+	alignOffset,
+	sideOffset,
+	...props
+}) => {
 	const [isActive, setIsActive] = useState<boolean>(false);
 
 	return (
@@ -19,7 +27,12 @@ const FilterWrapper: FC<FilterWrapperProps> = ({ text, className, ...props }) =>
 					text={text}
 				/>
 			</PopoverTrigger>
-			<PopoverContent sideOffset={-10} alignOffset={65} align="start" className="w-fit h-fit">
+			<PopoverContent
+				sideOffset={sideOffset || -10}
+				alignOffset={alignOffset || 65}
+				align="start"
+				className="w-fit h-fit"
+			>
 				{props.children || 'No content'}
 			</PopoverContent>
 		</PopoverComponent>
