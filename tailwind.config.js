@@ -75,6 +75,7 @@ export const theme = {
 		},
 		gridTemplateColumns: {
 			'list-item': '39% 14% 14% 14% 14%',
+			'list-item-mobile': '43% 18% 18% 18%',
 		},
 	},
 };

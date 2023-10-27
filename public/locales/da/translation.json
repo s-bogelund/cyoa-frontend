@@ -1,4 +1,23 @@
 {
 	"hello": "Hej Verden",
-	"changeLanguage": "Skift Sprog"
+	"changeLanguage": "Skift Sprog",
+	"searchPage": {
+		"pageTitle": "Søgeside",
+		"pageDescription": "Her kan du finde en historie der er tilpasset lige præcis det, du er mest interesseret i!",
+		"searchPlaceholder": "Søg efter en historie",
+		"filterPlaceholder": {
+			"age": "Max Alder",
+			"completionTime": "Gennemførelsestid",
+			"difficulty": "Sværhedsgrad"
+		},
+		"sortBy": "Sorter efter",
+		"sortOptions": {
+			"completionTime": "Gennemførelsestid",
+			"difficulty": "Sværhedsgrad",
+			"age": "Alder",
+			"rating": "Bedømmelse",
+			"descending": "Faldende",
+			"ascending": "Stigende"
+		}
+	}
 }

@@ -1,4 +1,23 @@
 {
 	"hello": "Hello World",
-	"changeLanguage": "Change Language"
+	"changeLanguage": "Change Language",
+	"searchPage": {
+		"pageTitle": "Search Page",
+		"pageDescription": "Here you can find a story that fits exactly what you are looking for!",
+		"searchPlaceholder": "Search for a story",
+		"filterPlaceholder": {
+			"age": "Max Age",
+			"completionTime": "Completion Time",
+			"difficulty": "Difficulty Level"
+		},
+		"sortBy": "Sort by",
+		"sortOptions": {
+			"completionTime": "Completion Time",
+			"difficulty": "Difficulty",
+			"age": "Age",
+			"rating": "Rating",
+			"descending": "Descending",
+			"ascending": "Ascending"
+		}
+	}
 }
