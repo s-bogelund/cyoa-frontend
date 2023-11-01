@@ -21,7 +21,8 @@
 		"noFallthroughCasesInSwitch": true,
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"react-d3-tree": ["node_modules/react-d3-tree/lib/types/index.d.ts"]
 		}
 	},
 	"include": ["src"],

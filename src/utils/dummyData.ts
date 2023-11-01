@@ -1,3 +1,5 @@
+import { Edge, Node } from 'reactflow';
+
 export const gameInfos: GameInfo[] = [
 	{ title: 'Moonlit Sorcery', age: 4, rating: 1.2, completionTime: 1, difficulty: 1 },
 	{ title: 'Chronicles of the Lost Planet', age: 6, rating: 2.6, completionTime: 2, difficulty: 2 },
@@ -21,3 +23,31 @@ export const gameInfos: GameInfo[] = [
 	{ title: 'Eclipsing Shadows', age: 14, rating: 4.5, completionTime: 2, difficulty: 2 },
 	{ title: 'Oaths in the Dark', age: 16, rating: 4.6, completionTime: 3, difficulty: 3 },
 ];
+
+const position = { x: 0, y: 0 };
+
+export const initialNodes: Node[] = [
+	{
+		id: '1',
+		type: 'testNode',
+		data: { label: 'Input' },
+		position: { x: 250, y: -35 },
+	},
+
+	{
+		id: '2',
+		data: { label: 'Default' },
+		position: { x: 100, y: 125 },
+	},
+	{
+		id: '3',
+		type: 'output',
+		data: { label: 'Output' },
+		position: { x: 250, y: 250 },
+	},
+];
+
+export const initialEdges: Edge[] = [
+	{ id: 'e1-2', source: '1', target: '2' },
+	{ id: 'e2-3', source: '2', target: '3' },
+] as Edge[];

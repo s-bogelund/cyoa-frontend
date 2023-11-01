@@ -10,6 +10,7 @@ import SignUpPage from './pages/SignUpPage';
 import StoryPage from './pages/StoryHomePage';
 import StoryNode from './pages/StoryNode';
 import SearchPage from './pages/SearchPage';
+import GraphTestPage from './pages/GraphTestPage';
 
 function App() {
 	const { t } = useTranslation();
@@ -28,6 +29,7 @@ function App() {
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="search-story" element={<SearchPage />} />
+				<Route path="graph-test" element={<GraphTestPage />} />
 				<Route
 					path="*"
 					element={
