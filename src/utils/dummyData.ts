@@ -33,21 +33,56 @@ export const initialNodes: Node[] = [
 		data: { label: 'Input' },
 		position: { x: 250, y: -35 },
 	},
-
 	{
 		id: '2',
+		type: 'testNode',
 		data: { label: 'Default' },
 		position: { x: 100, y: 125 },
 	},
 	{
 		id: '3',
-		type: 'output',
+		type: 'testNode',
 		data: { label: 'Output' },
 		position: { x: 250, y: 250 },
+	},
+	{
+		id: '4',
+		type: 'testNode',
+		data: { label: 'New Node 1' },
+		position: { x: 300, y: 300 },
+	},
+	{
+		id: '5',
+		type: 'testNode',
+		data: { label: 'New Node 2' },
+		position: { x: 350, y: 350 },
+	},
+	{
+		id: '6',
+		type: 'testNode',
+		data: { label: 'New Node 3' },
+		position: { x: 400, y: 400 },
+	},
+	{
+		id: '7',
+		type: 'testNode',
+		data: { label: 'New Node 4' },
+		position: { x: 450, y: 450 },
+	},
+	{
+		id: '8',
+		type: 'testNode',
+		data: { label: 'New Node 5' },
+		position: { x: 500, y: 500 },
 	},
 ];
 
 export const initialEdges: Edge[] = [
 	{ id: 'e1-2', source: '1', target: '2' },
 	{ id: 'e2-3', source: '2', target: '3' },
+	{ id: 'e1-4', source: '1', target: '4' },
+	{ id: 'e1-5', source: '1', target: '5' },
+	{ id: 'e1-6', source: '1', target: '6' },
+	{ id: 'e1-7', source: '1', target: '7' },
+	{ id: 'e1-8', source: '1', target: '8' },
 ] as Edge[];

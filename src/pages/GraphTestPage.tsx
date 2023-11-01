@@ -13,6 +13,7 @@ import BasicStoryNode from '@/components/graph/CustomNode';
 import useStore, { RFState } from '@/graphStore';
 import { shallow } from 'zustand/shallow';
 import { Button } from '@/components/shadcn/ui/button';
+import dagre from 'dagre';
 
 const selector = (state: RFState) => ({
 	nodes: state.nodes,
@@ -22,6 +23,30 @@ const selector = (state: RFState) => ({
 	onConnect: state.onConnect,
 });
 
+const layoutGraph = (nodes: Node[], edges: Edge[]) => {
+	const g = new dagre.graphlib.Graph();
+	g.setGraph({ rankdir: 'LR' });
+	g.setDefaultEdgeLabel(() => ({}));
+
+	nodes.forEach(node => {
+		g.setNode(node.id, { width: 200, height: 100 });
+	});
+
+	edges.forEach(edge => {
+		g.setEdge(edge.source, edge.target);
+	});
+
+	dagre.layout(g);
+
+	return nodes.map(node => {
+		const { x, y } = g.node(node.id);
+		return {
+			...node,
+			position: { x, y },
+		};
+	});
+};
+
 function GraphTestPage() {
 	const { nodes, edges, onNodesChange, onEdgesChange } = useStore(selector, shallow);
 
@@ -29,10 +54,12 @@ function GraphTestPage() {
 
 	const nodeTypes = useMemo(() => ({ testNode: BasicStoryNode }), []);
 
+	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
+
 	return (
 		<>
 			<ReactFlow
-				nodes={nodes}
+				nodes={dagreNodes}
 				edges={edges}
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}

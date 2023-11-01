@@ -5,8 +5,6 @@ import Tooltip from '../generics/Tooltip';
 import { Button } from '../shadcn/ui/button';
 import useStore from '@/graphStore';
 
-const handleStyle = { left: 10 };
-
 type BasicStoryNodeProps = {
 	header?: string;
 	onClick?: () => void;
@@ -64,8 +62,8 @@ const BasicStoryNode: FC<BasicStoryNodeProps> = ({ id, data, dragging = false, .
 							+
 						</Button>
 					</div>
-					<Handle type="target" position={Position.Bottom} />
-					<Handle type="source" position={Position.Bottom} />
+					<Handle type="target" position={Position.Left} />
+					<Handle type="source" position={Position.Right} />
 				</Card>
 			</Tooltip>
 		</>
