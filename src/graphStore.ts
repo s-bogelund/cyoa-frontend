@@ -31,11 +31,12 @@ export type RFState = {
 	getEdgesByNodeId: (id: string) => Edge[] | undefined;
 	// highlightNeighbours: (id: string, isHighlighted: boolean) => void;
 	getAllNeighbours: (id: string) => Node[];
+	saveGraphState: () => void;
 };
 
 const useStore = create<RFState>((set, get) => ({
-	nodes: dummyGraph.nodes,
-	edges: dummyGraph.edges,
+	nodes: loadGraphStateLS()?.nodes || dummyGraph.nodes,
+	edges: loadGraphStateLS()?.edges || dummyGraph.edges,
 	onNodesChange: (changes: NodeChange[]) => {
 		set({
 			nodes: applyNodeChanges(changes, get().nodes),
@@ -83,7 +84,9 @@ const useStore = create<RFState>((set, get) => ({
 		}
 		return [];
 	},
-
+	saveGraphState: () => {
+		saveGraphStateLS(get());
+	},
 	// highlightNeighbours: (id: string, isHighlighted: boolean) => {
 	// 	const nodes = get().getAllNeighbours(id);
 	// 	if (nodes.length > 0) {

@@ -99,6 +99,7 @@ const StoryNode: FC<StoryNodeProps> = ({
 			});
 			return newNodes;
 		});
+		store.saveGraphState();
 	};
 
 	return (

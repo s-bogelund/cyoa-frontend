@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FC, FormEvent, ReactNode, useState } from 'react';
 
 import { ExtendedNode, StoryNodeType } from '@/types/graphTypes';
-import { Label } from '@radix-ui/react-label';
 
 import { Button } from '../shadcn/ui/button';
 import { Input } from '../shadcn/ui/input';
@@ -18,7 +17,9 @@ import {
 } from '../shadcn/ui/sheet';
 import { Textarea } from '../shadcn/ui/textarea';
 import { Card } from '../shadcn/ui/card';
-import { Checkbox } from '@radix-ui/react-checkbox';
+import EncounterType from './EncounterType';
+import { Label } from '../shadcn/ui/label';
+import { Checkbox } from '../shadcn/ui/checkbox';
 
 type GraphSheetProps = {
 	onUpdate: (nodeInfo: StoryNodeType) => void;
@@ -31,6 +32,8 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 
 	const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 
+	console.log('nodeState: ', nodeState);
+
 	const handleStoryTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		setNodeState(prev => ({ ...prev, storyText: event.target.value }));
 	};
@@ -39,7 +42,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 		setNodeState(prev => ({ ...prev, isCheckpoint: event.target.checked }));
 	};
 
-	const handleSaveChanges = () => {
+	const saveChanges = () => {
 		console.log('Saving changes to node', nodeState);
 		onUpdate(nodeState);
 	};
@@ -47,6 +50,14 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 	const handleTitleUpdate = (event: FormEvent<HTMLInputElement>) => {
 		const newTitle = event.currentTarget.value;
 		setNodeState(prev => ({ ...prev, title: newTitle }));
+	};
+
+	const updateOnBlur = () => {
+		saveChanges();
+	};
+
+	const handleEncounterUpdate = (encounter: string) => {
+		setNodeState(prev => ({ ...prev, encounterType: encounter }));
 	};
 
 	return (
@@ -59,12 +70,18 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 							autoFocus
 							value={nodeState.title}
 							className="text-2xl font-semibold"
-							onBlur={() => setIsEditingTitle(false)}
-							onInput={event => handleTitleUpdate(event)}
+							onBlur={() => {
+								setIsEditingTitle(false);
+								updateOnBlur();
+							}}
+							onInput={event => {
+								handleTitleUpdate(event);
+							}}
 							onKeyDown={event => {
 								if (event.key === 'Enter') {
 									event.preventDefault();
 									setIsEditingTitle(false);
+									updateOnBlur();
 								}
 							}}
 						/>
@@ -83,18 +100,33 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 						placeholder="Skriv dit historieafsnit her..."
 						value={nodeState.storyText}
 						onChange={handleStoryTextChange}
+						onBlur={saveChanges}
 					/>
-					<Label>{nodeState.encounterType === 'combat' ? 'Kamp' : 'Samtale'}</Label>
-					<Label htmlFor="is-checkpoint">Er dette afsnit et checkpoint?</Label>
-					<Checkbox
-						id="is-checkpoint"
-						checked={nodeState.isCheckpoint}
-						// onCheck={handleIsCheckpointChange}
+					<Label className="text-xl">Hvilken type er dette historieafsnit?</Label>
+					<EncounterType
+						currentEncounterType={nodeState.encounterType}
+						onSelected={encounter => handleEncounterUpdate(encounter)}
 					/>
+					<div className="flex flex-col justify-center gap-6 h-fit w-full">
+						<Label className="text-xl">Er dette afsnit et checkpoint?</Label>
+						<div className="flex gap-2 items-center">
+							<Checkbox
+								id="is-checkpoint"
+								checked={nodeState.isCheckpoint}
+								onClick={() =>
+									setNodeState(prev => ({ ...prev, isCheckpoint: !prev.isCheckpoint }))
+								}
+								className="w-6 h-6"
+							/>
+							<Label className="text-lg" htmlFor="is-checkpoint">
+								Ja
+							</Label>
+						</div>
+					</div>
 				</Card>
 				<SheetClose asChild>
 					<SheetFooter>
-						<Button onClick={handleSaveChanges}>Gem Ændringer</Button>
+						<Button onClick={saveChanges}>Gem Ændringer</Button>
 					</SheetFooter>
 				</SheetClose>
 			</SheetContent>

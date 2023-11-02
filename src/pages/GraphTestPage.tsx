@@ -68,8 +68,6 @@ const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
 	console.log('dagreNodes: ', dagreNodes);
 
-	const updatedEdges = edges.map(edge => ({ ...edge, type: 'smoothstep' }));
-
 	return (
 		<>
 			<ReactFlow
