@@ -9,7 +9,7 @@ const navbarElements = [
 	},
 	{
 		text: 'NodeView',
-		linkTo: '/node',
+		linkTo: '/playnode',
 	},
 	{
 		text: 'StoryPageView',

@@ -2,17 +2,18 @@ import i18next from 'i18next';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Routes } from 'react-router-dom';
+import { SmoothStepEdge } from 'reactflow';
 
-import BasicStoryNode from './components/graph/CustomNode';
+import StoryNode, { StoryNodeProps } from './components/graph/StoryNode';
 import PageContainer from './components/PageContainer';
 import { buttonVariants } from './components/shadcn/ui/button';
 import { cn } from './lib/utils';
 import GraphTestPage from './pages/GraphTestPage';
 import LoginPage from './pages/LoginPage';
+import PlayNode from './pages/PlayNode';
 import SearchPage from './pages/SearchPage';
 import SignUpPage from './pages/SignUpPage';
 import StoryPage from './pages/StoryHomePage';
-import StoryNode from './pages/StoryNode';
 
 function App() {
 	const { t } = useTranslation();
@@ -22,13 +23,13 @@ function App() {
 		i18next.changeLanguage(newLanguage);
 	};
 
-	const nodeTypes = useMemo(() => ({ testNode: BasicStoryNode }), []);
+	const nodeTypes = useMemo(() => ({ testNode: StoryNode }), []);
 
 	return (
 		<PageContainer>
 			<Routes>
 				<Route path="/" element={<LoginPage />} />
-				<Route path="/node" element={<StoryNode />} />
+				<Route path="/playnode" element={<PlayNode />} />
 				<Route path="/story-page" element={<StoryPage title={'Troldehulen'} />} />
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />

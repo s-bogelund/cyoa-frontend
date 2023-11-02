@@ -4,7 +4,7 @@ import { Card, CardTitle } from '../components/shadcn/ui/card';
 import NodeOptions from '../components/story-node/NodeOptions';
 import NodeTextContainer from '../components/story-node/NodeTextContainer';
 
-type StoryNodeProps = {};
+type PlayNodeProps = {};
 
 const dummyOptions = [
 	'This is a very long Option One that certainly exceeds the seventy-five ',
@@ -19,7 +19,7 @@ const dummyOptions = [
  * It fetches the data from the backend and renders it.
  */
 
-const StoryNode: FC<StoryNodeProps> = ({}) => {
+const PlayNode: FC<PlayNodeProps> = ({}) => {
 	return (
 		<Card className="flex flex-col h-fit w-full md:w-[70%] lg:w-[60%] xl:w-[50%] items-center justify-center gap-4 px-6 py-8 lg:border-2">
 			<CardTitle>Trolls 'n stuff</CardTitle>
@@ -29,4 +29,4 @@ const StoryNode: FC<StoryNodeProps> = ({}) => {
 	);
 };
 
-export default StoryNode;
+export default PlayNode;

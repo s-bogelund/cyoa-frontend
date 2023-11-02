@@ -3,12 +3,24 @@ import ELK, { ElkNode } from 'elkjs/lib/elk.bundled.js';
 import { Sheet } from 'lucide-react';
 import { useCallback, useMemo, useState } from 'react';
 import ReactFlow, {
-    applyEdgeChanges, applyNodeChanges, Background, ControlButton, Controls, Edge, MiniMap, Node,
-    NodeChange, NodeTypes, useReactFlow
+	applyEdgeChanges,
+	applyNodeChanges,
+	Background,
+	BezierEdge,
+	ControlButton,
+	Controls,
+	Edge,
+	EdgeTypes,
+	MiniMap,
+	Node,
+	NodeChange,
+	NodeTypes,
+	SmoothStepEdge,
+	useReactFlow,
 } from 'reactflow';
 import { shallow } from 'zustand/shallow';
 
-import BasicStoryNode from '@/components/graph/CustomNode';
+import StoryNode from '@/components/graph/StoryNode';
 import { Button } from '@/components/shadcn/ui/button';
 import useStore, { RFState } from '@/graphStore';
 
@@ -54,6 +66,9 @@ const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 	const { nodes, edges, onNodesChange, onEdgesChange } = useStore(selector, shallow);
 
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
+	console.log('dagreNodes: ', dagreNodes);
+
+	const updatedEdges = edges.map(edge => ({ ...edge, type: 'smoothstep' }));
 
 	return (
 		<>
@@ -64,8 +79,8 @@ const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 				onEdgesChange={onEdgesChange}
 				fitView
 				nodeTypes={nodeTypes}
-				className="h-[90vh]"
 				proOptions={{ hideAttribution: true }}
+				minZoom={0.25}
 			>
 				<MiniMap
 					zoomable
