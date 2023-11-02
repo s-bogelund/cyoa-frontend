@@ -1,18 +1,18 @@
 import i18next from 'i18next';
+import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Routes } from 'react-router-dom';
 
+import BasicStoryNode from './components/graph/CustomNode';
 import PageContainer from './components/PageContainer';
 import { buttonVariants } from './components/shadcn/ui/button';
 import { cn } from './lib/utils';
+import GraphTestPage from './pages/GraphTestPage';
 import LoginPage from './pages/LoginPage';
+import SearchPage from './pages/SearchPage';
 import SignUpPage from './pages/SignUpPage';
 import StoryPage from './pages/StoryHomePage';
 import StoryNode from './pages/StoryNode';
-import SearchPage from './pages/SearchPage';
-import GraphTestPage from './pages/GraphTestPage';
-import { useMemo } from 'react';
-import BasicStoryNode from './components/graph/CustomNode';
 
 function App() {
 	const { t } = useTranslation();

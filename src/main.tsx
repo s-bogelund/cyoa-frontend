@@ -1,13 +1,13 @@
 import './index.css';
 
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { TooltipProvider } from '@radix-ui/react-tooltip';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { I18nextProvider } from 'react-i18next';
 import { BrowserRouter } from 'react-router-dom';
 
 import { ThemeProvider } from '@/components/shadcn/ui/theme-provider.tsx';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
 
 import App from './App.tsx';
 import AppContainer from './components/AppContainer.tsx';

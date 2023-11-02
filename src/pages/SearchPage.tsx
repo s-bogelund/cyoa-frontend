@@ -3,12 +3,12 @@ import React, { FC, useState } from 'react';
 import AgeFilter from '@/components/search-page/filters/AgeFilter';
 import CompletionTimeFilter from '@/components/search-page/filters/CompletionTimeFilter';
 import DifficultyFilter from '@/components/search-page/filters/DifficultyFilter';
+import SortItem from '@/components/search-page/filters/SortItems';
 import ContentList from '@/components/search-page/search-content/ContentList';
 import SearchBar from '@/components/search-page/SearchBar';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
 import { Checkbox } from '@/components/shadcn/ui/checkbox';
 import { gameInfos } from '@/utils/dummyData';
-import SortItem from '@/components/search-page/filters/SortItems';
 
 type DifficultyFilter = {
 	easy: boolean;

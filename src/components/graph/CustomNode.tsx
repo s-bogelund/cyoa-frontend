@@ -6,6 +6,7 @@ import useStore from '@/graphStore';
 import Tooltip from '../generics/Tooltip';
 import { Button } from '../shadcn/ui/button';
 import { Card, CardHeader } from '../shadcn/ui/card';
+import { Sheet, SheetTrigger } from '../shadcn/ui/sheet';
 
 type BasicStoryNodeProps = {
 	header?: string;
@@ -74,27 +75,33 @@ const BasicStoryNode: FC<BasicStoryNodeProps> = ({
 	}, [store, id]);
 
 	return (
-		<Card
-			onChange={onChange}
-			onMouseEnter={() => handleMouseEnter()}
-			onMouseLeave={() => setIsHovering(false)}
-			className={`relative flex flex-col items-start p-2 w-32 h-24 text-black border border-white cursor-pointer ${
-				isHighlighted ? 'border-2 !shadow-md !shadow-slate-500' : ''
-			}`}
-		>
-			<CardHeader className="text-center self-start text-white text-sm">{data.label}</CardHeader>
-			<div
-				className={`h-6 w-4 absolute right-0 top-0 ${
-					isHovering && !hasMaxChildren ? 'flex items-center z-50' : 'hidden'
-				}`}
-			>
-				<Button className="w-full bottom-0 h-full" onClick={() => addChildNode()}>
-					+
-				</Button>
-			</div>
-			{!isRoot && <Handle type="target" position={Position.Left} />}
-			<Handle type="source" position={Position.Right} isConnectable={!hasMaxChildren} />
-		</Card>
+		<Sheet>
+			<SheetTrigger asChild>
+				<Card
+					onChange={onChange}
+					onMouseEnter={() => handleMouseEnter()}
+					onMouseLeave={() => setIsHovering(false)}
+					className={`relative flex flex-col items-start p-2 w-32 h-24 text-black border border-white cursor-pointer ${
+						isHighlighted ? 'border-2 !shadow-md !shadow-slate-500' : ''
+					}`}
+				>
+					<CardHeader className="text-center self-start text-white text-sm">
+						{data.label}
+					</CardHeader>
+					<div
+						className={`h-6 w-4 absolute right-0 top-0 ${
+							isHovering && !hasMaxChildren ? 'flex items-center z-50' : 'hidden'
+						}`}
+					>
+						<Button className="w-full bottom-0 h-full" onClick={() => addChildNode()}>
+							+
+						</Button>
+					</div>
+					{!isRoot && <Handle type="target" position={Position.Left} />}
+					<Handle type="source" position={Position.Right} isConnectable={!hasMaxChildren} />
+				</Card>
+			</SheetTrigger>
+		</Sheet>
 	);
 };
 

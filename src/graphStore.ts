@@ -1,18 +1,11 @@
-import {
-	addEdge,
-	applyEdgeChanges,
-	applyNodeChanges,
-	Connection,
-	Edge,
-	EdgeChange,
-	Node,
-	NodeChange,
-	OnConnect,
-	OnEdgesChange,
-	OnNodesChange,
-} from 'reactflow';
 import 'reactflow/dist/style.css';
+
+import {
+    addEdge, applyEdgeChanges, applyNodeChanges, Connection, Edge, EdgeChange, Node, NodeChange,
+    OnConnect, OnEdgesChange, OnNodesChange
+} from 'reactflow';
 import { create } from 'zustand';
+
 import { initialEdges, initialNodes } from './utils/dummyData';
 import { loadGraphStateLS, saveGraphStateLS } from './utils/graph';
 
@@ -37,6 +30,7 @@ const useStore = create<RFState>((set, get) => ({
 		set({
 			nodes: applyNodeChanges(changes, get().nodes),
 		});
+
 		saveGraphStateLS(get());
 	},
 	onEdgesChange: (changes: EdgeChange[]) => {

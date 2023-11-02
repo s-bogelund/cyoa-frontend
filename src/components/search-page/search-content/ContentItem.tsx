@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useMemo, useState } from 'react';
 
+import Tooltip from '@/components/generics/Tooltip';
 import getAgeIcon from '@/components/icons/age-icons';
 import { getDifficultyIcon, Icons } from '@/components/icons/Icons';
 import { Card } from '@/components/shadcn/ui/card';
-import Tooltip from '@/components/generics/Tooltip';
 
 type ContentItemProps = {
 	id: string;
