@@ -1,6 +1,7 @@
 import { AiOutlineNodeIndex } from 'react-icons/ai';
-import { PiClock, PiCross } from 'react-icons/pi';
-
+import { PiClock, PiCross, PiSword } from 'react-icons/pi';
+import { RiSwordLine } from 'react-icons/ri';
+import { SlBubbles } from 'react-icons/sl';
 export type IconProps = { text?: string } & React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
@@ -86,6 +87,8 @@ export const Icons = {
 	Death: (props: IconProps) => <PiCross {...props} />,
 	Playtime: (props: IconProps) => <PiClock {...props} />,
 	Nodes: (props: IconProps) => <AiOutlineNodeIndex {...props} />,
+	Sword: (props: IconProps) => <PiSword {...props} />,
+	Speech: (props: IconProps) => <SlBubbles {...props} />,
 };
 
 export const getDifficultyIcon = (difficulty: number, className: string) => {

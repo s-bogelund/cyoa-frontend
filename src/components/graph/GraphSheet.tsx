@@ -102,12 +102,14 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 						onChange={handleStoryTextChange}
 						onBlur={saveChanges}
 					/>
-					<Label className="text-xl">Hvilken type er dette historieafsnit?</Label>
-					<EncounterType
-						currentEncounterType={nodeState.encounterType}
-						onSelected={encounter => handleEncounterUpdate(encounter)}
-					/>
-					<div className="flex flex-col justify-center gap-6 h-fit w-full">
+					<div className="flex flex-col w-full gap-2">
+						<Label className="text-xl">Hvad sker der i dette afsnit?</Label>
+						<EncounterType
+							currentEncounterType={nodeState.encounterType}
+							onSelected={encounter => handleEncounterUpdate(encounter)}
+						/>
+					</div>
+					<div className="flex flex-col justify-center gap-2 h-fit w-full">
 						<Label className="text-xl">Er dette afsnit et checkpoint?</Label>
 						<div className="flex gap-2 items-center">
 							<Checkbox
@@ -124,11 +126,14 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 						</div>
 					</div>
 				</Card>
-				<SheetClose asChild>
-					<SheetFooter>
-						<Button onClick={saveChanges}>Gem Ændringer</Button>
-					</SheetFooter>
-				</SheetClose>
+				<SheetFooter>
+					<SheetClose asChild>
+						<Button onClick={saveChanges}>GEM</Button>
+					</SheetClose>
+					<Button variant="destructive" onClick={e => e.stopPropagation}>
+						SLET AFSNIT
+					</Button>
+				</SheetFooter>
 			</SheetContent>
 		</Sheet>
 	);

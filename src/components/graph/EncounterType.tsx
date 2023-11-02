@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { Card } from '../shadcn/ui/card';
 import { Button } from '../shadcn/ui/button';
+import { Icons } from '../icons/Icons';
+import { IconType } from 'react-icons';
 
 type EncounterTypeProps = {
 	onSelected: (encounterType: string) => void;
@@ -8,9 +10,15 @@ type EncounterTypeProps = {
 };
 
 const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterType }) => {
-	const sharedStyle = 'w-24 h-24';
+	const sharedStyle = 'w-24 h-24 text-white text-lg relative';
+	const sharedIconStyle = 'w-full h-full opacity-20 absolute stroke-1';
 
 	console.log('currentEncounterType: ', currentEncounterType);
+
+	const DeathIcon: IconType = Icons.Death;
+	const SkullIcon: IconType = Icons.Skull;
+	const CombatIcon: IconType = Icons.Sword;
+	const SpeechIcon = Icons.Speech;
 
 	return (
 		<Card className="flex justify-between gap-2 flex-wrap">
@@ -20,7 +28,13 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				variant={currentEncounterType === 'combat' ? 'default' : 'outline'}
 				onClick={() => onSelected('combat')}
 			>
-				Kamp
+				<p className="z-40">Spilleren kæmper</p>
+
+				<CombatIcon
+					className={`${sharedIconStyle} ${
+						currentEncounterType === 'combat' ? 'text-black !opacity-50' : ''
+					}`}
+				/>
 			</Button>
 			<Button
 				value={'conversation'}
@@ -28,7 +42,13 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				variant={currentEncounterType === 'conversation' ? 'default' : 'outline'}
 				onClick={() => onSelected('conversation')}
 			>
-				Samtale
+				<p className="z-40">Spilleren snakker</p>
+
+				<SpeechIcon
+					className={`${sharedIconStyle} ${
+						currentEncounterType === 'conversation' ? 'text-black !opacity-50' : ''
+					}`}
+				/>
 			</Button>
 			<Button
 				value={'death'}
@@ -36,7 +56,13 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				variant={currentEncounterType === 'death' ? 'default' : 'outline'}
 				onClick={() => onSelected('death')}
 			>
-				Død
+				<p className="z-40">Spilleren dør!</p>
+
+				<SkullIcon
+					className={`${sharedIconStyle} ${
+						currentEncounterType === 'death' ? 'text-black !opacity-50' : ''
+					}`}
+				/>
 			</Button>
 			<Button
 				value="other"
@@ -44,7 +70,12 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				onClick={() => onSelected('other')}
 				variant={currentEncounterType === 'other' ? 'default' : 'outline'}
 			>
-				Andet
+				<p className="z-40">Noget andet</p>
+				<DeathIcon
+					className={`${sharedIconStyle} ${
+						currentEncounterType === 'other' ? 'text-black !opacity-50' : ''
+					}`}
+				/>
 			</Button>
 		</Card>
 	);

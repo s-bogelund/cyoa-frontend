@@ -108,11 +108,11 @@ const StoryNode: FC<StoryNodeProps> = ({
 				onChange={onChange}
 				onMouseEnter={() => handleMouseEnter()}
 				onMouseLeave={() => setIsHovering(false)}
-				className={`relative flex flex-col items-start p-2 w-32 h-24 text-black border border-white cursor-pointer ${
+				className={`relative flex flex-col justify-start items-center p-2 w-32 h-24 text-black border border-white cursor-pointer ${
 					isHighlighted ? 'border-2 !shadow-md !shadow-slate-500' : ''
 				}`}
 			>
-				<CardHeader className="text-center self-start text-white text-sm">{data.title}</CardHeader>
+				<p className="text-center text-sm font-semibold text-white">{data.title}</p>
 				<div
 					className={`h-6 w-4 absolute right-0 top-0 ${
 						isHovering && !hasMaxChildren ? 'flex items-center z-50' : 'hidden'
