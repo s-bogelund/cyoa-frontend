@@ -11,6 +11,8 @@ import StoryPage from './pages/StoryHomePage';
 import StoryNode from './pages/StoryNode';
 import SearchPage from './pages/SearchPage';
 import GraphTestPage from './pages/GraphTestPage';
+import { useMemo } from 'react';
+import BasicStoryNode from './components/graph/CustomNode';
 
 function App() {
 	const { t } = useTranslation();
@@ -19,6 +21,8 @@ function App() {
 		const newLanguage = currentLanguage === 'en' ? 'da' : 'en';
 		i18next.changeLanguage(newLanguage);
 	};
+
+	const nodeTypes = useMemo(() => ({ testNode: BasicStoryNode }), []);
 
 	return (
 		<PageContainer>
@@ -29,7 +33,7 @@ function App() {
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="search-story" element={<SearchPage />} />
-				<Route path="graph-test" element={<GraphTestPage />} />
+				<Route path="graph-test" element={<GraphTestPage nodeTypes={nodeTypes} />} />
 				<Route
 					path="*"
 					element={

@@ -8,6 +8,10 @@ import ReactFlow, {
 	NodeTypes,
 	useReactFlow,
 	NodeChange,
+	MiniMap,
+	Background,
+	Controls,
+	ControlButton,
 } from 'reactflow';
 import BasicStoryNode from '@/components/graph/CustomNode';
 import useStore, { RFState } from '@/graphStore';
@@ -25,11 +29,17 @@ const selector = (state: RFState) => ({
 
 const layoutGraph = (nodes: Node[], edges: Edge[]) => {
 	const g = new dagre.graphlib.Graph();
-	g.setGraph({ rankdir: 'LR' });
+	g.setGraph({
+		rankdir: 'LR',
+		ranker: 'shortest-path',
+		nodesep: 30,
+		ranksep: 100,
+	});
 	g.setDefaultEdgeLabel(() => ({}));
 
 	nodes.forEach(node => {
-		g.setNode(node.id, { width: 200, height: 100 });
+		// CustomNode geometry is 128x96
+		g.setNode(node.id, { width: 128, height: 96 });
 	});
 
 	edges.forEach(edge => {
@@ -47,12 +57,8 @@ const layoutGraph = (nodes: Node[], edges: Edge[]) => {
 	});
 };
 
-function GraphTestPage() {
+const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 	const { nodes, edges, onNodesChange, onEdgesChange } = useStore(selector, shallow);
-
-	// const flowState = useReactFlow();
-
-	const nodeTypes = useMemo(() => ({ testNode: BasicStoryNode }), []);
 
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
 
@@ -65,10 +71,32 @@ function GraphTestPage() {
 				onEdgesChange={onEdgesChange}
 				fitView
 				nodeTypes={nodeTypes}
-			/>
-			<Button onClick={() => console.log(nodes, edges)}>+</Button>
+				className="h-[90vh]"
+				proOptions={{ hideAttribution: true }}
+			>
+				<MiniMap
+					zoomable
+					pannable
+					maskColor="white"
+					nodeColor={'#020715'}
+					style={{
+						backgroundColor: '#a5a5a5',
+						position: 'absolute',
+						bottom: 0,
+						right: 0,
+						zIndex: 1000,
+					}}
+				/>
+				<Background color="#ccc" />
+				<Controls>
+					<ControlButton
+						onClick={() => alert('Something magical just happened. ✨')}
+					></ControlButton>
+				</Controls>
+			</ReactFlow>
+			{/* <Button onClick={() => console.log(nodes, edges)}>+</Button> */}
 		</>
 	);
-}
+};
 
 export default GraphTestPage;
