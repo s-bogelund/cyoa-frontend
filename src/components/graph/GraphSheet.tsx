@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, ReactNode, useState } from 'react';
+import React, { ChangeEvent, FC, FormEvent, ReactNode, useMemo, useState } from 'react';
 
 import { ExtendedNode, StoryNodeType } from '@/types/graphTypes';
 
@@ -20,26 +20,37 @@ import { Card } from '../shadcn/ui/card';
 import EncounterType from './EncounterType';
 import { Label } from '../shadcn/ui/label';
 import { Checkbox } from '../shadcn/ui/checkbox';
+import AlertDialog from '../generics/AlertDialog';
+import SheetChoiceButton from './SheetChoiceButton';
+import { Edge } from 'reactflow';
+import useStore from '@/graphStore';
+import SheetChoiceItem from './SheetChoiceItem';
 
 type GraphSheetProps = {
 	onUpdate: (nodeInfo: StoryNodeType) => void;
+	onChildAdded?: () => void;
 	nodeInfo: StoryNodeType;
 	children: ReactNode;
+	hasMaxChildren: boolean;
 };
 
-const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
+const GraphSheet: FC<GraphSheetProps> = ({
+	children,
+	nodeInfo,
+	onUpdate,
+	hasMaxChildren,
+	onChildAdded,
+}) => {
 	const [nodeState, setNodeState] = useState<StoryNodeType>(nodeInfo);
-
+	const [choiceState, setChoiceState] = useState<StoryNodeType[]>([]);
+	const [choices, setChoices] = useState<StoryNodeType[]>([]);
 	const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
-
+	const addCustomNode = useStore(state => state.addCustomNode);
+	const addCustomEdge = useStore(state => state.addCustomEdge);
 	console.log('nodeState: ', nodeState);
 
 	const handleStoryTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		setNodeState(prev => ({ ...prev, storyText: event.target.value }));
-	};
-
-	const handleIsCheckpointChange = (event: ChangeEvent<HTMLInputElement>) => {
-		setNodeState(prev => ({ ...prev, isCheckpoint: event.target.checked }));
 	};
 
 	const saveChanges = () => {
@@ -52,12 +63,50 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 		setNodeState(prev => ({ ...prev, title: newTitle }));
 	};
 
-	const updateOnBlur = () => {
-		saveChanges();
-	};
-
 	const handleEncounterUpdate = (encounter: string) => {
 		setNodeState(prev => ({ ...prev, encounterType: encounter }));
+	};
+
+	const renderChoices = () => {
+		return choices.map(choice => {
+			return (
+				<SheetChoiceItem
+					key={choice.id}
+					choiceText={choice.title}
+					autoFocus={true}
+					onClick={() => console.log('clicked choice')}
+				/>
+			);
+		});
+	};
+
+	const addChoice = () => {
+		const newNodeId = `${Number(nodeState.id) + Math.random() * 2}`; // Generate a unique ID for the new node
+
+		console.log('AddChoice called', nodeState);
+
+		const newNode: ExtendedNode = {
+			id: newNodeId,
+			type: 'testNode',
+			data: {
+				title: 'New Node',
+				id: newNodeId,
+				storyText: '',
+				encounterType: '',
+				isCheckpoint: false,
+			},
+			position: { x: 300, y: 300 }, // replace with desired position
+		};
+
+		const newEdge: Edge = {
+			id: `${nodeState.id}-${newNodeId}`,
+			source: nodeState.id,
+			target: newNodeId,
+		};
+
+		addCustomNode(newNode);
+		addCustomEdge(newEdge);
+		onChildAdded?.();
 	};
 
 	return (
@@ -72,7 +121,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 							className="text-2xl font-semibold"
 							onBlur={() => {
 								setIsEditingTitle(false);
-								updateOnBlur();
+								saveChanges();
 							}}
 							onInput={event => {
 								handleTitleUpdate(event);
@@ -81,7 +130,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 								if (event.key === 'Enter') {
 									event.preventDefault();
 									setIsEditingTitle(false);
-									updateOnBlur();
+									saveChanges();
 								}
 							}}
 						/>
@@ -125,14 +174,24 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 							</Label>
 						</div>
 					</div>
+					{!hasMaxChildren && <SheetChoiceButton isAddNew onClick={() => addChoice()} />}
 				</Card>
 				<SheetFooter>
 					<SheetClose asChild>
 						<Button onClick={saveChanges}>GEM</Button>
 					</SheetClose>
-					<Button variant="destructive" onClick={e => e.stopPropagation}>
-						SLET AFSNIT
-					</Button>
+					<AlertDialog
+						title={'Er du sikker på, at du vil slette dette afsnit?'}
+						description={'Dette vil være permanent, og kan ikke fortrydes.'}
+						cancelText={'Annullér'}
+						confirmText={'Fortsæt'}
+						onCancel={() => console.log("Don't delete")}
+						onConfirm={() => console.log('Delete that shit')}
+					>
+						<Button variant="destructive" onClick={e => e.stopPropagation}>
+							SLET AFSNIT
+						</Button>
+					</AlertDialog>
 				</SheetFooter>
 			</SheetContent>
 		</Sheet>

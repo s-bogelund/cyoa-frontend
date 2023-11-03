@@ -1,15 +1,15 @@
+import { Label } from '@radix-ui/react-label';
 import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
 import { Edge, Handle, Node, NodeProps, NodeTypes, Position, useReactFlow } from 'reactflow';
 
 import useStore from '@/graphStore';
 import { ExtendedNode, StoryNodeType } from '@/types/graphTypes';
-import { Label } from '@radix-ui/react-label';
+import { toNodeChange } from '@/utils/graph';
 
 import { Button } from '../shadcn/ui/button';
 import { Card, CardHeader } from '../shadcn/ui/card';
 import { Input } from '../shadcn/ui/input';
 import GraphSheet from './GraphSheet';
-import { toNodeChange } from '@/utils/graph';
 
 export type StoryNodeProps = {
 	header?: string;
@@ -86,6 +86,15 @@ const StoryNode: FC<StoryNodeProps> = ({
 		}
 	}, [store, id]);
 
+	const checkNoOfChildren = () => {
+		const currentNoOfChildren = store.getEdgesByNodeId(id)?.length || 0;
+		if (currentNoOfChildren >= 4) {
+			setHasMaxChildren(true);
+		} else {
+			setHasMaxChildren(false);
+		}
+	};
+
 	const updateNodeInStore = (nodeInfo: StoryNodeType) => {
 		setNodes(nodes => {
 			const newNodes = nodes.map(node => {
@@ -103,7 +112,12 @@ const StoryNode: FC<StoryNodeProps> = ({
 	};
 
 	return (
-		<GraphSheet nodeInfo={data} onUpdate={nodeInfo => updateNodeInStore(nodeInfo)}>
+		<GraphSheet
+			hasMaxChildren={hasMaxChildren}
+			nodeInfo={data}
+			onUpdate={nodeInfo => updateNodeInStore(nodeInfo)}
+			onChildAdded={() => checkNoOfChildren()}
+		>
 			<Card
 				onChange={onChange}
 				onMouseEnter={() => handleMouseEnter()}
