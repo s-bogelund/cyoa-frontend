@@ -13,8 +13,6 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 	const sharedStyle = 'w-24 h-24 text-white text-lg relative';
 	const sharedIconStyle = 'w-full h-full opacity-20 absolute stroke-1';
 
-	console.log('currentEncounterType: ', currentEncounterType);
-
 	const DeathIcon: IconType = Icons.Death;
 	const SkullIcon: IconType = Icons.Skull;
 	const CombatIcon: IconType = Icons.Sword;

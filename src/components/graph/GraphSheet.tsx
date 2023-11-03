@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, ReactNode, useMemo, useState } from 'react';
+import React, { ChangeEvent, FC, FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
 
 import { ExtendedNode, StoryNodeType } from '@/types/graphTypes';
 
@@ -22,7 +22,7 @@ import { Label } from '../shadcn/ui/label';
 import { Checkbox } from '../shadcn/ui/checkbox';
 import AlertDialog from '../generics/AlertDialog';
 import SheetChoiceButton from './SheetChoiceButton';
-import { Edge } from 'reactflow';
+import { Edge, useReactFlow } from 'reactflow';
 import useStore from '@/graphStore';
 import SheetChoiceItem from './SheetChoiceItem';
 
@@ -47,8 +47,11 @@ const GraphSheet: FC<GraphSheetProps> = ({
 	const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 	const addCustomNode = useStore(state => state.addCustomNode);
 	const addCustomEdge = useStore(state => state.addCustomEdge);
-	console.log('nodeState: ', nodeState);
-
+	const getChildren = useStore(state => state.getAllNeighbours);
+	const getEdges = useStore(state => state.getEdgesByNodeId);
+	const getNode = useStore(state => state.getNodeById);
+	// console.log('neighbours: ', getEdges);
+	const { deleteElements } = useReactFlow();
 	const handleStoryTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		setNodeState(prev => ({ ...prev, storyText: event.target.value }));
 	};
@@ -68,16 +71,42 @@ const GraphSheet: FC<GraphSheetProps> = ({
 	};
 
 	const renderChoices = () => {
-		return choices.map(choice => {
+		const edges = getEdges(nodeState.id);
+		if (!edges) return;
+
+		const children = edges.map(edge => {
+			return getNode(edge.target);
+		});
+
+		if (children.length < 1) return;
+
+		const data: StoryNodeType[] = children.map(child => {
+			return child && child.data ? child.data : null;
+		});
+
+		// if (edges!.length === 0) return;
+		console.log('edges: ', edges);
+
+		const newChoices = data!.map(choice => {
 			return (
 				<SheetChoiceItem
+					nodeId={choice.id}
 					key={choice.id}
 					choiceText={choice.title}
-					autoFocus={true}
-					onClick={() => console.log('clicked choice')}
+					onChange={(value: string) => {
+						console.log('changed choice', value);
+					}}
+					onDelete={(id: string) => {
+						console.log('deleted choice', id);
+					}}
+					onGoToSection={(id: string) => {
+						console.log('going to section', id);
+					}}
 				/>
+				// <div className="w-full h-12 bg-red-900">noget</div>
 			);
 		});
+		return newChoices;
 	};
 
 	const addChoice = () => {
@@ -174,7 +203,10 @@ const GraphSheet: FC<GraphSheetProps> = ({
 							</Label>
 						</div>
 					</div>
-					{!hasMaxChildren && <SheetChoiceButton isAddNew onClick={() => addChoice()} />}
+					<div className="flex flex-col gap-2 w-full">
+						{renderChoices()}
+						{!hasMaxChildren && <SheetChoiceButton isAddNew onClick={() => addChoice()} />}
+					</div>
 				</Card>
 				<SheetFooter>
 					<SheetClose asChild>

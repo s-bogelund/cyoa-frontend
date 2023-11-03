@@ -66,7 +66,6 @@ const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 	const { nodes, edges, onNodesChange, onEdgesChange } = useStore(selector, shallow);
 
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
-	console.log('dagreNodes: ', dagreNodes);
 
 	return (
 		<>
