@@ -27,6 +27,10 @@ const navbarElements = [
 		text: 'UserDashboard',
 		linkTo: '/user-dashboard',
 	},
+	{
+		text: 'WriterStorySummary',
+		linkTo: '/writer-story-summary',
+	},
 ];
 
 const AppContainer: FC<HTMLProps<HTMLDivElement>> = ({ children }) => {
