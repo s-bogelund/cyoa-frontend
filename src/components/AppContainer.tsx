@@ -23,6 +23,10 @@ const navbarElements = [
 		text: 'GraphTestView',
 		linkTo: '/graph-test',
 	},
+	{
+		text: 'UserDashboard',
+		linkTo: '/user-dashboard',
+	},
 ];
 
 const AppContainer: FC<HTMLProps<HTMLDivElement>> = ({ children }) => {

@@ -13,6 +13,7 @@ import SearchPage from './pages/SearchPage';
 import GraphTestPage from './pages/GraphTestPage';
 import { useMemo } from 'react';
 import BasicStoryNode from './components/graph/CustomNode';
+import UserDashboardPage from './pages/UserDashboardPage';
 
 function App() {
 	const { t } = useTranslation();
@@ -34,6 +35,7 @@ function App() {
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="search-story" element={<SearchPage />} />
 				<Route path="graph-test" element={<GraphTestPage nodeTypes={nodeTypes} />} />
+				<Route path='user-dashboard' element={<UserDashboardPage />} />
 				<Route
 					path="*"
 					element={
