@@ -10,18 +10,22 @@ type DashboardReaderStorySummaryProps = {
     playthrough?: Playthrough,
 }
 
-const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ playthrough }) => {
-  const renderDifficultyIcons = () => {
-    if (playthrough?.story.difficulty) {
-      const numberOfRenders = parseInt(playthrough?.story.difficulty)
-      const iconArray = Array(numberOfRenders).fill(<></>).map((_, index) => (
-        <StoryInfoElement icon={Icons.Skull} />
-      ));
-      return iconArray;
-    } else {
-      return <p>Ingen sværhedsgrad</p>
-    }
+export const renderDifficultyIcons = (input: number) => {
+  if (input) {
+    const iconArray = Array(input).fill(<></>).map((_, index) => (
+      <StoryInfoElement icon={Icons.Skull} />
+    ));
+    return iconArray;
+  } else {
+    return <p>Ingen sværhedsgrad</p>
   }
+}
+
+// TODO: Create query that fetches the story and current node of the playthrough.
+// TODO: Change parameters in the code to fit the new story and currentNode
+
+const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ playthrough }) => {
+  
 
   const renderEncounterType = (input: string) => {
     switch (input) {
@@ -46,6 +50,8 @@ const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ pla
       }
     }
   }
+
+  const storyDifficulty: number = playthrough?.story.difficulty ? parseInt(playthrough?.story.difficulty) : 0;
   
   return (
     <Card className='flex flex-col border-2 items-center p-2'>
@@ -55,7 +61,7 @@ const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ pla
       <Card className='flex flex-row gap-6 text-lg mb-2'>
         <Card className='flex flex-row gap-2'>
           Sværhedsgrad:
-          <Card className='flex'>{renderDifficultyIcons()}</Card>
+          <Card className='flex'>{renderDifficultyIcons(storyDifficulty)}</Card>
         </Card>
         <Card className='flex flex-row gap-2'>
           Alder: 
@@ -76,7 +82,10 @@ const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ pla
         </Card>
       </Card>
       <Card className='flex flex-row gap-6 text-lg w-full'>
-        <Textarea value={playthrough?.currentNode.storyText} readOnly />
+        <Textarea
+          value={playthrough?.currentNode.storyText}
+          readOnly
+        />
       </Card>
     </Card>
   )

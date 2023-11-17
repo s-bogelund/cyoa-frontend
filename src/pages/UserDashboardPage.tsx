@@ -1,6 +1,7 @@
 import { Button } from '@/components/shadcn/ui/button'
 import { Card, CardContent, CardTitle } from '@/components/shadcn/ui/card'
 import DashboardReaderStorySummary from '@/components/user-dashboard/DashboardReaderStorySummary'
+import DashboardWriterStorySummary from '@/components/user-dashboard/DashboardWriterStorySummary'
 import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -68,6 +69,13 @@ const dummyPlaythrough: Playthrough = {
     isPlayerDead: false
 }
 
+const dummyLatestStory: Story = {
+    id: "3333333322",
+    title: "Dødens Labyrint",
+    difficulty: "3",
+    targetAge: 16
+}
+
 const UserDashboardPage: FC<UserDashboardProps> = () => {
     const navigate = useNavigate();
 
@@ -124,7 +132,7 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                 {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
                 <Card className='flex flex-col justify-between w-[45%] border-2 p-4'>
                     <Card>
-                        Her skal der være et komponent der opsummerer den seneste historie man har skrevet på
+                        <DashboardWriterStorySummary story={dummyLatestStory} />
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
