@@ -79,7 +79,7 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
-                        onClick={() => navigate("/graph-test")}
+                        onClick={() => navigate("/writer-story-summary")}
                         >
                         Skriv videre
                     </Button>
