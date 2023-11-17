@@ -52,7 +52,7 @@ export type Playthrough = {
 const dummyPlaythrough: Playthrough = {
     story: {
         id: "123123123",
-        title: "Forfatters historie",
+        title: "Troldmanden fra Ildbjerget",
         difficulty: "2",
         targetAge: 10,
     },
@@ -72,7 +72,7 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
     const navigate = useNavigate();
 
   return (
-    <Card className='flex flex-col w-full h-full mt-8 gap-10 md:w-[80%] lg:w-[80%] xl:w-[80%]'>
+    <Card className='flex flex-col w-full h-full mt-8 gap-10 md:w-[65%] lg:w-[80%] xl:w-[60%]'>
         <Card className='text-center'>
             <CardTitle className='text-4xl mb-8'>
                 Hej {dummyUser.firstName}!
@@ -110,7 +110,9 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
             <Card className='flex justify-evenly'>
                 <Card className='flex flex-col justify-between w-[45%] border-2 p-4'>
                     <Card>
-                        <DashboardReaderStorySummary playthrough={dummyPlaythrough} />
+                        <DashboardReaderStorySummary
+                            playthrough={dummyPlaythrough}
+                        />
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
