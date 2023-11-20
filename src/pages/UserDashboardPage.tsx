@@ -97,16 +97,16 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
             <CardContent className='text-2xl'>
                 Hvad vil du gerne lave i dag?
             </CardContent>
-            <Card className='flex justify-evenly'>
+            <Card className='flex flex-row justify-start p-6 gap-16'>
                 <Button
-                    className='h-32 text-lg'
+                    className='h-32 text-lg w-[30%]'
                     onClick={() => navigate("/search-story")}
                 >
                     Finde en ny historie at læse
                 </Button>
                 {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
                 <Button
-                    className='h-32 text-lg'
+                    className='h-32 text-lg w-[30%]'
                     onClick={() => navigate("/graph-test")}
                 >
                     Skrive en ny historie

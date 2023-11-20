@@ -66,35 +66,6 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
                 </Card>
             </Card>
         </Card>
-        {/* Template JSX */}
-        {/* <Card className='flex flex-row gap-6 text-lg mb-2'>
-            <Card className='flex flex-row gap-2'>
-                Sværhedsgrad:
-                <Card className='flex'>
-                    {renderDifficultyIcons(parseInt(story.difficulty))}
-                </Card>
-            </Card>
-            <Card className='flex flex-row gap-2'>
-                Alder: 
-                <StoryInfoElement
-                    icon={getAgeIcon(story.targetAge ? story.targetAge : 4)}
-                    description={`Recommended age: ${story.targetAge || 6}+`}
-                    isAgeIcon
-                    className="justify-center"
-                />
-            </Card>
-        </Card>
-        <Card className='flex flex-row gap-6 text-lg mb-2'>
-            <Card className='flex flex-row gap-2'>
-                Antal afsnit: {1337}
-                <StoryInfoElement
-                    icon={Icons.Nodes}
-                    description={`Recommended age: ${story.targetAge || 6}+`}
-                    isAgeIcon
-                    className="justify-center"
-                />
-            </Card>
-        </Card> */}
     </Card>
   )
 }
