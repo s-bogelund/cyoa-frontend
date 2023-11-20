@@ -1,3 +1,5 @@
+import React, { FC } from 'react';
+
 import {
 	AlertDialog as AlertDialogWrapper,
 	AlertDialogAction,
@@ -9,8 +11,6 @@ import {
 	AlertDialogTitle,
 	AlertDialogTrigger,
 } from '@/components/shadcn/ui/alert-dialog';
-
-import React, { FC } from 'react';
 
 type AlertDialogProps = {
 	title: string;

@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Input } from '../shadcn/ui/input';
-import { Card } from '../shadcn/ui/card';
-import { Icons } from '../icons/Icons';
 import { IconType } from 'react-icons';
-import { PopoverComponent, PopoverContent, PopoverTrigger } from '../shadcn/ui/popover';
+
 import Badge from '../generics/Badge';
+import { Icons } from '../icons/Icons';
+import { Button } from '../shadcn/ui/button';
+import { Card } from '../shadcn/ui/card';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -18,7 +18,8 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from '../shadcn/ui/dropdown-menu';
-import { Button } from '../shadcn/ui/button';
+import { Input } from '../shadcn/ui/input';
+import { PopoverComponent, PopoverContent, PopoverTrigger } from '../shadcn/ui/popover';
 
 type SheetChoiceItemPropsProps = {
 	choiceText?: string;

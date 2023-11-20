@@ -1,7 +1,7 @@
+import { Label } from '@radix-ui/react-label';
 import React, { FC, useState } from 'react';
 
 import { Slider } from '@/components/shadcn/ui/slider';
-import { Label } from '@radix-ui/react-label';
 
 import FilterWrapper from './FilterWrapper';
 

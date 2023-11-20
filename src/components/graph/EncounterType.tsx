@@ -1,8 +1,9 @@
 import React, { FC } from 'react';
-import { Card } from '../shadcn/ui/card';
-import { Button } from '../shadcn/ui/button';
-import { Icons } from '../icons/Icons';
 import { IconType } from 'react-icons';
+
+import { Icons } from '../icons/Icons';
+import { Button } from '../shadcn/ui/button';
+import { Card } from '../shadcn/ui/card';
 
 type EncounterTypeProps = {
 	onSelected: (encounterType: string) => void;
@@ -10,7 +11,7 @@ type EncounterTypeProps = {
 };
 
 const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterType }) => {
-	const sharedStyle = 'w-24 h-24 text-white text-lg relative';
+	const sharedStyle = 'w-24 h-24 text-white text-2xl relative';
 	const sharedIconStyle = 'w-full h-full opacity-20 absolute ';
 
 	const QuestionIcon: IconType = Icons.QuestionMark;
@@ -26,7 +27,7 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				variant={currentEncounterType === 'combat' ? 'default' : 'outline'}
 				onClick={() => onSelected('combat')}
 			>
-				<p className="z-40">Spilleren kæmper</p>
+				<p className="z-40">Kamp!</p>
 
 				<CombatIcon
 					className={`${sharedIconStyle} ${
@@ -40,7 +41,7 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				variant={currentEncounterType === 'conversation' ? 'default' : 'outline'}
 				onClick={() => onSelected('conversation')}
 			>
-				<p className="z-40">Historien fortsætter</p>
+				<p className="z-40">Historie</p>
 
 				<SpeechIcon
 					className={`${sharedIconStyle} ${
@@ -54,7 +55,7 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				variant={currentEncounterType === 'death' ? 'default' : 'outline'}
 				onClick={() => onSelected('death')}
 			>
-				<p className="z-40">Spilleren dør!</p>
+				<p className="z-40">Død!</p>
 
 				<SkullIcon
 					className={`${sharedIconStyle} ${
@@ -68,7 +69,7 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				onClick={() => onSelected('other')}
 				variant={currentEncounterType === 'other' ? 'default' : 'outline'}
 			>
-				<p className="z-40">Noget andet</p>
+				<p className="z-40">Andet</p>
 				<QuestionIcon
 					className={`${sharedIconStyle} ${
 						currentEncounterType === 'other' ? 'text-black !opacity-50' : ''
