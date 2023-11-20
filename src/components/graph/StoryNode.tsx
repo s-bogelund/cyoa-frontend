@@ -1,17 +1,17 @@
 import { Label } from '@radix-ui/react-label';
 import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
+import { IconType } from 'react-icons';
 import { Edge, Handle, Node, NodeProps, NodeTypes, Position, useReactFlow } from 'reactflow';
 
 import useStore from '@/graphStore';
 import { ExtendedNode, StoryNodeType } from '@/types/graphTypes';
 import { toNodeChange } from '@/utils/graph';
 
+import { Icons } from '../icons/Icons';
 import { Button } from '../shadcn/ui/button';
 import { Card, CardHeader } from '../shadcn/ui/card';
 import { Input } from '../shadcn/ui/input';
 import GraphSheet from './GraphSheet';
-import { IconType } from 'react-icons';
-import { Icons } from '../icons/Icons';
 
 export type StoryNodeProps = {
 	header?: string;
@@ -26,6 +26,8 @@ const QuestionIcon: IconType = Icons.QuestionMark;
 const SkullIcon: IconType = Icons.Skull;
 const CombatIcon: IconType = Icons.Sword;
 const SpeechIcon = Icons.Speech;
+const AddIcon = Icons.AddNode;
+const EditIcon = Icons.EditNode;
 
 const StoryNode: FC<StoryNodeProps> = ({
 	id,
@@ -155,7 +157,7 @@ const StoryNode: FC<StoryNodeProps> = ({
 		>
 			<Card
 				onChange={onChange}
-				onMouseEnter={() => handleMouseEnter()}
+				onMouseEnter={() => setIsHovering(true)}
 				onMouseLeave={() => setIsHovering(false)}
 				className={`relative flex flex-col justify-start items-center p-2 w-32 h-24 text-black border border-white cursor-pointer ${
 					isHighlighted ? 'border-2 !shadow-md !shadow-slate-500' : ''
@@ -165,16 +167,25 @@ const StoryNode: FC<StoryNodeProps> = ({
 				<p className="text-center text-sm font-semibold text-white">{data.title}</p>
 
 				<Button
-					variant={'ghost'}
-					className={`w-8 h-8 absolute right-0 bottom-1 text-3xl hover:bg-opacity-40 text-white ${
-						hasMaxChildren ? 'hidden' : ''
+					variant={'default'}
+					className={`grid place-content-center w-8 h-8 absolute right-0 bottom-0 text-2xl bg-transparent betterhover:hover:bg-opacity-30 betterhover:hover:bg-gray-500 text-white p-1 opacity-60 ${
+						hasMaxChildren ? 'hidden' : '' || isHovering ? 'opacity-100' : 'opacity-50'
 					}`}
 					onClick={e => {
 						e.stopPropagation();
 						addChildNode();
 					}}
 				>
-					+
+					<AddIcon />
+				</Button>
+
+				<Button
+					variant={'default'}
+					className={`grid place-content-center w-8 h-8 absolute left-0 bottom-0 text-2xl bg-transparent betterhover:hover:bg-opacity-30 betterhover:hover:bg-gray-500 text-white p-1 ${
+						isHovering ? 'opacity-100' : 'opacity-50'
+					}`}
+				>
+					<EditIcon />
 				</Button>
 				{!isRoot && <Handle type="target" position={Position.Left} />}
 				<Handle type="source" position={Position.Right} isConnectable={!hasMaxChildren} />

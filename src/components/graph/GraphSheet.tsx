@@ -118,7 +118,7 @@ const GraphSheet: FC<GraphSheetProps> = ({
 			id: newNodeId,
 			type: 'testNode',
 			data: {
-				title: 'New Node',
+				title: 'Nyt Afsnit',
 				id: newNodeId,
 				storyText: '',
 				encounterType: '',
