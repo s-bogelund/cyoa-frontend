@@ -6,6 +6,7 @@ import getAgeIcon from '../icons/age-icons'
 import { Textarea } from '../shadcn/ui/textarea'
 import { renderDifficultyIcons } from './DashboardReaderStorySummary'
 import { Icons } from '../icons/Icons'
+import WriterStoryElements from './WriterStoryElements'
 
 // TODO: Parent needs a query that fetches the user's story that has the latest modifications made to them
 // TODO: This story 
@@ -19,34 +20,7 @@ const DashboardWriterStorySummary: FC<DashboardWriterStorySummaryProps> = ({ sto
         <Card className='h-fit text-2xl mb-3'>
             {story.title}
         </Card>
-        <Card className='flex flex-row gap-6 text-lg mb-2'>
-            <Card className='flex flex-row gap-2'>
-                Sværhedsgrad:
-                <Card className='flex'>
-                    {renderDifficultyIcons(parseInt(story.difficulty))}
-                </Card>
-            </Card>
-            <Card className='flex flex-row gap-2'>
-                Alder: 
-                <StoryInfoElement
-                    icon={getAgeIcon(story.targetAge ? story.targetAge : 4)}
-                    description={`Recommended age: ${story.targetAge || 6}+`}
-                    isAgeIcon
-                    className="justify-center"
-                />
-            </Card>
-        </Card>
-        <Card className='flex flex-row gap-6 text-lg mb-2'>
-            <Card className='flex flex-row gap-2'>
-                Antal afsnit: {1337}
-                <StoryInfoElement
-                    icon={Icons.Nodes}
-                    description={`Recommended age: ${story.targetAge || 6}+`}
-                    isAgeIcon
-                    className="justify-center"
-                />
-            </Card>
-        </Card>
+        <WriterStoryElements story={story} />
     </Card>
   )
 }
