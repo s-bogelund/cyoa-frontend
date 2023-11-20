@@ -1,4 +1,6 @@
 
+import { Edge } from 'reactflow';
+
 import { ExtendedNode } from '@/types/graphTypes';
 
 export const gameInfos: GameInfo[] = [
