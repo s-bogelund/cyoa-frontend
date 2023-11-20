@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo, FC } from 'react';
-import FilterWrapper from './FilterWrapper';
-import { Card } from '@/components/shadcn/ui/card';
+import React from 'react';
+
 import { Icons } from '@/components/icons/Icons';
-import { Label } from '@/components/shadcn/ui/label';
+import { Card } from '@/components/shadcn/ui/card';
 import { Checkbox } from '@/components/shadcn/ui/checkbox';
-import { CheckedState } from '@radix-ui/react-checkbox';
+import { Label } from '@/components/shadcn/ui/label';
+
+import FilterWrapper from './FilterWrapper';
 
 const SkullIcon: React.FC = () => <Icons.Skull className="w-6" />;
 

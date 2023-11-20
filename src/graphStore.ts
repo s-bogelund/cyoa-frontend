@@ -1,3 +1,5 @@
+import 'reactflow/dist/style.css';
+
 import {
 	addEdge,
 	applyEdgeChanges,
@@ -11,8 +13,8 @@ import {
 	OnEdgesChange,
 	OnNodesChange,
 } from 'reactflow';
-import 'reactflow/dist/style.css';
 import { create } from 'zustand';
+
 import { initialEdges, initialNodes } from './utils/dummyData';
 import { loadGraphStateLS, saveGraphStateLS } from './utils/graph';
 

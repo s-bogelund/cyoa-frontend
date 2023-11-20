@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
-import { Card } from '../shadcn/ui/card'
-import { renderDifficultyIcons, renderEncounterType } from './DashboardReaderStorySummary'
-import { Playthrough, Story, StoryNode } from '@/pages/UserDashboardPage'
+
+import { Story, StoryNode } from '@/pages/UserDashboardPage'
+
 import getAgeIcon from '../icons/age-icons'
+import { Card } from '../shadcn/ui/card'
 import StoryInfoElement from '../story-homepage/StoryInfoElement'
-import { Icons } from '../icons/Icons'
+import { renderDifficultyIcons, renderEncounterType } from './DashboardReaderStorySummary'
 
 type ReaderStoryElementsProps = {
     story?: Story,

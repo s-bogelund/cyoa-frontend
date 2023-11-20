@@ -1,23 +1,17 @@
-import ELK, { ElkNode } from 'elkjs/lib/elk.bundled.js';
-import { useCallback, useMemo, useState } from 'react';
+import dagre from 'dagre';
+import { useMemo } from 'react';
 import ReactFlow, {
+	Background,
+	ControlButton,
+	Controls,
 	Edge,
-	applyEdgeChanges,
-	applyNodeChanges,
+	MiniMap,
 	Node,
 	NodeTypes,
-	useReactFlow,
-	NodeChange,
-	MiniMap,
-	Background,
-	Controls,
-	ControlButton,
 } from 'reactflow';
-import BasicStoryNode from '@/components/graph/CustomNode';
-import useStore, { RFState } from '@/graphStore';
 import { shallow } from 'zustand/shallow';
-import { Button } from '@/components/shadcn/ui/button';
-import dagre from 'dagre';
+
+import useStore, { RFState } from '@/graphStore';
 
 const selector = (state: RFState) => ({
 	nodes: state.nodes,

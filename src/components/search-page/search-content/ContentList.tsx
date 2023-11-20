@@ -1,7 +1,9 @@
-import { Card } from '@/components/shadcn/ui/card';
 import React, { FC } from 'react';
-import ContentItem from './ContentItem';
+
+import { Card } from '@/components/shadcn/ui/card';
+
 import SortItem from '../filters/SortItems';
+import ContentItem from './ContentItem';
 
 type ContentListProps = {
 	gameInfos: GameInfo[];

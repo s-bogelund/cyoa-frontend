@@ -1,11 +1,8 @@
-import { Story } from '@/pages/UserDashboardPage'
 import React, { FC } from 'react'
+
+import { Story } from '@/pages/UserDashboardPage'
+
 import { Card } from '../shadcn/ui/card'
-import StoryInfoElement from '../story-homepage/StoryInfoElement'
-import getAgeIcon from '../icons/age-icons'
-import { Textarea } from '../shadcn/ui/textarea'
-import { renderDifficultyIcons } from './DashboardReaderStorySummary'
-import { Icons } from '../icons/Icons'
 import WriterStoryElements from './WriterStoryElements'
 
 // TODO: Parent needs a query that fetches the user's story that has the latest modifications made to them

@@ -1,4 +1,3 @@
-import { Edge, Node } from 'reactflow';
 
 export const gameInfos: GameInfo[] = [
 	{ title: 'Moonlit Sorcery', age: 4, rating: 1.2, completionTime: 1, difficulty: 1 },

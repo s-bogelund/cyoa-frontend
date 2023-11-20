@@ -1,12 +1,11 @@
 import React, { FC } from 'react';
-
-import { Card } from '@/components/shadcn/ui/card';
-
-import FilterWrapper from './FilterWrapper';
-import { SortBy, SortOrder, SortState } from '../search-content/ContentList';
 import { useTranslation } from 'react-i18next';
+
 import Badge from '@/components/generics/Badge';
+import { Card } from '@/components/shadcn/ui/card';
 import { PopoverComponent, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/popover';
+
+import { SortBy, SortOrder, SortState } from '../search-content/ContentList';
 
 type SortItemProps = {
 	className?: string;

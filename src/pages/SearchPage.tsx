@@ -6,9 +6,7 @@ import DifficultyFilter from '@/components/search-page/filters/DifficultyFilter'
 import ContentList from '@/components/search-page/search-content/ContentList';
 import SearchBar from '@/components/search-page/SearchBar';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
-import { Checkbox } from '@/components/shadcn/ui/checkbox';
 import { gameInfos } from '@/utils/dummyData';
-import SortItem from '@/components/search-page/filters/SortItems';
 
 type DifficultyFilter = {
 	easy: boolean;

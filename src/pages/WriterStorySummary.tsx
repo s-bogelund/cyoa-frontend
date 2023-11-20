@@ -1,10 +1,11 @@
+import React, { FC } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { Button } from '@/components/shadcn/ui/button'
-import { Card, CardTitle } from '@/components/shadcn/ui/card'
+import { Card } from '@/components/shadcn/ui/card'
 import { Input } from '@/components/shadcn/ui/input'
 import { Label } from '@/components/shadcn/ui/label'
 import { Textarea } from '@/components/shadcn/ui/textarea'
-import React, { FC } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 type WriterStorySummaryProps = {}
 

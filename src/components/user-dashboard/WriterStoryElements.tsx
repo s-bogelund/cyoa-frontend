@@ -1,10 +1,12 @@
 import React, { FC } from 'react'
+
+import { Story } from '@/pages/UserDashboardPage'
+
+import getAgeIcon from '../icons/age-icons'
+import { Icons } from '../icons/Icons'
 import { Card } from '../shadcn/ui/card'
 import StoryInfoElement from '../story-homepage/StoryInfoElement'
 import { renderDifficultyIcons } from './DashboardReaderStorySummary'
-import getAgeIcon from '../icons/age-icons'
-import { Story } from '@/pages/UserDashboardPage'
-import { Icons } from '../icons/Icons'
 
 type WriterStoryElementsProps = {
     story: Story

@@ -1,9 +1,8 @@
-import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
-import { Edge, Handle, Node, NodeProps, NodeTypes, Position } from 'reactflow';
+import { ChangeEvent, FC, useCallback, useState } from 'react';
+import { Edge, Handle, Node, NodeProps, Position } from 'reactflow';
 
 import useStore from '@/graphStore';
 
-import Tooltip from '../generics/Tooltip';
 import { Button } from '../shadcn/ui/button';
 import { Card, CardHeader } from '../shadcn/ui/card';
 
