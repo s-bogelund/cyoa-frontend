@@ -1,10 +1,10 @@
 import { AiOutlineNodeIndex } from 'react-icons/ai';
-import { PiClock, PiCross, PiSword } from 'react-icons/pi';
-import { SlBubbles } from 'react-icons/sl';
+import { BiEdit } from 'react-icons/bi';
+import { CgAddR } from 'react-icons/cg';
 import { HiDotsVertical } from 'react-icons/hi';
 import { MdQuestionMark } from 'react-icons/md';
-import { CgAddR } from 'react-icons/cg';
-import { BiEdit } from 'react-icons/bi';
+import { PiClock, PiCross, PiSword } from 'react-icons/pi';
+import { SlBubbles } from 'react-icons/sl';
 export type IconProps = { text?: string } & React.HTMLAttributes<SVGElement>;
 
 export const Icons = {

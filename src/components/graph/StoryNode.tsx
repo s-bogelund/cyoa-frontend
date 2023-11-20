@@ -57,7 +57,7 @@ const StoryNode: FC<StoryNodeProps> = ({
 			id: newNodeId,
 			type: 'testNode',
 			data: {
-				title: 'New Node',
+				title: 'Ingen titel',
 				id: newNodeId,
 				storyText: '',
 				encounterType: '',

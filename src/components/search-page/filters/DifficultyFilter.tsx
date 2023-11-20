@@ -1,10 +1,10 @@
+import { CheckedState } from '@radix-ui/react-checkbox';
 import React, { FC, useEffect, useMemo, useState } from 'react';
 
 import { Icons } from '@/components/icons/Icons';
 import { Card } from '@/components/shadcn/ui/card';
 import { Checkbox } from '@/components/shadcn/ui/checkbox';
 import { Label } from '@/components/shadcn/ui/label';
-import { CheckedState } from '@radix-ui/react-checkbox';
 
 import FilterWrapper from './FilterWrapper';
 

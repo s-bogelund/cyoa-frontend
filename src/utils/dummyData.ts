@@ -1,5 +1,6 @@
-import { ExtendedNode } from '@/types/graphTypes';
 import { Edge, Node } from 'reactflow';
+
+import { ExtendedNode } from '@/types/graphTypes';
 
 export const gameInfos: GameInfo[] = [
 	{ title: 'Moonlit Sorcery', age: 4, rating: 1.2, completionTime: 1, difficulty: 1 },

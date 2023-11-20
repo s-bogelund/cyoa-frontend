@@ -1,9 +1,17 @@
+import { Search } from 'lucide-react';
 import React, { ChangeEvent, FC, FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
+import { Edge, useReactFlow } from 'reactflow';
 
+import useStore from '@/graphStore';
 import { ExtendedNode, StoryNodeType } from '@/types/graphTypes';
 
+import AlertDialog from '../generics/AlertDialog';
+import { Icons } from '../icons/Icons';
 import { Button } from '../shadcn/ui/button';
+import { Card } from '../shadcn/ui/card';
+import { Checkbox } from '../shadcn/ui/checkbox';
 import { Input } from '../shadcn/ui/input';
+import { Label } from '../shadcn/ui/label';
 import {
 	Sheet,
 	SheetClose,
@@ -16,15 +24,11 @@ import {
 	SheetTrigger,
 } from '../shadcn/ui/sheet';
 import { Textarea } from '../shadcn/ui/textarea';
-import { Card } from '../shadcn/ui/card';
 import EncounterType from './EncounterType';
-import { Label } from '../shadcn/ui/label';
-import { Checkbox } from '../shadcn/ui/checkbox';
-import AlertDialog from '../generics/AlertDialog';
-import SheetChoiceButton from './SheetChoiceButton';
-import { Edge, useReactFlow } from 'reactflow';
-import useStore from '@/graphStore';
+import SheetAddChoiceButton from './SheetAddChoiceButton';
 import SheetChoiceItem from './SheetChoiceItem';
+
+const EditIcon = Icons.EditNode;
 
 type GraphSheetProps = {
 	onUpdate: (nodeInfo: StoryNodeType) => void;
@@ -42,16 +46,13 @@ const GraphSheet: FC<GraphSheetProps> = ({
 	onChildAdded,
 }) => {
 	const [nodeState, setNodeState] = useState<StoryNodeType>(nodeInfo);
-	const [choiceState, setChoiceState] = useState<StoryNodeType[]>([]);
-	const [choices, setChoices] = useState<StoryNodeType[]>([]);
 	const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 	const addCustomNode = useStore(state => state.addCustomNode);
 	const addCustomEdge = useStore(state => state.addCustomEdge);
-	const getChildren = useStore(state => state.getAllNeighbours);
 	const getEdges = useStore(state => state.getEdgesByNodeId);
 	const getNode = useStore(state => state.getNodeById);
+	const [reRender, setRerender] = useState<boolean>(false);
 	// console.log('neighbours: ', getEdges);
-	const { deleteElements } = useReactFlow();
 	const handleStoryTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		setNodeState(prev => ({ ...prev, storyText: event.target.value }));
 	};
@@ -59,6 +60,7 @@ const GraphSheet: FC<GraphSheetProps> = ({
 	const saveChanges = () => {
 		console.log('Saving changes to node', nodeState);
 		onUpdate(nodeState);
+		setRerender(prev => !prev);
 	};
 
 	const handleTitleUpdate = (event: FormEvent<HTMLInputElement>) => {
@@ -67,7 +69,9 @@ const GraphSheet: FC<GraphSheetProps> = ({
 	};
 
 	const handleEncounterUpdate = (encounter: string) => {
-		setNodeState(prev => ({ ...prev, encounterType: encounter }));
+		const newNodeState = { ...nodeState, encounterType: encounter };
+		setNodeState(newNodeState);
+		saveChanges();
 	};
 
 	const renderChoices = () => {
@@ -141,47 +145,58 @@ const GraphSheet: FC<GraphSheetProps> = ({
 	return (
 		<Sheet>
 			<SheetTrigger asChild>{children}</SheetTrigger>
-			<SheetContent className="flex flex-col gap-9">
-				<SheetHeader>
-					{isEditingTitle ? (
-						<Input
-							autoFocus
-							value={nodeState.title}
-							className="text-2xl font-semibold"
-							onBlur={() => {
-								setIsEditingTitle(false);
-								saveChanges();
-							}}
-							onInput={event => {
-								handleTitleUpdate(event);
-							}}
-							onKeyDown={event => {
-								if (event.key === 'Enter') {
-									event.preventDefault();
+			<SheetContent className="flex flex-col gap-9 pt-16 !w-full">
+				<SheetHeader className="!w-full">
+					<Card className="flex flex-row !w-full">
+						{isEditingTitle ? (
+							<Input
+								autoFocus
+								value={nodeState.title}
+								className="text-4xl !h-14 py-0 my-[4px] font-semibold w-full rounded-r-none"
+								onBlur={() => {
 									setIsEditingTitle(false);
 									saveChanges();
-								}
-							}}
-						/>
-					) : (
-						<SheetTitle onClick={() => setIsEditingTitle(true)} className="text-2xl">
-							{nodeState.title}
-						</SheetTitle>
-					)}
-					<SheetDescription className="text-base">
-						Her kan du ændre i dette afsnit!
-					</SheetDescription>
+								}}
+								onInput={event => {
+									handleTitleUpdate(event);
+								}}
+								onKeyDown={event => {
+									if (event.key === 'Enter') {
+										event.preventDefault();
+										setIsEditingTitle(false);
+										saveChanges();
+									}
+								}}
+								id="title-input"
+							/>
+						) : (
+							<SheetTitle onClick={() => setIsEditingTitle(true)} className="text-4xl w-full">
+								<Card className="border-[4px] p-2 !w-full rounded-r-none mr-[-16px]">
+									{nodeState.title}
+								</Card>
+							</SheetTitle>
+						)}
+						<Label htmlFor="title-input">
+							<div
+								className="flex justify-center items-center rounded-md rounded-l-none bg-slate-700 bg-opacity-50 h-16 w-16 text-4xl"
+								onClick={() => setIsEditingTitle(true)}
+							>
+								{/* <Search width="42px" height="80px" /> */}
+								<EditIcon className="w-10 h-full" />
+							</div>
+						</Label>
+					</Card>
 				</SheetHeader>
 				<Card className="flex flex-col justify-start gap-10 ">
 					<Textarea
-						className="h-48"
+						className="h-48 text-lg"
 						placeholder="Skriv dit historieafsnit her..."
 						value={nodeState.storyText}
 						onChange={handleStoryTextChange}
 						onBlur={saveChanges}
 					/>
 					<div className="flex flex-col w-full gap-2">
-						<Label className="text-xl">Hvad sker der i dette afsnit?</Label>
+						<Label className="text-xl">Hvilken type er det her afsnit?</Label>
 						<EncounterType
 							currentEncounterType={nodeState.encounterType}
 							onSelected={encounter => handleEncounterUpdate(encounter)}
@@ -203,9 +218,9 @@ const GraphSheet: FC<GraphSheetProps> = ({
 							</Label>
 						</div>
 					</div>
-					<div className="flex flex-col gap-2 w-full">
+					<div className="flex flex-col gap-4 w-full">
 						{renderChoices()}
-						{!hasMaxChildren && <SheetChoiceButton isAddNew onClick={() => addChoice()} />}
+						{!hasMaxChildren && <SheetAddChoiceButton onClick={() => addChoice()} />}
 					</div>
 				</Card>
 				<SheetFooter>

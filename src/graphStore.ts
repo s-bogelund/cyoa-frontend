@@ -15,9 +15,9 @@ import {
 } from 'reactflow';
 import { create } from 'zustand';
 
+import { ExtendedNode, StoryNodeType } from './types/graphTypes';
 import { dummyGraph, initialEdges, initialNodes } from './utils/dummyData';
 import { loadGraphStateLS, saveGraphStateLS, toNodeChange } from './utils/graph';
-import { ExtendedNode, StoryNodeType } from './types/graphTypes';
 
 export type RFState = {
 	nodes: ExtendedNode[];
