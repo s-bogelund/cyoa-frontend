@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+
 import { BadgeComponent, BadgeComponentProps } from '../shadcn/ui/badge';
 
 export type BadgeProps = {

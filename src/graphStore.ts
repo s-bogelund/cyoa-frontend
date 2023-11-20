@@ -1,3 +1,5 @@
+import 'reactflow/dist/style.css';
+
 import {
 	addEdge,
 	applyEdgeChanges,
@@ -11,13 +13,14 @@ import {
 	OnEdgesChange,
 	OnNodesChange,
 } from 'reactflow';
-import 'reactflow/dist/style.css';
 import { create } from 'zustand';
-import { initialEdges, initialNodes } from './utils/dummyData';
-import { loadGraphStateLS, saveGraphStateLS } from './utils/graph';
+
+import { dummyGraph, initialEdges, initialNodes } from './utils/dummyData';
+import { loadGraphStateLS, saveGraphStateLS, toNodeChange } from './utils/graph';
+import { ExtendedNode, StoryNodeType } from './types/graphTypes';
 
 export type RFState = {
-	nodes: Node[];
+	nodes: ExtendedNode[];
 	edges: Edge[];
 	onNodesChange: OnNodesChange;
 	onEdgesChange: OnEdgesChange;
@@ -28,15 +31,17 @@ export type RFState = {
 	getEdgesByNodeId: (id: string) => Edge[] | undefined;
 	// highlightNeighbours: (id: string, isHighlighted: boolean) => void;
 	getAllNeighbours: (id: string) => Node[];
+	saveGraphState: () => void;
 };
 
 const useStore = create<RFState>((set, get) => ({
-	nodes: loadGraphStateLS()?.nodes || initialNodes,
-	edges: loadGraphStateLS()?.edges || initialEdges,
+	nodes: loadGraphStateLS()?.nodes || dummyGraph.nodes,
+	edges: loadGraphStateLS()?.edges || dummyGraph.edges,
 	onNodesChange: (changes: NodeChange[]) => {
 		set({
 			nodes: applyNodeChanges(changes, get().nodes),
 		});
+
 		saveGraphStateLS(get());
 	},
 	onEdgesChange: (changes: EdgeChange[]) => {
@@ -78,6 +83,9 @@ const useStore = create<RFState>((set, get) => ({
 			}
 		}
 		return [];
+	},
+	saveGraphState: () => {
+		saveGraphStateLS(get());
 	},
 	// highlightNeighbours: (id: string, isHighlighted: boolean) => {
 	// 	const nodes = get().getAllNeighbours(id);

@@ -1,7 +1,9 @@
 import React, { FC, useState } from 'react';
-import FilterWrapper from './FilterWrapper';
+
 import { Slider } from '@/components/shadcn/ui/slider';
 import { Label } from '@radix-ui/react-label';
+
+import FilterWrapper from './FilterWrapper';
 
 type AgeFilterProps = {
 	onChange: (value: number | boolean) => void;

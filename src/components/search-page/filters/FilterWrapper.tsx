@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
+
 import Badge, { BadgeProps } from '../../generics/Badge';
-import { PopoverComponent, PopoverTrigger, PopoverContent } from '../../shadcn/ui/popover';
+import { PopoverComponent, PopoverContent, PopoverTrigger } from '../../shadcn/ui/popover';
 
 type FilterWrapperProps = {
 	isActive?: boolean;
