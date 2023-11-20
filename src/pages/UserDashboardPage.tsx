@@ -97,7 +97,7 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
             <CardContent className='text-2xl'>
                 Hvad vil du gerne lave i dag?
             </CardContent>
-            <Card className='flex flex-row justify-start p-6 gap-16'>
+            <Card className='flex flex-row justify-evenly p-6'>
                 <Button
                     className='h-32 text-lg w-[30%]'
                     onClick={() => navigate("/search-story")}
