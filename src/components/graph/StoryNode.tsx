@@ -10,6 +10,8 @@ import { Button } from '../shadcn/ui/button';
 import { Card, CardHeader } from '../shadcn/ui/card';
 import { Input } from '../shadcn/ui/input';
 import GraphSheet from './GraphSheet';
+import { IconType } from 'react-icons';
+import { Icons } from '../icons/Icons';
 
 export type StoryNodeProps = {
 	header?: string;
@@ -19,6 +21,11 @@ export type StoryNodeProps = {
 	encounterType?: 'combat' | 'conversation' | 'death';
 	isRoot?: boolean;
 } & NodeProps;
+
+const QuestionIcon: IconType = Icons.QuestionMark;
+const SkullIcon: IconType = Icons.Skull;
+const CombatIcon: IconType = Icons.Sword;
+const SpeechIcon = Icons.Speech;
 
 const StoryNode: FC<StoryNodeProps> = ({
 	id,
@@ -37,6 +44,8 @@ const StoryNode: FC<StoryNodeProps> = ({
 	const onChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
 		console.log(evt.currentTarget.value);
 	}, []);
+
+	console.log('Node data', data);
 
 	const addChildNode = useCallback(() => {
 		if (hasMaxChildren) return;
@@ -109,6 +118,34 @@ const StoryNode: FC<StoryNodeProps> = ({
 		store.saveGraphState();
 	};
 
+	const decideBgColor = () => {
+		switch (data.encounterType) {
+			case 'combat':
+				return 'bg-red-800 bg-opacity-70';
+			case 'conversation':
+				return 'bg-blue-800 bg-opacity-70';
+			case 'death':
+				return 'bg-black';
+			default:
+				return 'bg-gray-700';
+		}
+	};
+
+	const decideIcon = () => {
+		const style = 'absolute w-[60%] h-[60%] bottom-1 object-center text-white opacity-50';
+
+		switch (data.encounterType) {
+			case 'combat':
+				return <CombatIcon className={style} />;
+			case 'conversation':
+				return <SpeechIcon className={style} />;
+			case 'death':
+				return <SkullIcon className={style} />;
+			default:
+				return <QuestionIcon className={style} />;
+		}
+	};
+
 	return (
 		<GraphSheet
 			hasMaxChildren={hasMaxChildren}
@@ -122,24 +159,23 @@ const StoryNode: FC<StoryNodeProps> = ({
 				onMouseLeave={() => setIsHovering(false)}
 				className={`relative flex flex-col justify-start items-center p-2 w-32 h-24 text-black border border-white cursor-pointer ${
 					isHighlighted ? 'border-2 !shadow-md !shadow-slate-500' : ''
-				}`}
+				} ${decideBgColor()}`}
 			>
+				{decideIcon()}
 				<p className="text-center text-sm font-semibold text-white">{data.title}</p>
-				<div
-					className={`h-6 w-4 absolute right-0 top-0 ${
-						isHovering && !hasMaxChildren ? 'flex items-center z-50' : 'hidden'
+
+				<Button
+					variant={'ghost'}
+					className={`w-8 h-8 absolute right-0 bottom-1 text-3xl hover:bg-opacity-40 text-white ${
+						hasMaxChildren ? 'hidden' : ''
 					}`}
+					onClick={e => {
+						e.stopPropagation();
+						addChildNode();
+					}}
 				>
-					<Button
-						className="w-full bottom-0 h-full"
-						onClick={e => {
-							e.stopPropagation();
-							addChildNode();
-						}}
-					>
-						+
-					</Button>
-				</div>
+					+
+				</Button>
 				{!isRoot && <Handle type="target" position={Position.Left} />}
 				<Handle type="source" position={Position.Right} isConnectable={!hasMaxChildren} />
 			</Card>

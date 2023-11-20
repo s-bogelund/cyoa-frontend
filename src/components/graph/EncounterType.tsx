@@ -11,9 +11,9 @@ type EncounterTypeProps = {
 
 const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterType }) => {
 	const sharedStyle = 'w-24 h-24 text-white text-lg relative';
-	const sharedIconStyle = 'w-full h-full opacity-20 absolute stroke-1';
+	const sharedIconStyle = 'w-full h-full opacity-20 absolute ';
 
-	const DeathIcon: IconType = Icons.Death;
+	const QuestionIcon: IconType = Icons.QuestionMark;
 	const SkullIcon: IconType = Icons.Skull;
 	const CombatIcon: IconType = Icons.Sword;
 	const SpeechIcon = Icons.Speech;
@@ -40,7 +40,7 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				variant={currentEncounterType === 'conversation' ? 'default' : 'outline'}
 				onClick={() => onSelected('conversation')}
 			>
-				<p className="z-40">Spilleren snakker</p>
+				<p className="z-40">Historien fortsætter</p>
 
 				<SpeechIcon
 					className={`${sharedIconStyle} ${
@@ -69,7 +69,7 @@ const EncounterType: FC<EncounterTypeProps> = ({ onSelected, currentEncounterTyp
 				variant={currentEncounterType === 'other' ? 'default' : 'outline'}
 			>
 				<p className="z-40">Noget andet</p>
-				<DeathIcon
+				<QuestionIcon
 					className={`${sharedIconStyle} ${
 						currentEncounterType === 'other' ? 'text-black !opacity-50' : ''
 					}`}
