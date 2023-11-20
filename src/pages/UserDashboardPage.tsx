@@ -54,7 +54,7 @@ const dummyPlaythrough: Playthrough = {
     story: {
         id: "123123123",
         title: "Troldmanden fra Ildbjerget",
-        difficulty: "2",
+        difficulty: "3",
         targetAge: 10,
     },
     currentNode: {
@@ -79,8 +79,10 @@ const dummyLatestStory: Story = {
 const UserDashboardPage: FC<UserDashboardProps> = () => {
     const navigate = useNavigate();
 
+    // TODO WIP: Alter layout based on viewport-width (xl: done, l: wip, md: wip)
+
   return (
-    <Card className='flex flex-col w-full h-full mt-8 gap-10 md:w-[65%] lg:w-[80%] xl:w-[60%]'>
+    <Card className='flex flex-col w-full h-full mt-8 gap-10 md:w-[80%] lg:w-[75%] xl:min-w-[1000px] xl:w-[50%] '>
         <Card className='text-center'>
             <CardTitle className='text-4xl mb-8'>
                 Hej {dummyUser.firstName}!
