@@ -1,4 +1,6 @@
 
+import { ExtendedNode } from '@/types/graphTypes';
+
 export const gameInfos: GameInfo[] = [
 	{ title: 'Moonlit Sorcery', age: 4, rating: 1.2, completionTime: 1, difficulty: 1 },
 	{ title: 'Chronicles of the Lost Planet', age: 6, rating: 2.6, completionTime: 2, difficulty: 2 },
@@ -23,68 +25,71 @@ export const gameInfos: GameInfo[] = [
 	{ title: 'Oaths in the Dark', age: 16, rating: 4.6, completionTime: 3, difficulty: 3 },
 ];
 
-const position = { x: 0, y: 0 };
+// Dummy nodes data
+export const nodes: ExtendedNode[] = [
+	{
+		id: '1',
+		type: 'testNode',
+		position: { x: 250, y: 5 },
+		data: {
+			id: '1',
+			title: 'Start',
+			storyText: 'The adventure begins...',
+			encounterType: 'conversation',
+			isCheckpoint: true,
+		},
+	},
+	{
+		id: '2',
+		type: 'testNode',
+		position: { x: 100, y: 100 },
+		data: {
+			id: '2',
+			title: 'Crossroad',
+			storyText: 'You arrive at a crossroad.',
+			encounterType: 'combat',
+			isCheckpoint: false,
+		},
+	},
+	{
+		id: '3',
+		type: 'testNode',
+		position: { x: 400, y: 100 },
+		data: {
+			id: '3',
+			title: 'Old Tree',
+			storyText: 'A mysterious tree whispers secrets of the past.',
+			encounterType: 'conversation',
+			isCheckpoint: false,
+		},
+	},
+	{
+		id: '4',
+		type: 'testNode',
+		position: { x: 250, y: 200 },
+		data: {
+			id: '4',
+			title: 'Cave Entrance',
+			storyText: 'A dark cave looms before you. Dare you enter?',
+			encounterType: 'death',
+			isCheckpoint: false,
+		},
+	},
+];
 
-// export const initialNodes: Node[] = [
-// 	{
-// 		id: '1',
-// 		type: 'testNode',
-// 		data: { label: 'Input' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '2',
-// 		type: 'testNode',
-// 		data: { label: 'Default' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '3',
-// 		type: 'testNode',
-// 		data: { label: 'Output' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '4',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 1' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '5',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 2' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '6',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 3' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '7',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 4' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '8',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 5' },
-// 		position: position,
-// 	},
-// ];
+// Dummy edges data
+const edges: Edge[] = [
+	{ id: 'e1-2', source: '1', target: '2' },
+	{ id: 'e1-3', source: '1', target: '3' },
+	{ id: 'e2-4', source: '2', target: '4' },
+	{ id: 'e3-4', source: '3', target: '4' },
+];
 
-// export const initialEdges: Edge[] = [
-// 	{ id: 'e1-2', source: '1', target: '2' },
-// 	{ id: 'e2-3', source: '2', target: '3' },
-// 	{ id: 'e1-4', source: '1', target: '4' },
-// 	{ id: 'e1-5', source: '1', target: '5' },
-// 	{ id: 'e1-6', source: '1', target: '6' },
-// 	{ id: 'e1-7', source: '1', target: '7' },
-// 	{ id: 'e1-8', source: '1', target: '8' },
-// ] as Edge[];
+// Combine nodes and edges into a graph structure
+export const dummyGraph = {
+	nodes,
+	edges,
+};
 
 export const jsonGraph = {
 	nodes: [

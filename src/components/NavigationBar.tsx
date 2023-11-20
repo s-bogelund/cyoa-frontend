@@ -2,10 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
-	NavigationMenu,
-	NavigationMenuItem,
-	NavigationMenuList,
-	navigationMenuTriggerStyle,
+    NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle
 } from '@/components/shadcn/ui/navigation-menu';
 
 export type NavigationBarElement = {

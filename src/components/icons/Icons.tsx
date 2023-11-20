@@ -1,5 +1,10 @@
 import { AiOutlineNodeIndex } from 'react-icons/ai';
-import { PiClock, PiCross } from 'react-icons/pi';
+import { BiEdit } from 'react-icons/bi';
+import { CgAddR } from 'react-icons/cg';
+import { HiDotsVertical } from 'react-icons/hi';
+import { MdQuestionMark } from 'react-icons/md';
+import { PiClock, PiCross, PiSword } from 'react-icons/pi';
+import { SlBubbles } from 'react-icons/sl';
 export type IconProps = { text?: string } & React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
@@ -85,6 +90,12 @@ export const Icons = {
 	Death: (props: IconProps) => <PiCross {...props} />,
 	Playtime: (props: IconProps) => <PiClock {...props} />,
 	Nodes: (props: IconProps) => <AiOutlineNodeIndex {...props} />,
+	Sword: (props: IconProps) => <PiSword {...props} />,
+	Speech: (props: IconProps) => <SlBubbles {...props} />,
+	MenuDots: (props: IconProps) => <HiDotsVertical {...props} />,
+	QuestionMark: (props: IconProps) => <MdQuestionMark {...props} />,
+	AddNode: (props: IconProps) => <CgAddR {...props} />,
+	EditNode: (props: IconProps) => <BiEdit {...props} />,
 };
 
 export const getDifficultyIcon = (difficulty: number, className: string) => {

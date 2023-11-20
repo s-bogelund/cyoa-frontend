@@ -2,6 +2,7 @@
 import i18n from 'i18next';
 import HttpApi from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
+
 //@ts-ignore
 i18n
 	.use(HttpApi) // if you want to use the http backend

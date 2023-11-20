@@ -1,14 +1,20 @@
+import { Node } from 'reactflow';
+
 type StoryNodeData = {
 	label: string;
 	prose: string;
 	choices: StoryChoice[];
 };
 
-type StoryNode = {
+export type StoryNodeType = {
 	id: string;
-	data: StoryNodeData;
-	position: { x: number; y: number };
+	title: string;
+	storyText: string;
+	encounterType: string;
+	isCheckpoint: boolean;
 };
+
+export type ExtendedNode = Node<StoryNodeType>;
 
 type StoryChoice = {
 	label: string;

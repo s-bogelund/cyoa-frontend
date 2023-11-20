@@ -1,16 +1,27 @@
 import dagre from 'dagre';
-import { useMemo } from 'react';
+import ELK, { ElkNode } from 'elkjs/lib/elk.bundled.js';
+import { Sheet } from 'lucide-react';
+import { useCallback, useMemo, useState } from 'react';
 import ReactFlow, {
+	applyEdgeChanges,
+	applyNodeChanges,
 	Background,
+	BezierEdge,
 	ControlButton,
 	Controls,
 	Edge,
+	EdgeTypes,
 	MiniMap,
 	Node,
+	NodeChange,
 	NodeTypes,
+	SmoothStepEdge,
+	useReactFlow,
 } from 'reactflow';
 import { shallow } from 'zustand/shallow';
 
+import StoryNode from '@/components/graph/StoryNode';
+import { Button } from '@/components/shadcn/ui/button';
 import useStore, { RFState } from '@/graphStore';
 
 const selector = (state: RFState) => ({
@@ -65,8 +76,8 @@ const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 				onEdgesChange={onEdgesChange}
 				fitView
 				nodeTypes={nodeTypes}
-				className="h-[90vh]"
 				proOptions={{ hideAttribution: true }}
+				minZoom={0.25}
 			>
 				<MiniMap
 					zoomable

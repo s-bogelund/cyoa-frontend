@@ -6,6 +6,7 @@ import { Card } from '@/components/shadcn/ui/card';
 import { PopoverComponent, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/popover';
 
 import { SortBy, SortOrder, SortState } from '../search-content/ContentList';
+import FilterWrapper from './FilterWrapper';
 
 type SortItemProps = {
 	className?: string;
