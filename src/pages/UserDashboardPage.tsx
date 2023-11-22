@@ -118,8 +118,8 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
             <CardContent className='text-2xl'>
                 Du kan også fortsætte, hvor du slap
             </CardContent>
-            <Card className='flex justify-evenly'>
-                <Card className='flex flex-col justify-between w-[45%] border-2 p-4'>
+            <Card className='flex flex-col sm:flex-row justify-evenly gap-3'>
+                <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
                         <DashboardReaderStorySummary
                             playthrough={dummyPlaythrough}
@@ -133,7 +133,7 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                     </Button>
                 </Card>
                 {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
-                <Card className='flex flex-col justify-between w-[45%] border-2 p-4'>
+                <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
                         <DashboardWriterStorySummary story={dummyLatestStory} />
                     </Card>
