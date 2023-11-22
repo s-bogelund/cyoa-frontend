@@ -14,6 +14,8 @@ import PlayNode from './pages/PlayNode';
 import SearchPage from './pages/SearchPage';
 import SignUpPage from './pages/SignUpPage';
 import StoryPage from './pages/StoryHomePage';
+import UserDashboardPage from './pages/UserDashboardPage';
+import WriterStorySummary from './pages/WriterStorySummary';
 
 function App() {
 	const { t } = useTranslation();
@@ -35,6 +37,8 @@ function App() {
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="search-story" element={<SearchPage />} />
 				<Route path="graph-test" element={<GraphTestPage nodeTypes={nodeTypes} />} />
+				<Route path='user-dashboard' element={<UserDashboardPage />} />
+				<Route path='writer-story-summary' element={<WriterStorySummary />} />
 				<Route
 					path="*"
 					element={

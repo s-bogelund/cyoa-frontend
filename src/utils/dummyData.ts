@@ -1,4 +1,5 @@
-import { Edge, Node } from 'reactflow';
+
+import { Edge } from 'reactflow';
 
 import { ExtendedNode } from '@/types/graphTypes';
 

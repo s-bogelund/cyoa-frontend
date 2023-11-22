@@ -3,7 +3,6 @@ import React, { FC } from 'react';
 
 import { Icons } from '../icons/Icons';
 import { Card } from '../shadcn/ui/card';
-
 const SkullIcon: React.FC = () => <Icons.Skull className="w-6" />;
 
 type SearchBarProps = {
