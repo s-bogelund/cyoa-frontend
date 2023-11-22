@@ -16,7 +16,7 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
   return (
     <Card>
         {/* This content is rendered on large screens */}
-        <Card className='hidden m-3 items-center gap-3 text-lg lg:flex lg:flex-col'>
+        <Card className='flex flex-col sm:hidden m-3 items-center gap-3 text-lg lg:flex lg:flex-col'>
             <Card className='flex flex-row gap-2'>
                 Sværhedsgrad:
                 <Card className='flex'>
@@ -43,7 +43,7 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
             </Card>
         </Card>
         {/* This content is rendered on small screens */}
-        <Card className='flex flex-col m-3 items-center text-lg gap-3 lg:hidden'>
+        <Card className='hidden sm:flex sm:flex-col m-3 items-center text-lg gap-3 lg:hidden'>
             <Card className='flex flex-row gap-2'>
                 <Card className='flex'>
                     {renderDifficultyIcons(parseInt(story.difficulty))}
