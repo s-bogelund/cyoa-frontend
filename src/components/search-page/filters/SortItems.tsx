@@ -74,12 +74,12 @@ const SortItem: FC<SortItemProps> = ({ className, sortState, onChange }) => {
 						>
 							{t('searchPage.sortOptions.difficulty')}
 						</div>
-						<div
+						{/* <div
 							className="cursor-pointer betterhover:hover:bg-white betterhover:hover:bg-opacity-5 px-2 rounded-sm"
 							onClick={() => handleSortClick('completionTime')}
 						>
 							{t('searchPage.sortOptions.completionTime')}
-						</div>
+						</div> */}
 					</Card>
 				</PopoverContent>
 			</PopoverComponent>

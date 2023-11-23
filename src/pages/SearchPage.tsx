@@ -8,7 +8,6 @@ import DifficultyFilterType from '@/components/search-page/filters/DifficultyFil
 import ContentList from '@/components/search-page/search-content/ContentList';
 import SearchBar from '@/components/search-page/SearchBar';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
-import { gameInfos } from '@/utils/dummyData';
 import { StoryNode } from '@/gql/graphql';
 type DifficultyFilterType = {
 	easy: boolean;
