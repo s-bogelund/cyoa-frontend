@@ -98,11 +98,38 @@ export const Icons = {
 	EditNode: (props: IconProps) => <BiEdit {...props} />,
 };
 
-export const getDifficultyIcon = (difficulty: number, className: string) => {
-	const skulls = Array.from({ length: difficulty }, (_, i) => (
-		<Icons.Skull className={className} key={i} />
-	));
-
+export const getDifficultyIcon = (difficulty: number | string, className: string) => {
+	let skulls: JSX.Element | JSX.Element[];
+	if (typeof difficulty !== 'string') {
+		skulls = Array.from({ length: difficulty }, (_, i) => (
+			<Icons.Skull className={className} key={i} />
+		));
+	} else {
+		switch (difficulty) {
+			case 'easy':
+				skulls = <Icons.Skull className={className} />;
+				break;
+			case 'medium':
+				skulls = (
+					<>
+						<Icons.Skull className={className} />
+						<Icons.Skull className={className} />
+					</>
+				);
+				break;
+			case 'hard':
+				skulls = (
+					<>
+						<Icons.Skull className={className} />
+						<Icons.Skull className={className} />
+						<Icons.Skull className={className} />
+					</>
+				);
+				break;
+			default:
+				skulls = <Icons.Skull className={className} />;
+		}
+	}
 	const DifficultyIcon = () => <>{skulls}</>;
 
 	return DifficultyIcon;

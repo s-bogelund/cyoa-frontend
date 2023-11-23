@@ -1,17 +1,19 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 
 import { Card } from '@/components/shadcn/ui/card';
 
 import SortItem from '../filters/SortItems';
 import ContentItem from './ContentItem';
+import { GetAllStoriesQueryResult } from '@/api/queries/getStories';
+import { Maybe, Story } from '@/gql/graphql';
 
 type ContentListProps = {
-	gameInfos: GameInfo[];
+	stories: Story[];
 	onItemSelected: (id: string) => void;
 	sortState?: SortState;
 };
 
-export type SortBy = 'difficulty' | 'age' | 'rating' | 'completionTime';
+export type SortBy = 'difficulty' | 'targetAge' | 'ratings';
 export type SortOrder = 'ascending' | 'descending';
 
 export type SortState = {
@@ -22,38 +24,55 @@ export type SortState = {
 const ContentList: FC<ContentListProps> = ({
 	onItemSelected: itemSelected,
 	sortState,
-	gameInfos = [],
+	stories,
 }) => {
-	const [sortBy, setSortBy] = React.useState<SortBy>(sortState?.attribute ?? 'rating');
+	const [sortBy, setSortBy] = React.useState<SortBy>(sortState?.attribute ?? 'targetAge');
 	const [sortOrder, setSortOrder] = React.useState<SortOrder>(sortState?.direction ?? 'descending');
 
-	const sortedGameInfos = () => {
-		return gameInfos.sort((a, b) => {
-			if (sortOrder === 'ascending') {
-				if (a[sortBy] < b[sortBy]) return -1;
-				if (a[sortBy] > b[sortBy]) return 1;
-				return 0;
+	const avgRating = useCallback((game: Story): number => {
+		if (!game.ratings || game.ratings.length === 0) return 0;
+		const sum = game.ratings.reduce((acc, curr) => acc + curr.ratingValue, 0);
+		return Number((sum / game.ratings.length).toFixed(2));
+	}, []);
+
+	const sortedGameInfos = useMemo(() => {
+		const orderMultiplier = sortOrder === 'ascending' ? 1 : -1;
+
+		return [...stories].sort((a, b) => {
+			let aValue: any;
+			let bValue: any;
+
+			// Special handling for 'ratings' since it's an array
+			if (sortBy === 'ratings') {
+				aValue = avgRating(a);
+				bValue = avgRating(b);
+			} else if (sortBy === 'difficulty') {
+				aValue = difficultySort(a[sortBy]);
+				bValue = difficultySort(b[sortBy]);
 			} else {
-				if (a[sortBy] > b[sortBy]) return -1;
-				if (a[sortBy] < b[sortBy]) return 1;
-				return 0;
+				aValue = a[sortBy] ?? 0; // Replace `0` with a suitable default value
+				bValue = b[sortBy] ?? 0; // Replace `0` with a suitable default value
 			}
+
+			console.log(aValue, bValue);
+
+			if (aValue < bValue) return -1 * orderMultiplier;
+			if (aValue > bValue) return 1 * orderMultiplier;
+			return 0;
 		});
-	};
+	}, [stories, sortBy, sortOrder, avgRating]);
 
 	const renderListItems = () => {
-		return sortedGameInfos().map((game, index) => (
+		return sortedGameInfos.map((game, index) => (
 			<ContentItem
 				key={`content-${index}`}
-				title={game.title}
-				age={game.age}
-				rating={game.rating}
-				completionTime={game.completionTime}
-				difficulty={game.difficulty}
+				title={game.title ?? ''}
+				targetAge={game.targetAge ?? 4}
+				rating={avgRating(game)}
+				completionTime={Math.round(Math.random() * 10) + 1} // Assuming completionTime is a static value
+				difficulty={game.difficulty ?? 'easy'}
 				id={`content-${index}`}
-				onClick={id => {
-					itemSelected(id);
-				}}
+				onClick={() => itemSelected(`content-${index}`)}
 			/>
 		));
 	};
@@ -73,9 +92,23 @@ const ContentList: FC<ContentListProps> = ({
 				/>
 			</div>
 
-			{gameInfos.length > 0 && renderListItems()}
+			{stories.length > 0 && renderListItems()}
 		</Card>
 	);
 };
 
 export default ContentList;
+
+function difficultySort(difficulty: string | Maybe<string> | undefined) {
+	if (!difficulty) return 0;
+	switch (difficulty) {
+		case 'easy':
+			return 1;
+		case 'medium':
+			return 2;
+		case 'hard':
+			return 3;
+		default:
+			return 0;
+	}
+}

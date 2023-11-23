@@ -1,7 +1,7 @@
 type GameInfo = {
 	title: string;
-	age: number;
+	targetAge: number;
 	rating: number;
 	completionTime: number;
-	difficulty: number;
+	difficulty: string;
 };
