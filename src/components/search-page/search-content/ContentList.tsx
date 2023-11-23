@@ -35,7 +35,7 @@ const ContentList: FC<ContentListProps> = ({
 		return Number((sum / game.ratings.length).toFixed(2));
 	}, []);
 
-	const sortedGameInfos = useMemo(() => {
+	const sortedStories = useMemo(() => {
 		const orderMultiplier = sortOrder === 'ascending' ? 1 : -1;
 
 		return [...stories].sort((a, b) => {
@@ -63,16 +63,16 @@ const ContentList: FC<ContentListProps> = ({
 	}, [stories, sortBy, sortOrder, avgRating]);
 
 	const renderListItems = () => {
-		return sortedGameInfos.map((game, index) => (
+		return sortedStories.map((story, index) => (
 			<ContentItem
-				key={`content-${index}`}
-				title={game.title ?? ''}
-				targetAge={game.targetAge ?? 4}
-				rating={avgRating(game)}
+				key={story.id}
+				title={story.title ?? ''}
+				targetAge={story.targetAge ?? 4}
+				rating={avgRating(story)}
 				completionTime={Math.round(Math.random() * 10) + 1} // Assuming completionTime is a static value
-				difficulty={game.difficulty ?? 'easy'}
-				id={`content-${index}`}
-				onClick={() => itemSelected(`content-${index}`)}
+				difficulty={story.difficulty ?? 'easy'}
+				id={story.id}
+				onClick={() => itemSelected(story.id)}
 			/>
 		));
 	};
