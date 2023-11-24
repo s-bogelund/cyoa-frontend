@@ -1,7 +1,7 @@
 import requests
 import uuid
 import random
-from dummy_data import story_excerpts, fantasy_titles
+from db_seed_data import story_excerpts, fantasy_titles
 from faker import Faker
 
 fake = Faker()
@@ -13,17 +13,15 @@ def graphql_query(query, variables=None):
     if response.status_code == 200:
         return response.json()
     else:
-        # Print or log the response content for debugging
         print("Response content:", response.content)
         raise Exception(f"Query failed with status code {response.status_code}")
-
 
 def add_user(first_name, last_name):
     mutation = """
     mutation AddUser($input: UserAddInput!) {
-    addUser(input: $input) {
-        id
-    }
+        addUser(input: $input) {
+            id
+        }
     }
     """
     variables = {
@@ -38,9 +36,9 @@ def add_user(first_name, last_name):
 def add_story(user_id, title, difficulty, target_age, playtime):
     mutation = """
     mutation AddStory($input: StoryAddInput!) {
-    addStory(input: $input) {
-        id
-    }
+        addStory(input: $input) {
+            id
+        }
     }
     """
     variables = {
@@ -57,9 +55,9 @@ def add_story(user_id, title, difficulty, target_age, playtime):
 def add_story_node(story_id, title, story_text, encounter_type, is_checkpoint):
     mutation = """
     mutation AddStoryNode($input: StoryNodeAddInput!) {
-    addStoryNode(input: $input) {
-        id
-    }
+        addStoryNode(input: $input) {
+            id
+        }
     }
     """
     variables = {
@@ -73,12 +71,29 @@ def add_story_node(story_id, title, story_text, encounter_type, is_checkpoint):
     }
     return graphql_query(mutation, variables)["data"]["addStoryNode"]["id"]
 
+def add_story_node_option(story_node_id, destination_node_id, option_text):
+    mutation = """
+    mutation AddStoryNodeOption($input: StoryNodeOptionAddInput!) {
+        addStoryNodeOption(input: $input) {
+            id
+        }
+    }
+    """
+    variables = {
+        "input": {
+            "storyNodeId": story_node_id,
+            "destinationNode": destination_node_id,
+            "optionText": option_text
+        }
+    }
+    return graphql_query(mutation, variables)["data"]["addStoryNodeOption"]["id"]
+
 def add_rating(user_id, story_id, rating_value):
     mutation = """
     mutation AddRating($input: RatingAddInput!) {
-    addRating(input: $input) {
-        id
-    }
+        addRating(input: $input) {
+            id
+        }
     }
     """
     variables = {
@@ -90,54 +105,44 @@ def add_rating(user_id, story_id, rating_value):
     }
     return graphql_query(mutation, variables)["data"]["addRating"]["id"]
 
-
-
-# Generate fantasy-themed story text
 def generate_fantasy_story_text():
-    # Randomly select a story excerpt
     title, text = random.choice(story_excerpts)
     return title, text
 
-
-# Generate Users
-user_ids = []
-for _ in range(14):
-    first_name = fake.first_name()  # or use fake.first_name() if you want to use Faker
-    last_name = fake.last_name()   # or use fake.last_name()
-    user_id = add_user(first_name, last_name)
-    user_ids.append(user_id)
-
-# Track stories created by each user
-stories_created_by_user = {user_id: [] for user_id in user_ids}
-
-difficulty_levels = ['easy', 'medium', 'hard']
-age_range = [age for age in range(4, 19, 2)]  # Generates a list of even ages from 4 to 18
-
-
-# Generate Stories and Story Nodes
-encounter_types = ['combat', 'conversation', 'death', 'other']
-for user_id in user_ids:
-    story_title = random.choice(fantasy_titles)
-    selected_difficulty = random.choice(difficulty_levels)
-    selected_age = random.choice(age_range)
-    playtime = random.randint(120, 780)  # Random playtime between 2 to 13 hours in minutes
-
-    story_id = add_story(user_id, story_title, selected_difficulty, selected_age, playtime)
-    stories_created_by_user[user_id].append(story_id)
-
-    for _ in range(12):
-        node_title, story_text = generate_fantasy_story_text()
-        encounter_type = random.choice(encounter_types)
-        add_story_node(story_id, node_title, story_text, encounter_type, False)
-
-
-# Generate Ratings
-for user_id in user_ids:
-    for story_id in stories_created_by_user:
-        for created_story_id in stories_created_by_user[story_id]:
-            if created_story_id != story_id:
-                rating_value = random.uniform(1.0, 5.0)
-                add_rating(user_id, created_story_id, rating_value)
-
 if __name__ == "__main__":
+    user_ids = []
+    for _ in range(14):
+        first_name = fake.first_name()
+        last_name = fake.last_name()
+        user_id = add_user(first_name, last_name)
+        user_ids.append(user_id)
+
+    stories_created_by_user = {user_id: [] for user_id in user_ids}
+    difficulty_levels = ['easy', 'medium', 'hard']
+    age_range = [age for age in range(4, 19, 2)]
+
+    for user_id in user_ids:
+        story_title = random.choice(fantasy_titles)
+        selected_difficulty = random.choice(difficulty_levels)
+        selected_age = random.choice(age_range)
+        playtime = random.randint(120, 780)
+
+        story_id = add_story(user_id, story_title, selected_difficulty, selected_age, playtime)
+        stories_created_by_user[user_id].append(story_id)
+
+        story_nodes = []
+        for _ in range(12):
+            node_title, story_text = generate_fantasy_story_text()
+            encounter_type = random.choice(['combat', 'conversation', 'death', 'other'])
+            story_node_id = add_story_node(story_id, node_title, story_text, encounter_type, False)
+            story_nodes.append(story_node_id)
+
+        for i, node_id in enumerate(story_nodes):
+            if i == 0: continue  # Skip the root node
+            options_count = random.randint(2, 4)  # Each node will have 2-4 options
+            for _ in range(options_count):
+                destination_node_id = random.choice([nid for nid in story_nodes if nid != node_id])
+                option_text = fake.sentence(nb_words=6)
+                add_story_node_option(node_id, destination_node_id, option_text)
+
     print("Dummy data generation completed.")
