@@ -69,7 +69,7 @@ const ContentList: FC<ContentListProps> = ({
 				title={story.title ?? ''}
 				targetAge={story.targetAge ?? 4}
 				rating={avgRating(story)}
-				completionTime={Math.round(Math.random() * 10) + 1} // Assuming completionTime is a static value
+				completionTime={story.playtime ?? 8} // Assuming completionTime is a static value
 				difficulty={story.difficulty ?? 'easy'}
 				id={story.id}
 				onClick={() => itemSelected(story.id)}

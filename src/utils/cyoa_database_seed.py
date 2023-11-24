@@ -12,7 +12,10 @@ def graphql_query(query, variables=None):
     if response.status_code == 200:
         return response.json()
     else:
+        # Print or log the response content for debugging
+        print("Response content:", response.content)
         raise Exception(f"Query failed with status code {response.status_code}")
+
 
 def add_user(first_name, last_name):
     mutation = """
@@ -31,7 +34,7 @@ def add_user(first_name, last_name):
     }
     return graphql_query(mutation, variables)["data"]["addUser"]["id"]
 
-def add_story(user_id, title, difficulty, target_age):
+def add_story(user_id, title, difficulty, target_age, playtime):
     mutation = """
     mutation AddStory($input: StoryAddInput!) {
     addStory(input: $input) {
@@ -44,7 +47,8 @@ def add_story(user_id, title, difficulty, target_age):
             "userId": user_id,
             "title": title,
             "difficulty": difficulty,
-            "targetAge": target_age
+            "targetAge": target_age,
+            "playtime": playtime
         }
     }
     return graphql_query(mutation, variables)["data"]["addStory"]["id"]
@@ -165,10 +169,11 @@ age_range = [age for age in range(4, 19, 2)]  # Generates a list of even ages fr
 encounter_types = ['combat', 'conversation', 'death', 'other']
 for user_id in user_ids:
     story_title = random.choice(fantasy_titles)
-    selected_difficulty = random.choice(difficulty_levels)  # Randomly choose difficulty
-    selected_age = random.choice(age_range)  # Randomly choose an even age
+    selected_difficulty = random.choice(difficulty_levels)
+    selected_age = random.choice(age_range)
+    playtime = random.randint(120, 780)  # Random playtime between 2 to 13 hours in minutes
 
-    story_id = add_story(user_id, story_title, selected_difficulty, selected_age)
+    story_id = add_story(user_id, story_title, selected_difficulty, selected_age, playtime)
     stories_created_by_user[user_id].append(story_id)
 
     for _ in range(12):
