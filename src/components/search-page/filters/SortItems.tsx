@@ -6,7 +6,6 @@ import { Card } from '@/components/shadcn/ui/card';
 import { PopoverComponent, PopoverContent, PopoverTrigger } from '@/components/shadcn/ui/popover';
 
 import { SortBy, SortOrder, SortState } from '../search-content/ContentList';
-import FilterWrapper from './FilterWrapper';
 
 type SortItemProps = {
 	className?: string;
@@ -59,15 +58,15 @@ const SortItem: FC<SortItemProps> = ({ className, sortState, onChange }) => {
 					<Card className="flex flex-col w-fit gap-1">
 						<div
 							className="cursor-pointer betterhover:hover:bg-white betterhover:hover:bg-opacity-5 px-2 rounded-sm"
-							onClick={() => handleSortClick('age')}
+							onClick={() => handleSortClick('targetAge')}
 						>
-							{t('searchPage.sortOptions.age')}
+							{t('searchPage.sortOptions.targetAge')}
 						</div>
 						<div
 							className="cursor-pointer betterhover:hover:bg-white betterhover:hover:bg-opacity-5 px-2 rounded-sm"
-							onClick={() => handleSortClick('rating')}
+							onClick={() => handleSortClick('ratings')}
 						>
-							{t('searchPage.sortOptions.rating')}
+							{t('searchPage.sortOptions.ratings')}
 						</div>
 						<div
 							className="cursor-pointer betterhover:hover:bg-white betterhover:hover:bg-opacity-5 px-2 rounded-sm"

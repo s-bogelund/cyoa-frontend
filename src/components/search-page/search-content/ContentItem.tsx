@@ -15,14 +15,14 @@ const TimeIcon = Icons.Playtime;
 
 const ContentItem: FC<ContentItemProps> = ({
 	title,
-	age,
+	targetAge,
 	rating,
 	completionTime,
 	difficulty,
 	onClick,
 	id,
 }) => {
-	const AgeIcon = getAgeIcon(age);
+	const AgeIcon = getAgeIcon(targetAge);
 	const DifficultyIcon = getDifficultyIcon(difficulty, 'w-7 h-7');
 	const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
 
@@ -66,15 +66,15 @@ const ContentItem: FC<ContentItemProps> = ({
 					<RatingIcon className="text-xl w-5 h-5  lg:w-6 lg:h-6" />
 				</div>
 			</Tooltip>
-			<Tooltip text={`Anbefalet alder: ${age}+`}>
+			<Tooltip text={`Anbefalet alder: ${targetAge}+`}>
 				<div className={`flex justify-center items-center gap-1 ${textSize}`}>
 					<AgeIcon />
 				</div>
 			</Tooltip>
-			<Tooltip text={`Tager ca. ${completionTime} timer at gennemføre`}>
-				<div className={`hidden md:flex justify-center items-center gap-1 ${textSize}`}>
+			<Tooltip text={`Tager ca. ${Number((completionTime / 60).toFixed(1))} timer at gennemføre`}>
+				<div className={`hidden md:flex justify-left items-center gap-1 ${textSize}`}>
 					<TimeIcon className="w-7 h-7" />
-					{completionTime} timer
+					{Number((completionTime / 60).toFixed(0))} timer
 				</div>
 			</Tooltip>
 			<Tooltip text={`Sværhedsgrad: ${difficulty}/3`}>

@@ -1,63 +1,42 @@
-// import { gql } from '@apollo/client';
+import { Story } from '@/gql/graphql';
+import { gql } from '@apollo/client';
+import { type } from 'os';
 
-// const GET_STORIES = gql`
-// 	query GetAllStories {
-// 		stories {
-// 			id
-// 			title
-// 			difficulty
-// 			targetAge
-// 			user {
-// 				id
-// 				firstName
-// 				lastName
-// 				# ... other User fields
-// 			}
-// 			storyNodes {
-// 				id
-// 				title
-// 				storyText
-// 				encounterType
-// 				isCheckpoint
-// 				storyNodeOptions {
-// 					id
-// 					destinationNode
-// 					optionText
-// 					condition
-// 					# ... other StoryNodeOption fields
-// 				}
-// 				combatDatas {
-// 					id
-// 					diceType
-// 					isDiceRollRequired
-// 					# ... other CombatData fields
-// 				}
-// 				storyNodeDeathStatistics {
-// 					id
-// 					deathCount
-// 					# ... other StoryNodeDeathStatistic fields
-// 				}
-// 				visitedStoryNodes {
-// 					id
-// 					previousNode
-// 					# ... other VisitedStoryNode fields
-// 				}
-// 			}
-// 			ratings {
-// 				id
-// 				ratingValue
-// 				# ... other Rating fields
-// 			}
-// 			playthroughs {
-// 				id
-// 				currentNode
-// 				isOngoing
-// 				isCompleted
-// 				isPlayerDead
-// 				# ... other Playthrough fields
-// 			}
-// 		}
-// 	}
-// `;
+export type GetAllStoriesQueryResult = {
+	stories: Story[];
+};
 
-// export default GET_STORIES;
+const GET_ALL_STORIES = gql`
+	query GetAllStories {
+		stories {
+			id
+			title
+			difficulty
+			targetAge
+			playtime
+			user {
+				id
+				firstName
+				lastName
+			}
+			storyNodes {
+				id
+				title
+				storyText
+			}
+			ratings {
+				ratingValue
+			}
+			playthroughs {
+				id
+				isOngoing
+				isCompleted
+			}
+			createdAt
+			modifiedAt
+			isDeleted
+		}
+	}
+`;
+
+export default GET_ALL_STORIES;

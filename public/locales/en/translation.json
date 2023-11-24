@@ -14,8 +14,8 @@
 		"sortOptions": {
 			"completionTime": "Completion Time",
 			"difficulty": "Difficulty",
-			"age": "Age",
-			"rating": "Rating",
+			"targetAge": "Age",
+			"ratings": "Rating",
 			"descending": "Descending",
 			"ascending": "Ascending"
 		}
