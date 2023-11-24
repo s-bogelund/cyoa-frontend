@@ -37,7 +37,9 @@ export type Story = {
     id: string,
     title: string,
     difficulty: string,
-    targetAge: number
+    targetAge: number,
+    playtime: number,
+    description: string
 }
 
 // TODO: Playthrough should instead use the story and storynode id's and then query for the respective story and storynode to put in the component
@@ -51,19 +53,23 @@ export type Playthrough = {
     isPlayerDead: boolean
 }
 
-const dummyPlaythrough: Playthrough = {
+
+
+const dummyPlaythrough: Playthrough = {     // Query for playthrough with latest "Modified"
     story: {
         id: "123123123",
         title: "Troldmanden fra Ildbjerget",
         difficulty: "3",
         targetAge: 10,
+        playtime: 4,
+        description: "Her er der en beskrivelse"
     },
     currentNode: {
         id: "111",
-            title: "Et samtale-afsnit",
-            storyText: "Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer.",
-            encounterType: "Samtale",
-            isCheckpoint: true
+        title: "Et samtale-afsnit",
+        storyText: "Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer.",
+        encounterType: "Samtale",
+        isCheckpoint: true
     },
     isOngoing: true,
     isCompleted: false,
@@ -71,16 +77,16 @@ const dummyPlaythrough: Playthrough = {
 }
 
 const dummyLatestStory: Story = {
-    id: "3333333322",
+    id: "7c493899-284d-4c9c-b3a8-ea4246b9d1c6",
     title: "Dødens Labyrint",
     difficulty: "3",
-    targetAge: 16
+    targetAge: 16,
+    playtime: 4,
+    description: "Her er der en beskrivelse"
 }
 
 const UserDashboardPage: FC<UserDashboardProps> = () => {
     const navigate = useNavigate();
-
-    // TODO WIP: Alter layout based on viewport-width (xl: done, l: wip, md: wip)
 
   return (
     <Card className='flex flex-col w-full h-full mt-8 gap-10 md:w-[80%] lg:w-[75%] xl:min-w-[1000px] xl:w-[50%] '>
@@ -101,14 +107,14 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
             <Card className='flex flex-row justify-evenly p-6'>
                 <Button
                     className='h-32 text-lg w-[30%]'
-                    onClick={() => navigate("/search-story")}
+                    onClick={() => navigate("/browse")}
                 >
                     Finde en ny historie at læse
                 </Button>
                 {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
                 <Button
                     className='h-32 text-lg w-[30%]'
-                    onClick={() => navigate("/graph-test")}
+                    onClick={() => navigate("/writer-summary")}
                 >
                     Skrive en ny historie
                 </Button>
@@ -127,7 +133,7 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
-                        onClick={() => navigate("/search-story")}
+                        onClick={() => navigate("/playnode")}
                         >
                         Fortsæt historien
                     </Button>
@@ -139,7 +145,10 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
-                        onClick={() => navigate("/writer-story-summary")}
+                        onClick={() => navigate({
+                            pathname: "/writer-summary",
+                            search: `?storyId=${dummyLatestStory.id}`
+                        })}
                         >
                         Skriv videre
                     </Button>

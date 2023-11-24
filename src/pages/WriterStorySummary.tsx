@@ -9,6 +9,8 @@ import { Textarea } from '@/components/shadcn/ui/textarea'
 
 type WriterStorySummaryProps = {}
 
+// TODO: Indsæt GQL-query der finder en story baseret på URL parameters (React Router har helt sikkert en hook hertil!)
+
 const WriterStorySummary: FC<WriterStorySummaryProps> = () => {
     const navigate = useNavigate();
   return (
@@ -40,7 +42,11 @@ const WriterStorySummary: FC<WriterStorySummaryProps> = () => {
         <Button
             className='w-[80%] text-lg'
             // TODO: Below onClick should take a slug of the story that is being edited
-            onClick={() => navigate("/graph-test")}
+            onClick={() => {
+                // Her kan man fire den mutation der gemmer den nye beskrivelse og sådan
+                // Der skal nok kigges på om der er query parameters eller ej, for hvis der ikke er, så skal der oprettes en ny historie
+                navigate("/graph-test")
+            }}
         >
             Gå til historien
         </Button>
