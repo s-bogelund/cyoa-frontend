@@ -1,22 +1,22 @@
 import React, { FC } from 'react'
 
-import { Story, StoryNode } from '@/pages/UserDashboardPage'
-
 import getAgeIcon from '../icons/age-icons'
 import { Card } from '../shadcn/ui/card'
 import StoryInfoElement from '../story-homepage/StoryInfoElement'
 import { renderDifficultyIcons, renderEncounterType } from './DashboardReaderStorySummary'
+import { GetStoryForSummaryQueryResult } from '@/api/queries/getStoryForSummary'
+import { GetStoryNodeForSummaryQueryResult } from '@/api/queries/getStoryNodeForSummary'
+import { Story, StoryNode } from '@/gql/graphql'
+import { Maybe } from 'graphql/jsutils/Maybe'
 
 type ReaderStoryElementsProps = {
-    story?: Story,
-    storyNode?: StoryNode
+    story?: Story | undefined,
+    storyNode?: StoryNode | undefined
 }
 
 const ReaderStoryElements: FC<ReaderStoryElementsProps> = ({ story, storyNode }) => {
     const storyDifficulty: number = story?.difficulty ? parseInt(story?.difficulty) : 0;
 
-    
-      
   return (
     <Card>
         {/* Content below is shown on large screens */}

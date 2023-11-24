@@ -45,7 +45,7 @@ const WriterStorySummary: FC<WriterStorySummaryProps> = () => {
             onClick={() => {
                 // Her kan man fire den mutation der gemmer den nye beskrivelse og sådan
                 // Der skal nok kigges på om der er query parameters eller ej, for hvis der ikke er, så skal der oprettes en ny historie
-                navigate("/graph-test")
+                navigate("/graph")
             }}
         >
             Gå til historien

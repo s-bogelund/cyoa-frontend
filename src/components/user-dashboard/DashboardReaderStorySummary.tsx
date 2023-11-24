@@ -1,15 +1,17 @@
 import React, { FC } from 'react'
 
-import { Playthrough, Story, StoryNode } from '@/pages/UserDashboardPage'
-
 import { Icons } from '../icons/Icons'
 import { Card } from '../shadcn/ui/card'
 import { Textarea } from '../shadcn/ui/textarea'
 import StoryInfoElement from '../story-homepage/StoryInfoElement'
 import ReaderStoryElements from './ReaderStoryElements'
+import GET_STORY_FOR_SUMMARY, { GetStoryForSummaryQueryResult } from '@/api/queries/getStoryForSummary'
+import { useQuery } from '@apollo/client'
+import GET_STORY_NODE_FOR_SUMMARY, { GetStoryNodeForSummaryQueryResult } from '@/api/queries/getStoryNodeForSummary'
 
 type DashboardReaderStorySummaryProps = {
-    playthrough?: Playthrough,
+    storyId: string,
+    currentNodeId: string
 }
 
 export const renderDifficultyIcons = (input: number) => {
@@ -47,30 +49,22 @@ export const renderEncounterType = (input: string) => {
   }
 }
 
-const story: Story = {
-  id: "123123123",
-  title: "Troldmanden fra Ildbjerget",
-  difficulty: "3",
-  targetAge: 10,
-  playtime: 4,
-  description: "Her er der en beskrivelse"
-}
-
-const currentNode: StoryNode = {
-  id: "111",
-  title: "Et samtale-afsnit",
-  storyText: "Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer.",
-  encounterType: "Samtale",
-  isCheckpoint: true
-}
-
 // TODO: Create query that fetches the story and current node of the playthrough.
 // TODO: Change parameters in the code to fit the new story and currentNode
 
-const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ playthrough }) => {
+const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ storyId, currentNodeId }) => {
 
-  const story = playthrough?.story;   // Replace with query, that is based on URL-parameters
-  const currentNode = playthrough?.currentNode;   // Replace with query, that is based on URL-parameters
+	const { loading: loadingStory, error: errorStory, data: dataStory } = useQuery<GetStoryForSummaryQueryResult>(
+    GET_STORY_FOR_SUMMARY,
+    {variables: { idInput: storyId }}
+  );
+  
+  const {loading: loadingCurrentNode, error: errorCurrentNode, data: dataCurrentNode} = useQuery<GetStoryNodeForSummaryQueryResult>(
+    GET_STORY_NODE_FOR_SUMMARY,
+    {variables: { idInput: currentNodeId }}
+  );
+  
+  const currentNodeText = dataCurrentNode?.storyNode.storyText ? dataCurrentNode?.storyNode.storyText : "Ingen tekst.";
   
   // Fire query that fetches story and currentNode based on ID's given from playthrough
   // Query should replace dummy data
@@ -78,12 +72,12 @@ const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ pla
   return (
     <Card className='flex flex-col border-2 items-center p-2'>
       <Card className='h-fit text-2xl mb-3'>
-        {story?.title}
+        {dataStory?.story.title}
       </Card>
-      <ReaderStoryElements story={story} storyNode={currentNode} />
+      <ReaderStoryElements story={dataStory?.story.title} storyNode={dataCurrentNode?.storyNode} />
       <Card className='flex gap-6 text-lg w-full'>
         <Textarea
-          value={currentNode?.storyText}
+          value={currentNodeText}
           readOnly
         />
       </Card>
