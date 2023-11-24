@@ -71,10 +71,10 @@ const ContentItem: FC<ContentItemProps> = ({
 					<AgeIcon />
 				</div>
 			</Tooltip>
-			<Tooltip text={`Tager ca. ${completionTime} timer at gennemføre`}>
-				<div className={`hidden md:flex justify-center items-center gap-1 ${textSize}`}>
+			<Tooltip text={`Tager ca. ${Number((completionTime / 60).toFixed(1))} timer at gennemføre`}>
+				<div className={`hidden md:flex justify-left items-center gap-1 ${textSize}`}>
 					<TimeIcon className="w-7 h-7" />
-					{completionTime} timer
+					{Number((completionTime / 60).toFixed(0))} timer
 				</div>
 			</Tooltip>
 			<Tooltip text={`Sværhedsgrad: ${difficulty}/3`}>

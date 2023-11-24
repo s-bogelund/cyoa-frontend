@@ -13,7 +13,7 @@ type ContentListProps = {
 	sortState?: SortState;
 };
 
-export type SortBy = 'difficulty' | 'targetAge' | 'ratings';
+export type SortBy = 'difficulty' | 'targetAge' | 'ratings' | 'completionTime';
 export type SortOrder = 'ascending' | 'descending';
 
 export type SortState = {
@@ -28,6 +28,7 @@ const ContentList: FC<ContentListProps> = ({
 }) => {
 	const [sortBy, setSortBy] = React.useState<SortBy>(sortState?.attribute ?? 'targetAge');
 	const [sortOrder, setSortOrder] = React.useState<SortOrder>(sortState?.direction ?? 'descending');
+	console.log('Stories', stories);
 
 	const avgRating = useCallback((game: Story): number => {
 		if (!game.ratings || game.ratings.length === 0) return 0;
@@ -49,12 +50,13 @@ const ContentList: FC<ContentListProps> = ({
 			} else if (sortBy === 'difficulty') {
 				aValue = difficultySort(a[sortBy]);
 				bValue = difficultySort(b[sortBy]);
+			} else if (sortBy === 'completionTime') {
+				aValue = a.playtime;
+				bValue = b.playtime;
 			} else {
 				aValue = a[sortBy] ?? 0; // Replace `0` with a suitable default value
 				bValue = b[sortBy] ?? 0; // Replace `0` with a suitable default value
 			}
-
-			console.log(aValue, bValue);
 
 			if (aValue < bValue) return -1 * orderMultiplier;
 			if (aValue > bValue) return 1 * orderMultiplier;
@@ -63,13 +65,13 @@ const ContentList: FC<ContentListProps> = ({
 	}, [stories, sortBy, sortOrder, avgRating]);
 
 	const renderListItems = () => {
-		return sortedStories.map((story, index) => (
+		return sortedStories.map(story => (
 			<ContentItem
 				key={story.id}
 				title={story.title ?? ''}
 				targetAge={story.targetAge ?? 4}
 				rating={avgRating(story)}
-				completionTime={story.playtime ?? 8} // Assuming completionTime is a static value
+				completionTime={story.playtime ?? 480}
 				difficulty={story.difficulty ?? 'easy'}
 				id={story.id}
 				onClick={() => itemSelected(story.id)}

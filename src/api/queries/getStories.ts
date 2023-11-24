@@ -13,6 +13,7 @@ const GET_ALL_STORIES = gql`
 			title
 			difficulty
 			targetAge
+			playtime
 			user {
 				id
 				firstName
