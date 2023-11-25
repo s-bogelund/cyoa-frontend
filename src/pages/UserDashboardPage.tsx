@@ -62,7 +62,7 @@ const dummyPlaythrough: Playthrough = {     // Query for playthrough with latest
     isDeleted: false,
     currentNode: "f24c1777-3311-4a39-8662-27dd7190e2cd",
     isPlayerDead: false,
-    storyId: "26d9eb19-83a7-4b89-8b66-7b2e8af3f092",
+    storyId: "8e3cd742-dce3-48f8-b101-cd80ead59df9",
     userId: "2c7418c1-eb16-4ed3-8c45-539bfbff224d",
     createdAt: new Date(),
     id: "2c7418c1-eb16-4ed3-8c45-539bfbff2211",     // This is a bogus value

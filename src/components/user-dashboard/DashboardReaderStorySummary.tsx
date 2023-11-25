@@ -20,13 +20,6 @@ const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ cur
     GET_NODE_AND_STORY_FOR_SUMMARY,
     { variables: { idInput: currentNodeId }}
   );
-
-  // TODO: Double queries can be merged, by filtering the resulting data array, if all storynodes are queried
-  // TODO: This way I will only need a single query
-  
-  
-  // Fire query that fetches story and currentNode based on ID's given from playthrough
-  // Query should replace dummy data
   
   if (loading ) {
     console.log("loading", loading)

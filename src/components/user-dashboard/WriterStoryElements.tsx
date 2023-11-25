@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
 
 import { Story } from '@/pages/UserDashboardPage'
+import { renderDifficultyIcons } from '@/utils/renderDifficultyIcons'
 
 import getAgeIcon from '../icons/age-icons'
 import { Icons } from '../icons/Icons'
 import { Card } from '../shadcn/ui/card'
 import StoryInfoElement from '../story-homepage/StoryInfoElement'
-import { renderDifficultyIcons } from './DashboardReaderStorySummary'
 
 type WriterStoryElementsProps = {
     story: Story
@@ -20,7 +20,7 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
             <Card className='flex flex-row gap-2'>
                 Sværhedsgrad:
                 <Card className='flex'>
-                    {renderDifficultyIcons(parseInt(story.difficulty))}
+                    {renderDifficultyIcons(story.difficulty)}
                 </Card>
             </Card>
             <Card className='flex flex-row gap-2'>
@@ -46,7 +46,7 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
         <Card className='hidden sm:flex sm:flex-col m-3 items-center text-lg gap-3 lg:hidden'>
             <Card className='flex flex-row gap-2'>
                 <Card className='flex'>
-                    {renderDifficultyIcons(parseInt(story.difficulty))}
+                    {renderDifficultyIcons(story.difficulty)}
                 </Card>
             </Card>
             <Card className='flex flex-row w-full gap-8'>
