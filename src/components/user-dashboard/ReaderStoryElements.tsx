@@ -10,12 +10,14 @@ import { Story, StoryNode } from '@/gql/graphql'
 import { Maybe } from 'graphql/jsutils/Maybe'
 
 type ReaderStoryElementsProps = {
-    story?: Story | undefined,
-    storyNode?: StoryNode | undefined
+    story?: GetStoryForSummaryQueryResult | undefined,
+    storyNode?: GetStoryNodeForSummaryQueryResult | undefined
 }
 
 const ReaderStoryElements: FC<ReaderStoryElementsProps> = ({ story, storyNode }) => {
-    const storyDifficulty: number = story?.difficulty ? parseInt(story?.difficulty) : 0;
+    const summaryStory = story?.story;
+    const summaryNode = storyNode?.storyNode;
+    const storyDifficulty: number = summaryStory?.difficulty ? parseInt(summaryStory?.difficulty) : 0;
 
   return (
     <Card>
@@ -28,18 +30,18 @@ const ReaderStoryElements: FC<ReaderStoryElementsProps> = ({ story, storyNode })
             <Card className='flex flex-row gap-2 text-lg'>
                 Alder:
                 <StoryInfoElement
-                icon={getAgeIcon(story?.targetAge ? story?.targetAge : 4)}
-                description={`Recommended age: ${story?.targetAge || 6}+`}
+                icon={getAgeIcon(summaryStory?.targetAge ? summaryStory?.targetAge : 4)}
+                description={`Recommended age: ${summaryStory?.targetAge || 6}+`}
                 isAgeIcon
                 className="justify-center"
                 />
             </Card>
             <Card className='flex flex-row gap-6 text-lg mb-2'>
                 <Card>
-                    {renderEncounterType(storyNode?.encounterType ? storyNode?.encounterType : "")}
+                    {renderEncounterType(summaryNode?.encounterType ? summaryNode?.encounterType : "")}
                 </Card>
                 <Card className='flex md:hidden lg:flex'>
-                    {storyNode?.title}
+                    {summaryNode?.title}
                 </Card>
             </Card>
         </Card>
@@ -50,13 +52,13 @@ const ReaderStoryElements: FC<ReaderStoryElementsProps> = ({ story, storyNode })
             </Card>
             <Card className='flex flex-row w-full justify-between'>
                 <StoryInfoElement
-                icon={getAgeIcon(story?.targetAge ? story?.targetAge : 4)}
-                description={`Recommended age: ${story?.targetAge || 6}+`}
+                icon={getAgeIcon(summaryStory?.targetAge ? summaryStory?.targetAge : 4)}
+                description={`Recommended age: ${summaryStory?.targetAge || 6}+`}
                 isAgeIcon
                 className="justify-center"
                 />
                 <Card>
-                    {renderEncounterType(storyNode?.encounterType ? storyNode?.encounterType : "")}
+                    {renderEncounterType(summaryNode?.encounterType ? summaryNode?.encounterType : "")}
                 </Card>
             </Card>
         </Card>
