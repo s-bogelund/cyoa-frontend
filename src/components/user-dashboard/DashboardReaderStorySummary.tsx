@@ -1,12 +1,10 @@
 import { useQuery } from '@apollo/client'
-import React, { FC } from 'react'
+import { FC } from 'react'
 
 import GET_NODE_AND_STORY_FOR_SUMMARY, { GetNodeAndStoryForSummaryQueryResult } from '@/api/queries/getNodeAndStoryForSummary'
 
-import { Icons } from '../icons/Icons'
 import { Card } from '../shadcn/ui/card'
 import { Textarea } from '../shadcn/ui/textarea'
-import StoryInfoElement from '../story-homepage/StoryInfoElement'
 import ReaderStoryElements from './ReaderStoryElements'
 
 type DashboardReaderStorySummaryProps = {

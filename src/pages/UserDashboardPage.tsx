@@ -121,7 +121,6 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                 <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
                         <DashboardReaderStorySummary
-                            storyId={dummyPlaythrough.storyId}
                             currentNodeId={dummyPlaythrough.currentNode}
                         />
                     </Card>

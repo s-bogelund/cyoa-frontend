@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import GET_ALL_STORIES, { GetAllStoriesQueryResult } from '@/api/queries/getStories';
 import AgeFilter from '@/components/search-page/filters/AgeFilter';
@@ -8,7 +8,7 @@ import DifficultyFilter from '@/components/search-page/filters/DifficultyFilter'
 import ContentList from '@/components/search-page/search-content/ContentList';
 import SearchBar from '@/components/search-page/SearchBar';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
-import { Story, StoryNode } from '@/gql/graphql';
+import { Story } from '@/gql/graphql';
 
 type DifficultyFilterType = {
 	easy: boolean;
