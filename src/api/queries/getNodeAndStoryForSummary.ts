@@ -3,7 +3,7 @@ import { gql } from "@apollo/client";
 import { StoryNode } from "@/gql/graphql";
 
 export type GetNodeAndStoryForSummaryQueryResult = {
-	storyNode: StoryNode;
+	storyNodes: StoryNode[];
 };
 
 const GET_NODE_AND_STORY_FOR_SUMMARY = gql`

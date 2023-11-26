@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import GET_NODE_AND_STORY_FOR_SUMMARY, { GetNodeAndStoryForSummaryQueryResult } from '@/api/queries/getNodeAndStoryForSummary'
 
@@ -15,13 +15,12 @@ type DashboardReaderStorySummaryProps = {
 // TODO: Change parameters in the code to fit the new story and currentNode
 
 const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ currentNodeId }) => {
-
-	const { loading, error, data } = useQuery<GetNodeAndStoryForSummaryQueryResult>(
+  const { loading, error, data } = useQuery<GetNodeAndStoryForSummaryQueryResult>(
     GET_NODE_AND_STORY_FOR_SUMMARY,
     { variables: { idInput: currentNodeId }}
   );
   
-  if (loading ) {
+  if (loading) {
     console.log("loading", loading)
     return <p>Loading...</p>;
   } 
@@ -30,16 +29,16 @@ const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ cur
     return <p>Error: {error?.message}</p>;
   }
   if (data) {
-    console.log("Component should render", data)
+    const storyNode = data.storyNodes[0];
     return (
       <Card className='flex flex-col border-2 items-center p-2'>
       <Card className='h-fit text-2xl mb-3'>
-        {data.storyNode.story?.title}
+        {data.storyNodes[0].story?.title}
       </Card>
-      <ReaderStoryElements storyNode={data.storyNode} />
+      <ReaderStoryElements storyNode={storyNode} />
       <Card className='flex gap-6 text-lg w-full'>
         <Textarea
-          value={"tekst her"}
+          value={storyNode.storyText ? storyNode.storyText : ""}
           readOnly
           />
       </Card>
