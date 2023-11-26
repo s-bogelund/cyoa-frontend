@@ -2,11 +2,11 @@ import { gql } from "@apollo/client";
 
 import { StoryNode } from "@/gql/graphql";
 
-export type GetNodeAndStoryForSummaryQueryResult = {
+export type GetNodeForReaderSummaryQueryResult = {
 	storyNodes: StoryNode[];
 };
 
-const GET_NODE_AND_STORY_FOR_SUMMARY = gql`
+const GET_NODE_FOR_READER_SUMMARY = gql`
 	query GetNodeAndStoryForSummary($idInput: UUID) {
 		storyNodes (where: {id: {eq: $idInput}}) {
 			id
@@ -23,4 +23,4 @@ const GET_NODE_AND_STORY_FOR_SUMMARY = gql`
 	}
 `;
 
-export default GET_NODE_AND_STORY_FOR_SUMMARY;
+export default GET_NODE_FOR_READER_SUMMARY;

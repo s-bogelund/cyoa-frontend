@@ -72,7 +72,7 @@ const dummyPlaythrough: Playthrough = {     // Query for playthrough with latest
 const dummyLatestStory: Story = {
     id: "7c493899-284d-4c9c-b3a8-ea4246b9d1c6",
     title: "Dødens Labyrint",
-    difficulty: "3",
+    difficulty: "medium",
     targetAge: 16,
     playtime: 4,
     description: "Her er der en beskrivelse"

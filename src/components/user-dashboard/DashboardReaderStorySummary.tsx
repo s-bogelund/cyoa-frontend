@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client'
 import { FC, useEffect } from 'react'
 
-import GET_NODE_AND_STORY_FOR_SUMMARY, { GetNodeAndStoryForSummaryQueryResult } from '@/api/queries/getNodeAndStoryForSummary'
 
 import { Card } from '../shadcn/ui/card'
 import { Textarea } from '../shadcn/ui/textarea'
 import ReaderStoryElements from './ReaderStoryElements'
+import GET_NODE_FOR_READER_SUMMARY, { GetNodeForReaderSummaryQueryResult } from '@/api/queries/getNodeForReaderSummary'
 
 type DashboardReaderStorySummaryProps = {
     currentNodeId: string
@@ -15,8 +15,8 @@ type DashboardReaderStorySummaryProps = {
 // TODO: Change parameters in the code to fit the new story and currentNode
 
 const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ currentNodeId }) => {
-  const { loading, error, data } = useQuery<GetNodeAndStoryForSummaryQueryResult>(
-    GET_NODE_AND_STORY_FOR_SUMMARY,
+  const { loading, error, data } = useQuery<GetNodeForReaderSummaryQueryResult>(
+    GET_NODE_FOR_READER_SUMMARY,
     { variables: { idInput: currentNodeId }}
   );
   
