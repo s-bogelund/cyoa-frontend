@@ -22,7 +22,6 @@ const ReaderStoryElements: FC<ReaderStoryElementsProps> = ({ storyNode }) => {
     } else {
         difficultyJSX = renderDifficultyIcons("");
     }
-    
 
   return (
     <Card>

@@ -70,7 +70,7 @@ const dummyPlaythrough: Playthrough = {     // Query for playthrough with latest
 }
 
 const dummyLatestStory: Story = {
-    id: "7c493899-284d-4c9c-b3a8-ea4246b9d1c6",
+    id: "00f2e5e0-0db5-47fa-99ef-9b4da772f104",
     title: "Dødens Labyrint",
     difficulty: "medium",
     targetAge: 16,
@@ -134,7 +134,7 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                 {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
                 <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
-                        <DashboardWriterStorySummary story={dummyLatestStory} />
+                        <DashboardWriterStorySummary storyId={dummyLatestStory.id} />
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'

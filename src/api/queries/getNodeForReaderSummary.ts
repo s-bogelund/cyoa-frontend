@@ -7,7 +7,7 @@ export type GetNodeForReaderSummaryQueryResult = {
 };
 
 const GET_NODE_FOR_READER_SUMMARY = gql`
-	query GetNodeAndStoryForSummary($idInput: UUID) {
+	query GetNodeForReaderSummary($idInput: UUID) {
 		storyNodes (where: {id: {eq: $idInput}}) {
 			id
 			title

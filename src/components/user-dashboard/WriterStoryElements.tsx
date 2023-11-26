@@ -1,18 +1,26 @@
 import React, { FC } from 'react'
 
-import { Story } from '@/pages/UserDashboardPage'
 import { renderDifficultyIcons } from '@/utils/renderDifficultyIcons'
 
 import getAgeIcon from '../icons/age-icons'
 import { Icons } from '../icons/Icons'
 import { Card } from '../shadcn/ui/card'
 import StoryInfoElement from '../story-homepage/StoryInfoElement'
+import { Story } from '@/gql/graphql'
 
 type WriterStoryElementsProps = {
     story: Story
 }
 
 const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
+    let difficultyJSX;
+
+    if (story?.difficulty) {
+        difficultyJSX = renderDifficultyIcons(story?.difficulty ? story?.difficulty : "");
+    } else {
+        difficultyJSX = renderDifficultyIcons("");
+    }
+
   return (
     <Card>
         {/* This content is rendered on large screens */}
@@ -20,7 +28,7 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
             <Card className='flex flex-row gap-2'>
                 Sværhedsgrad:
                 <Card className='flex'>
-                    {renderDifficultyIcons(story.difficulty)}
+                    {difficultyJSX}
                 </Card>
             </Card>
             <Card className='flex flex-row gap-2'>
@@ -33,10 +41,10 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
                 />
             </Card>
             <Card className='flex flex-row gap-2'>
-                Antal afsnit: {1337}
+                Antal afsnit: {story.storyNodes?.length}
                 <StoryInfoElement
                     icon={Icons.Nodes}
-                    description={`Number of nodes in story`}
+                    description={`Antal afsnit i en historie`}
                     isAgeIcon
                     className="justify-center"
                 />
@@ -46,7 +54,7 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
         <Card className='hidden sm:flex sm:flex-col m-3 items-center text-lg gap-3 lg:hidden'>
             <Card className='flex flex-row gap-2'>
                 <Card className='flex'>
-                    {renderDifficultyIcons(story.difficulty)}
+                    {difficultyJSX}
                 </Card>
             </Card>
             <Card className='flex flex-row w-full gap-8'>
@@ -59,12 +67,12 @@ const WriterStoryElements: FC<WriterStoryElementsProps> = ({ story }) => {
                 <Card className='flex flex-row'>
                     <StoryInfoElement
                         icon={Icons.Nodes}
-                        description={`Number of nodes in story`}
+                        description={`Antal afsnit i en historie`}
                         isAgeIcon
                         className="justify-center"
                         />
                         {/* TODO: Calculate number based on length of story's storyNode array */}
-                        1337
+                        {story.storyNodes?.length}
                 </Card>
             </Card>
         </Card>
