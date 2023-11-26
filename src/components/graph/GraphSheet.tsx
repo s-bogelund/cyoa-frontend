@@ -89,7 +89,7 @@ const GraphSheet: FC<GraphSheetProps> = ({
 		});
 
 		// if (edges!.length === 0) return;
-		console.log('edges: ', edges);
+		// console.log('edges: ', edges);
 
 		const newChoices = data!.map(choice => {
 			return (

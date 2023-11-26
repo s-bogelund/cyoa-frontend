@@ -47,8 +47,6 @@ const StoryNode: FC<StoryNodeProps> = ({
 		console.log(evt.currentTarget.value);
 	}, []);
 
-	console.log('Node data', data);
-
 	const addChildNode = useCallback(() => {
 		if (hasMaxChildren) return;
 

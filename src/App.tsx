@@ -8,7 +8,7 @@ import StoryNode, { StoryNodeProps } from './components/graph/StoryNode';
 import PageContainer from './components/PageContainer';
 import { buttonVariants } from './components/shadcn/ui/button';
 import { cn } from './lib/utils';
-import GraphTestPage from './pages/GraphTestPage';
+import GraphPage from './pages/GraphPage';
 import LoginPage from './pages/LoginPage';
 import PlayNode from './pages/PlayNode';
 import SearchPage from './pages/SearchPage';
@@ -36,9 +36,9 @@ function App() {
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="search-story" element={<SearchPage />} />
-				<Route path="graph-test" element={<GraphTestPage nodeTypes={nodeTypes} />} />
-				<Route path='user-dashboard' element={<UserDashboardPage />} />
-				<Route path='writer-story-summary' element={<WriterStorySummary />} />
+				<Route path="graph-test" element={<GraphPage nodeTypes={nodeTypes} />} />
+				<Route path="user-dashboard" element={<UserDashboardPage />} />
+				<Route path="writer-story-summary" element={<WriterStorySummary />} />
 				<Route
 					path="*"
 					element={

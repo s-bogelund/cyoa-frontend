@@ -1,5 +1,5 @@
 import 'reactflow/dist/style.css';
-
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import {
 	addEdge,
 	applyEdgeChanges,
@@ -15,9 +15,17 @@ import {
 } from 'reactflow';
 import { create } from 'zustand';
 
-import { ExtendedNode, StoryNodeType } from './types/graphTypes';
-import { dummyGraph, initialEdges, initialNodes } from './utils/dummyData';
-import { loadGraphStateLS, saveGraphStateLS, toNodeChange } from './utils/graph';
+import { ExtendedNode } from './types/graphTypes';
+import { dummyGraph } from './utils/dummyData';
+import { loadGraphStateLS, saveGraphStateLS } from './utils/graph';
+import { useQuery } from '@apollo/client';
+import { GET_STORY_QUERY } from './api/queries/getStory';
+import { convertGqlNodes, createEdgesFromStoryNodes } from './utils/convertGraphTypes';
+
+const client = new ApolloClient({
+	uri: 'http://localhost:5186/graphql/', // Replace with your GraphQL endpoint
+	cache: new InMemoryCache(),
+});
 
 export type RFState = {
 	nodes: ExtendedNode[];
@@ -32,6 +40,7 @@ export type RFState = {
 	// highlightNeighbours: (id: string, isHighlighted: boolean) => void;
 	getAllNeighbours: (id: string) => Node[];
 	saveGraphState: () => void;
+	loadGraphData: (storyId: string) => void;
 };
 
 const useStore = create<RFState>((set, get) => ({
@@ -86,6 +95,26 @@ const useStore = create<RFState>((set, get) => ({
 	},
 	saveGraphState: () => {
 		saveGraphStateLS(get());
+	},
+	loadGraphData: async (storyId: string) => {
+		try {
+			const { data } = await client.query({
+				query: GET_STORY_QUERY,
+				variables: { id: storyId },
+			});
+
+			if (data && data.storyQuery) {
+				const convertedNodes = convertGqlNodes(data.storyQuery.storyNodes);
+				const convertedEdges = createEdgesFromStoryNodes(convertedNodes);
+
+				set({
+					nodes: convertedNodes,
+					edges: convertedEdges,
+				});
+			}
+		} catch (error) {
+			console.error('Error fetching story data:', error);
+		}
 	},
 	// highlightNeighbours: (id: string, isHighlighted: boolean) => {
 	// 	const nodes = get().getAllNeighbours(id);

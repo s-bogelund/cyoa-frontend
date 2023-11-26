@@ -1,6 +1,8 @@
 import { Node, NodeChange } from 'reactflow';
 
 import { RFState } from '@/graphStore';
+import { useQuery } from '@apollo/client';
+import { GET_STORY_QUERY } from '@/api/queries/getStory';
 
 export const saveGraphStateLS = (graphState: RFState) => {
 	localStorage.setItem('graphState', JSON.stringify(graphState));
@@ -13,6 +15,19 @@ export const loadGraphStateLS = (): RFState | undefined => {
 	}
 	return undefined;
 };
+
+// export const loadGraphStateGQL = (storyId: string) => {
+// 	const { loading, error, data } = useQuery(GET_STORY_QUERY, {
+// 		variables: { id: storyId },
+// 	});
+
+// 	console.log(data);
+
+// 	if (loading) return 'Loading...';
+// 	if (error) return `Error! ${error.message}`;
+
+// 	return data.storyQuery;
+// };
 
 enum NodeTypeChange {
 	Dimension = 'dimensions',
