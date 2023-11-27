@@ -88,7 +88,7 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                 <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
                         <DashboardReaderStorySummary
-                            currentNodeId={latestPlaythrough?.currentNode}    // TODO: Replace with latest playthrough when value is available
+                            currentNodeId={latestPlaythrough?.currentNode}
                         />
                     </Card>
                     <Button
@@ -101,10 +101,8 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                         Fortsæt historien
                     </Button>
                 </Card>
-                {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
                 <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
-                        {/* TODO: Replace with id of latest modified story when value is available */}
                         <DashboardWriterStorySummary storyId={latestStory!.id} />
                     </Card>
                     <Button
