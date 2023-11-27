@@ -89,14 +89,16 @@ const GraphSheet: FC<GraphSheetProps> = ({
 		});
 
 		// if (edges!.length === 0) return;
-		console.log('edges: ', edges);
+		// console.log('edges: ', edges);
 
-		const newChoices = data!.map(choice => {
+		const options = nodeState.storyNodeOptions;
+
+		const newChoices = options!.map(choice => {
 			return (
 				<SheetChoiceItem
 					nodeId={choice.id}
 					key={choice.id}
-					choiceText={choice.title}
+					choiceText={choice.optionText}
 					onChange={(value: string) => {
 						console.log('changed choice', value);
 					}}
@@ -110,6 +112,7 @@ const GraphSheet: FC<GraphSheetProps> = ({
 				// <div className="w-full h-12 bg-red-900">noget</div>
 			);
 		});
+
 		return newChoices;
 	};
 
@@ -127,6 +130,7 @@ const GraphSheet: FC<GraphSheetProps> = ({
 				storyText: '',
 				encounterType: '',
 				isCheckpoint: false,
+				storyId: nodeState.storyId,
 			},
 			position: { x: 300, y: 300 }, // replace with desired position
 		};
