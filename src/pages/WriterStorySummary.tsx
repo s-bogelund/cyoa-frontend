@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { Button } from '@/components/shadcn/ui/button'
@@ -6,8 +6,9 @@ import { Card } from '@/components/shadcn/ui/card'
 import { Input } from '@/components/shadcn/ui/input'
 import { Label } from '@/components/shadcn/ui/label'
 import { Textarea } from '@/components/shadcn/ui/textarea'
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import GET_STORY_FOR_SUMMARY_PAGE, { GetStoryForSummaryPageQueryResult } from '@/api/queries/getStoryForSummaryPage'
+import { ADD_STORY_MUTATION } from '@/api/mutations/story/addStory'
 
 type WriterStorySummaryProps = {}
 
@@ -16,6 +17,8 @@ type WriterStorySummaryProps = {}
 const WriterStorySummary: FC<WriterStorySummaryProps> = () => {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+    const [storyTitleState, setStoryTitleState] = useState('');
+    const [storyDescriptionState, setStoryDescriptionState] = useState('');
 
     console.log(searchParams.get('storyId'));
 
@@ -23,6 +26,8 @@ const WriterStorySummary: FC<WriterStorySummaryProps> = () => {
         GET_STORY_FOR_SUMMARY_PAGE,
         { variables: { idInput: searchParams.get('storyId') }}
     )
+
+    const [addStory, { data: addStoryData, loading: addStoryLoading, error: addLoadingError }] = useMutation(ADD_STORY_MUTATION);
 
     if (loading) {
 		return <p>Loading...</p>;
@@ -45,7 +50,7 @@ const WriterStorySummary: FC<WriterStorySummaryProps> = () => {
                         className='w-full h-12 border-2 text-2xl'
                         placeholder='Skriv historiens titel her!'
                         id='writer-story-summary-title'
-                        content={story.title ? story.title : ""}
+                        value={story.title ? story.title : ""}
                     />
                 </Card>
                 <Card className='flex flex-col w-full'>
@@ -58,7 +63,7 @@ const WriterStorySummary: FC<WriterStorySummaryProps> = () => {
                     <Textarea className='w-full min-h-[150px] border-2 text-2xl'
                         placeholder='Skriv historiens beskrivelse her. Det kan være en kort opsummering af historien, eller en tekst der skal gøre læseren interesseret.'
                         id='writer-story-summary-description'
-                        content={story.description ? story.description : ""}
+                        value={story.description ? story.description : ""}
                     />
                 </Card>
                 <Button
@@ -71,13 +76,17 @@ const WriterStorySummary: FC<WriterStorySummaryProps> = () => {
                                 search: `?storyId=${story.id}`
                             })
                         } else {
-                            
-                            // Fire mutation to create a new story
-                            // Return id of newly created story
-                            // Navigate to newly created story bu using id in "navigate"
+                            // TODO: Fix use of mutations and make sure that mutation returns new story that can be used with "navigate"
+                            let newStory = addStory({ variables: {input: {
+                                userId: "5f432dac-7c3e-40b2-a4d4-5310c1be3676",     // TODO: Replace value with users own id when available
+                                title: "WriterStorySummary test story",
+                                description: "A description of something"
+                            }}});
+                            navigate({
+                                pathname: "/graph",
+                                search: `?storyId=${newStory}`
+                            })
                         }
-                        // Her kan man fire den mutation der gemmer den nye beskrivelse og sådan
-                        // Der skal nok kigges på om der er query parameters eller ej, for hvis der ikke er, så skal der oprettes en ny historie
                     }}
                 >
                     Gå til historien

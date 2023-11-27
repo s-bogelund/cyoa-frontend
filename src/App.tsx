@@ -35,10 +35,9 @@ function App() {
 				<Route path="/story-page" element={<StoryPage title={'Troldehulen'} />} />
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />
-				<Route path="search-story" element={<SearchPage />} />
-				<Route path="graph-test" element={<GraphPage nodeTypes={nodeTypes} />} />
-				<Route path="user-dashboard" element={<UserDashboardPage />} />
-				<Route path="writer-story-summary" element={<WriterStorySummary />} />
+				<Route path="/browse" element={<SearchPage />} />
+				<Route path="/graph" element={<GraphPage nodeTypes={nodeTypes} />} />
+				<Route path="/writer-summary" element={<WriterStorySummary />} />
 				<Route
 					path="*"
 					element={
