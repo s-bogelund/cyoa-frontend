@@ -64,7 +64,7 @@ const SheetChoiceItemProps: FC<SheetChoiceItemPropsProps> = ({
 					onClick={() => setIsFocused(true)}
 				>
 					<div className="w-[85%]">
-						{choiceText === 'New Node' ? 'Hvad vælger karakteren?' : choiceText}
+						{choiceText?.toLowerCase() === 'ingen titel' ? 'Hvad vælger karakteren?' : choiceText}
 					</div>
 					<div>
 						<ItemMenu

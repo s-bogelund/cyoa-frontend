@@ -4,7 +4,7 @@ import { IconType } from 'react-icons';
 import { Edge, Handle, Node, NodeProps, NodeTypes, Position, useReactFlow } from 'reactflow';
 
 import useStore from '@/graphStore';
-import { ExtendedNode, StoryNodeType } from '@/types/graphTypes';
+import { ExtendedNode, StoryNodeOptionType, StoryNodeType } from '@/types/graphTypes';
 import { toNodeChange } from '@/utils/graph';
 
 import { Icons } from '../icons/Icons';
@@ -18,6 +18,7 @@ export type StoryNodeProps = {
 	isHighlighted?: boolean;
 	isSelected?: boolean;
 	onClick?: () => void;
+	data: StoryNodeType;
 	encounterType?: 'combat' | 'conversation' | 'death';
 	isRoot?: boolean;
 } & NodeProps;
@@ -58,10 +59,12 @@ const StoryNode: FC<StoryNodeProps> = ({
 				title: 'Ingen titel',
 				id: newNodeId,
 				storyText: '',
-				encounterType: '',
+				storyId: data.storyId,
+				encounterType: 'other',
 				isCheckpoint: false,
+				storyNodeOptions: [] as StoryNodeOptionType[],
 			},
-			position: { x: 300, y: 300 }, // replace with desired position
+			position: { x: 300, y: 300 },
 		};
 
 		const newEdge: Edge = {
@@ -80,7 +83,7 @@ const StoryNode: FC<StoryNodeProps> = ({
 
 		const newStore = useStore.getState();
 		console.log('Added node', newStore);
-	}, [id, addCustomNode, addCustomEdge, hasMaxChildren, store]);
+	}, [hasMaxChildren, id, data.storyId, addCustomNode, addCustomEdge, store]);
 
 	const handleMouseEnter = useCallback(() => {
 		const currentNoOfChildren = store.getEdgesByNodeId(id)?.length || 0;

@@ -6,6 +6,7 @@ export type StoryNodeType = {
 	storyText: string;
 	encounterType: string;
 	isCheckpoint: boolean;
+	storyId?: string;
 	storyNodeOptions?: StoryNodeOptionType[];
 };
 

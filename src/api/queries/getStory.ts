@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 export const GET_STORY_QUERY = gql`
 	query GetStory($id: UUID!) {
 		storyQuery(where: { id: { eq: $id } }) {
+			id
 			userId
 			title
 			difficulty

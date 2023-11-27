@@ -51,18 +51,10 @@ const layoutGraph = (nodes: Node[], edges: Edge[]) => {
 const GraphPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 	const { nodes, edges, onNodesChange, onEdgesChange, loadGraphData } = useStore(selector, shallow);
 	useEffect(() => {
-		// Replace '67ca999d-884a-487f-b03b-c6f15c276958' with the actual ID you need
+		// Replace '67ca999d-884a-487f-b03b-c6f15c276958' with the actual ID
 		loadGraphData('67ca999d-884a-487f-b03b-c6f15c276958');
 	}, [loadGraphData]);
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
-
-	// useEffect(() => {
-	// 	if (data) {
-	// 		const nodes: StoryNode[] = data.storyQuery.storyNodes;
-	// 		const convertedNodes = convertGqlNodes(nodes);
-	// 		console.log('convertedNodes: ', convertedNodes);
-	// 	}
-	// }, [data]);
 
 	return (
 		<>
