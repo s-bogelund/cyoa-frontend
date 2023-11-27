@@ -60,6 +60,17 @@ export type CombatDataFilterInput = {
   storyNodeId?: InputMaybe<UuidOperationFilterInput>;
 };
 
+export type CombatDataSortInput = {
+  createdAt?: InputMaybe<SortEnumType>;
+  diceType?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  isDiceRollRequired?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
+  storyNode?: InputMaybe<StoryNodeSortInput>;
+  storyNodeId?: InputMaybe<SortEnumType>;
+};
+
 export type CombatDataUpdateInput = {
   diceType?: InputMaybe<Scalars['Int']['input']>;
   id: Scalars['UUID']['input'];
@@ -358,6 +369,21 @@ export type PlaythroughFilterInput = {
   visitedStoryNodes?: InputMaybe<ListFilterInputTypeOfVisitedStoryNodeFilterInput>;
 };
 
+export type PlaythroughSortInput = {
+  createdAt?: InputMaybe<SortEnumType>;
+  currentNode?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isCompleted?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  isOngoing?: InputMaybe<SortEnumType>;
+  isPlayerDead?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
+  story?: InputMaybe<StorySortInput>;
+  storyId?: InputMaybe<SortEnumType>;
+  user?: InputMaybe<UserSortInput>;
+  userId?: InputMaybe<SortEnumType>;
+};
+
 export type PlaythroughUpdateInput = {
   currentNode?: InputMaybe<Scalars['UUID']['input']>;
   id: Scalars['UUID']['input'];
@@ -395,6 +421,7 @@ export type QueryCombatDataQueryArgs = {
 
 
 export type QueryCombatDatasArgs = {
+  order?: InputMaybe<Array<CombatDataSortInput>>;
   where?: InputMaybe<CombatDataFilterInput>;
 };
 
@@ -405,6 +432,7 @@ export type QueryPlaythroughQueryArgs = {
 
 
 export type QueryPlaythroughsArgs = {
+  order?: InputMaybe<Array<PlaythroughSortInput>>;
   where?: InputMaybe<PlaythroughFilterInput>;
 };
 
@@ -415,11 +443,13 @@ export type QueryRatingQueryArgs = {
 
 
 export type QueryRatingsArgs = {
+  order?: InputMaybe<Array<RatingSortInput>>;
   where?: InputMaybe<RatingFilterInput>;
 };
 
 
 export type QueryStoriesArgs = {
+  order?: InputMaybe<Array<StorySortInput>>;
   where?: InputMaybe<StoryFilterInput>;
 };
 
@@ -430,6 +460,7 @@ export type QueryStoryNodeDeathStatisticQueryArgs = {
 
 
 export type QueryStoryNodeDeathStatisticsArgs = {
+  order?: InputMaybe<Array<StoryNodeDeathStatisticSortInput>>;
   where?: InputMaybe<StoryNodeDeathStatisticFilterInput>;
 };
 
@@ -440,6 +471,7 @@ export type QueryStoryNodeOptionQueryArgs = {
 
 
 export type QueryStoryNodeOptionsArgs = {
+  order?: InputMaybe<Array<StoryNodeOptionSortInput>>;
   where?: InputMaybe<StoryNodeOptionFilterInput>;
 };
 
@@ -450,6 +482,7 @@ export type QueryStoryNodeQueryArgs = {
 
 
 export type QueryStoryNodesArgs = {
+  order?: InputMaybe<Array<StoryNodeSortInput>>;
   where?: InputMaybe<StoryNodeFilterInput>;
 };
 
@@ -465,6 +498,7 @@ export type QueryUserQueryArgs = {
 
 
 export type QueryUsersArgs = {
+  order?: InputMaybe<Array<UserSortInput>>;
   where?: InputMaybe<UserFilterInput>;
 };
 
@@ -475,6 +509,7 @@ export type QueryVisitedStoryNodeQueryArgs = {
 
 
 export type QueryVisitedStoryNodesArgs = {
+  order?: InputMaybe<Array<VisitedStoryNodeSortInput>>;
   where?: InputMaybe<VisitedStoryNodeFilterInput>;
 };
 
@@ -516,10 +551,27 @@ export type RatingFilterInput = {
   userId?: InputMaybe<UuidOperationFilterInput>;
 };
 
+export type RatingSortInput = {
+  createdAt?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
+  ratingValue?: InputMaybe<SortEnumType>;
+  story?: InputMaybe<StorySortInput>;
+  storyId?: InputMaybe<SortEnumType>;
+  user?: InputMaybe<UserSortInput>;
+  userId?: InputMaybe<SortEnumType>;
+};
+
 export type RatingUpdateInput = {
   id: Scalars['UUID']['input'];
   ratingValue?: InputMaybe<Scalars['Float']['input']>;
 };
+
+export enum SortEnumType {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
 
 export type Story = {
   __typename?: 'Story';
@@ -580,6 +632,7 @@ export type StoryNode = {
   id: Scalars['UUID']['output'];
   isCheckpoint?: Maybe<Scalars['Boolean']['output']>;
   isDeleted: Scalars['Boolean']['output'];
+  isRootNode?: Maybe<Scalars['Boolean']['output']>;
   modifiedAt: Scalars['DateTime']['output'];
   story?: Maybe<Story>;
   storyId: Scalars['UUID']['output'];
@@ -631,6 +684,16 @@ export type StoryNodeDeathStatisticFilterInput = {
   storyNodeId?: InputMaybe<UuidOperationFilterInput>;
 };
 
+export type StoryNodeDeathStatisticSortInput = {
+  createdAt?: InputMaybe<SortEnumType>;
+  deathCount?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
+  storyNode?: InputMaybe<StoryNodeSortInput>;
+  storyNodeId?: InputMaybe<SortEnumType>;
+};
+
 export type StoryNodeDeathStatisticUpdateInput = {
   deathCount?: InputMaybe<Scalars['Int']['input']>;
   id: Scalars['UUID']['input'];
@@ -649,6 +712,7 @@ export type StoryNodeFilterInput = {
   id?: InputMaybe<UuidOperationFilterInput>;
   isCheckpoint?: InputMaybe<BooleanOperationFilterInput>;
   isDeleted?: InputMaybe<BooleanOperationFilterInput>;
+  isRootNode?: InputMaybe<BooleanOperationFilterInput>;
   modifiedAt?: InputMaybe<DateTimeOperationFilterInput>;
   or?: InputMaybe<Array<StoryNodeFilterInput>>;
   story?: InputMaybe<StoryFilterInput>;
@@ -699,11 +763,37 @@ export type StoryNodeOptionFilterInput = {
   storyNodeId?: InputMaybe<UuidOperationFilterInput>;
 };
 
+export type StoryNodeOptionSortInput = {
+  condition?: InputMaybe<SortEnumType>;
+  createdAt?: InputMaybe<SortEnumType>;
+  destinationNode?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
+  optionText?: InputMaybe<SortEnumType>;
+  storyNode?: InputMaybe<StoryNodeSortInput>;
+  storyNodeId?: InputMaybe<SortEnumType>;
+};
+
 export type StoryNodeOptionUpdateInput = {
   condition?: InputMaybe<Scalars['String']['input']>;
   destinationNode?: InputMaybe<Scalars['UUID']['input']>;
   id: Scalars['UUID']['input'];
   optionText?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type StoryNodeSortInput = {
+  createdAt?: InputMaybe<SortEnumType>;
+  encounterType?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isCheckpoint?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  isRootNode?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
+  story?: InputMaybe<StorySortInput>;
+  storyId?: InputMaybe<SortEnumType>;
+  storyText?: InputMaybe<SortEnumType>;
+  title?: InputMaybe<SortEnumType>;
 };
 
 export type StoryNodeUpdateInput = {
@@ -712,6 +802,20 @@ export type StoryNodeUpdateInput = {
   isCheckpoint?: InputMaybe<Scalars['Boolean']['input']>;
   storyText?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type StorySortInput = {
+  createdAt?: InputMaybe<SortEnumType>;
+  description?: InputMaybe<SortEnumType>;
+  difficulty?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
+  playtime?: InputMaybe<SortEnumType>;
+  targetAge?: InputMaybe<SortEnumType>;
+  title?: InputMaybe<SortEnumType>;
+  user?: InputMaybe<UserSortInput>;
+  userId?: InputMaybe<SortEnumType>;
 };
 
 export type StoryUpdateInput = {
@@ -776,6 +880,16 @@ export type UserFilterInput = {
   playthroughs?: InputMaybe<ListFilterInputTypeOfPlaythroughFilterInput>;
   ratings?: InputMaybe<ListFilterInputTypeOfRatingFilterInput>;
   stories?: InputMaybe<ListFilterInputTypeOfStoryFilterInput>;
+};
+
+export type UserSortInput = {
+  authZeroUserId?: InputMaybe<SortEnumType>;
+  createdAt?: InputMaybe<SortEnumType>;
+  firstName?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  lastName?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
 };
 
 export type UserUpdateInput = {
@@ -860,29 +974,55 @@ export type VisitedStoryNodeMutationUpdateVisitedStoryNodeArgs = {
   input: VisitedStoryNodeUpdateInput;
 };
 
+export type VisitedStoryNodeSortInput = {
+  createdAt?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  isDeleted?: InputMaybe<SortEnumType>;
+  modifiedAt?: InputMaybe<SortEnumType>;
+  playthrough?: InputMaybe<PlaythroughSortInput>;
+  playthroughId?: InputMaybe<SortEnumType>;
+  previousNode?: InputMaybe<SortEnumType>;
+  storyNode?: InputMaybe<StoryNodeSortInput>;
+  storyNodeId?: InputMaybe<SortEnumType>;
+};
+
 export type VisitedStoryNodeUpdateInput = {
   id: Scalars['UUID']['input'];
   previousNode: Scalars['UUID']['input'];
 };
+
+export type GetNodeForReaderSummaryQueryVariables = Exact<{
+  idInput?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type GetNodeForReaderSummaryQuery = { __typename?: 'Query', storyNodes: Array<{ __typename?: 'StoryNode', id: any, title?: string | null, storyText?: string | null, encounterType?: string | null, story?: { __typename?: 'Story', id: any, title?: string | null, difficulty?: string | null, targetAge?: number | null } | null }> };
 
 export type GetAllStoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllStoriesQuery = { __typename?: 'Query', stories: Array<{ __typename?: 'Story', id: any, title?: string | null, difficulty?: string | null, targetAge?: number | null, playtime?: number | null, createdAt: any, modifiedAt: any, isDeleted: boolean, user?: { __typename?: 'User', id: any, firstName?: string | null, lastName?: string | null } | null, storyNodes?: Array<{ __typename?: 'StoryNode', id: any, title?: string | null, storyText?: string | null }> | null, ratings?: Array<{ __typename?: 'Rating', ratingValue: number }> | null, playthroughs?: Array<{ __typename?: 'Playthrough', id: any, isOngoing: boolean, isCompleted: boolean }> | null }> };
 
-export type GetStoryForSummaryQueryVariables = Exact<{
+export type GetStoryForStoryPageQueryVariables = Exact<{
   idInput?: InputMaybe<Scalars['UUID']['input']>;
 }>;
 
 
-export type GetStoryForSummaryQuery = { __typename?: 'Query', stories: Array<{ __typename?: 'Story', id: any, title?: string | null, difficulty?: string | null, targetAge?: number | null }> };
+export type GetStoryForStoryPageQuery = { __typename?: 'Query', stories: Array<{ __typename?: 'Story', id: any, title?: string | null, targetAge?: number | null, playtime?: number | null, description?: string | null, difficulty?: string | null, storyNodes?: Array<{ __typename?: 'StoryNode', id: any, encounterType?: string | null }> | null, ratings?: Array<{ __typename?: 'Rating', ratingValue: number }> | null }> };
 
-export type GetStoryNodeForSummaryQueryVariables = Exact<{
+export type GetStoryForWriterSummaryQueryVariables = Exact<{
   idInput?: InputMaybe<Scalars['UUID']['input']>;
 }>;
 
 
-export type GetStoryNodeForSummaryQuery = { __typename?: 'Query', storyNodes: Array<{ __typename?: 'StoryNode', id: any, title?: string | null, storyText?: string | null, encounterType?: string | null }> };
+export type GetStoryForWriterSummaryQuery = { __typename?: 'Query', stories: Array<{ __typename?: 'Story', id: any, title?: string | null, difficulty?: string | null, targetAge?: number | null, storyNodes?: Array<{ __typename?: 'StoryNode', id: any }> | null }> };
+
+export type GetStoryNodeForPlayNodeQueryVariables = Exact<{
+  idInput?: InputMaybe<Scalars['UUID']['input']>;
+}>;
+
+
+export type GetStoryNodeForPlayNodeQuery = { __typename?: 'Query', storyNodes: Array<{ __typename?: 'StoryNode', id: any, title?: string | null, storyText?: string | null, storyNodeOptions?: Array<{ __typename?: 'StoryNodeOption', id: any, storyNodeId: any, destinationNode: any, optionText?: string | null }> | null }> };
 
 export type GetUsersQueryVariables = Exact<{
   where?: InputMaybe<UserFilterInput>;
@@ -892,7 +1032,9 @@ export type GetUsersQueryVariables = Exact<{
 export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: any, firstName?: string | null, lastName?: string | null }> };
 
 
+export const GetNodeForReaderSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetNodeForReaderSummary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"storyNodes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"storyText"}},{"kind":"Field","name":{"kind":"Name","value":"encounterType"}},{"kind":"Field","name":{"kind":"Name","value":"story"},"directives":[{"kind":"Directive","name":{"kind":"Name","value":"include"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"if"},"value":{"kind":"BooleanValue","value":true}}]}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"}},{"kind":"Field","name":{"kind":"Name","value":"targetAge"}}]}}]}}]}}]} as unknown as DocumentNode<GetNodeForReaderSummaryQuery, GetNodeForReaderSummaryQueryVariables>;
 export const GetAllStoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllStories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stories"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"}},{"kind":"Field","name":{"kind":"Name","value":"targetAge"}},{"kind":"Field","name":{"kind":"Name","value":"playtime"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"storyNodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"storyText"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ratings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ratingValue"}}]}},{"kind":"Field","name":{"kind":"Name","value":"playthroughs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"isOngoing"}},{"kind":"Field","name":{"kind":"Name","value":"isCompleted"}}]}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"modifiedAt"}},{"kind":"Field","name":{"kind":"Name","value":"isDeleted"}}]}}]}}]} as unknown as DocumentNode<GetAllStoriesQuery, GetAllStoriesQueryVariables>;
-export const GetStoryForSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStoryForSummary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"}},{"kind":"Field","name":{"kind":"Name","value":"targetAge"}}]}}]}}]} as unknown as DocumentNode<GetStoryForSummaryQuery, GetStoryForSummaryQueryVariables>;
-export const GetStoryNodeForSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStoryNodeForSummary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"storyNodes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"storyText"}},{"kind":"Field","name":{"kind":"Name","value":"encounterType"}}]}}]}}]} as unknown as DocumentNode<GetStoryNodeForSummaryQuery, GetStoryNodeForSummaryQueryVariables>;
+export const GetStoryForStoryPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStoryForStoryPage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"targetAge"}},{"kind":"Field","name":{"kind":"Name","value":"playtime"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"}},{"kind":"Field","name":{"kind":"Name","value":"storyNodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"encounterType"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ratings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ratingValue"}}]}}]}}]}}]} as unknown as DocumentNode<GetStoryForStoryPageQuery, GetStoryForStoryPageQueryVariables>;
+export const GetStoryForWriterSummaryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStoryForWriterSummary"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"stories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"difficulty"}},{"kind":"Field","name":{"kind":"Name","value":"targetAge"}},{"kind":"Field","name":{"kind":"Name","value":"storyNodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetStoryForWriterSummaryQuery, GetStoryForWriterSummaryQueryVariables>;
+export const GetStoryNodeForPlayNodeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetStoryNodeForPlayNode"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UUID"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"storyNodes"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"idInput"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"storyText"}},{"kind":"Field","name":{"kind":"Name","value":"storyNodeOptions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"storyNodeId"}},{"kind":"Field","name":{"kind":"Name","value":"destinationNode"}},{"kind":"Field","name":{"kind":"Name","value":"optionText"}}]}}]}}]}}]} as unknown as DocumentNode<GetStoryNodeForPlayNodeQuery, GetStoryNodeForPlayNodeQueryVariables>;
 export const GetUsersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetUsers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UserFilterInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}}]}}]}}]} as unknown as DocumentNode<GetUsersQuery, GetUsersQueryVariables>;

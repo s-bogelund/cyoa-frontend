@@ -7,10 +7,10 @@ import StoryInfoElement from './StoryInfoElement';
 
 type StoryInfoContainerProps = {
 	rating?: number;
-	difficulty?: number;
+	difficulty?: string;
 	deaths?: number;
 	playtime?: number;
-	ageRating?: number;
+	ageRating?: number;		// Is targetAge from story
 	nodes?: number;
 };
 
@@ -28,19 +28,19 @@ const StoryInfo: FC<StoryInfoContainerProps> = ({
 				<StoryInfoElement
 					icon={Icons.Rating}
 					description="Average rating"
-					text={`${rating || 3}/5`}
+					text={`${rating ? Number(rating.toFixed(1)) : 3 || 3}/5`}
 				/>
 
 				<StoryInfoElement
 					description="Estimated time to complete"
 					icon={Icons.Playtime}
-					text={`${playtime || 3} hours`}
+					text={`${playtime ? Number((playtime / 60).toFixed(1)) : 120 / 60 || 3} timer`}
 				/>
 				<StoryInfoElement
 					className="justify-center"
 					description="Difficulty"
 					icon={Icons.Skull}
-					text={`${difficulty || 4}/5`}
+					text={`${difficulty}`}
 				/>
 				<StoryInfoElement
 					icon={getAgeIcon(ageRating ? ageRating : 4)}

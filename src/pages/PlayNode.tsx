@@ -23,7 +23,7 @@ const dummyOptions = [
  */
 
 const PlayNode: FC<PlayNodeProps> = ({}) => {
-	let [searchParams, setSearchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	
 	const {loading, error, data} = useQuery<GetStoryNodeForPlayNodeQueryResult>(
 		GET_STORY_NODE_FOR_PLAY_NODE,

@@ -13,7 +13,7 @@ const GET_NODE_FOR_READER_SUMMARY = gql`
 			title
 			storyText
 			encounterType
-			story @include(if: true) {
+			story {
 				id
 				title
 				difficulty

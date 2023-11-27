@@ -8,10 +8,6 @@ const navbarElements = [
 		linkTo: '/',
 	},
 	{
-		text: 'NodeView',
-		linkTo: '/playnode',
-	},
-	{
 		text: 'StoryPageView',
 		linkTo: '/story-page',
 	},

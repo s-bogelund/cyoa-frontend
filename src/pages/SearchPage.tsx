@@ -9,6 +9,7 @@ import ContentList from '@/components/search-page/search-content/ContentList';
 import SearchBar from '@/components/search-page/SearchBar';
 import { Card, CardDescription, CardTitle } from '@/components/shadcn/ui/card';
 import { Story } from '@/gql/graphql';
+import { useNavigate } from 'react-router-dom';
 
 type DifficultyFilterType = {
 	easy: boolean;
@@ -28,6 +29,7 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 	const [filteredStories, setFilteredStories] = useState<Story[]>([]);
 	const [completionTimeFilter, setCompletionTimeFilter] = useState<number>(Infinity);
 	const [targetAgeFilter, setTargetAgeFilter] = useState<number>(18);
+	const navigate = useNavigate();
 
 	const { loading, error, data } = useQuery<GetAllStoriesQueryResult>(GET_ALL_STORIES);
 	const handleDifficultyChange = (selectedValues: string[]) => {
@@ -82,7 +84,10 @@ const SearchPage: FC<SearchPageProps> = ({}) => {
 			</Card>
 			<Card id="content-filter-container" className="flex flex-col w-full h-full gap-8">
 				<ContentList
-					onItemSelected={id => console.log('Id clicked:', id)}
+					onItemSelected={id => navigate({
+						pathname: "/story-page",
+						search: `?storyId=${id}`
+					})}
 					stories={filteredStories}
 				/>
 			</Card>
