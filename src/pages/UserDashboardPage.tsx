@@ -126,7 +126,10 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
-                        onClick={() => navigate("/playnode")}
+                        onClick={() => navigate({
+                            pathname: "/playnode",
+                            search: `?storyNodeId=${dummyPlaythrough.currentNode}`
+                        })}
                         >
                         Fortsæt historien
                     </Button>
