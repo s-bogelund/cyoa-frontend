@@ -2,13 +2,12 @@ import i18next from 'i18next';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Routes } from 'react-router-dom';
-import { SmoothStepEdge } from 'reactflow';
 
 import StoryNode, { StoryNodeProps } from './components/graph/StoryNode';
 import PageContainer from './components/PageContainer';
 import { buttonVariants } from './components/shadcn/ui/button';
 import { cn } from './lib/utils';
-import GraphTestPage from './pages/GraphTestPage';
+import GraphPage from './pages/GraphPage';
 import LoginPage from './pages/LoginPage';
 import PlayNode from './pages/PlayNode';
 import SearchPage from './pages/SearchPage';
@@ -36,8 +35,8 @@ function App() {
 				<Route path="/sign-up" element={<SignUpPage />} />
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/browse" element={<SearchPage />} />
-				<Route path="/graph" element={<GraphTestPage nodeTypes={nodeTypes} />} />
-				<Route path='/writer-summary' element={<WriterStorySummary />} />
+				<Route path="/graph" element={<GraphPage nodeTypes={nodeTypes} />} />
+				<Route path="/writer-summary" element={<WriterStorySummary />} />
 				<Route
 					path="*"
 					element={

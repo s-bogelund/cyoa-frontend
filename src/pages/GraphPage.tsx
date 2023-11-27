@@ -1,28 +1,13 @@
 import dagre from 'dagre';
-import ELK, { ElkNode } from 'elkjs/lib/elk.bundled.js';
-import { Sheet } from 'lucide-react';
-import { useCallback, useMemo, useState } from 'react';
-import ReactFlow, {
-	applyEdgeChanges,
-	applyNodeChanges,
-	Background,
-	BezierEdge,
-	ControlButton,
-	Controls,
-	Edge,
-	EdgeTypes,
-	MiniMap,
-	Node,
-	NodeChange,
-	NodeTypes,
-	SmoothStepEdge,
-	useReactFlow,
-} from 'reactflow';
+import { useEffect, useMemo, useState } from 'react';
+import ReactFlow, { Background, Controls, Edge, MiniMap, Node, NodeTypes } from 'reactflow';
 import { shallow } from 'zustand/shallow';
 
-import StoryNode from '@/components/graph/StoryNode';
-import { Button } from '@/components/shadcn/ui/button';
 import useStore, { RFState } from '@/graphStore';
+import { useQuery } from '@apollo/client';
+import { GET_STORY_QUERY } from '@/api/queries/getStory';
+import { StoryNode } from '@/gql/graphql';
+import { convertGqlNodes } from '@/utils/convertGraphTypes';
 
 const selector = (state: RFState) => ({
 	nodes: state.nodes,
@@ -30,6 +15,8 @@ const selector = (state: RFState) => ({
 	onNodesChange: state.onNodesChange,
 	onEdgesChange: state.onEdgesChange,
 	onConnect: state.onConnect,
+	loadGraphData: state.loadGraphData,
+	subscribe: state.subscribe,
 });
 
 const layoutGraph = (nodes: Node[], edges: Edge[]) => {
@@ -62,9 +49,11 @@ const layoutGraph = (nodes: Node[], edges: Edge[]) => {
 	});
 };
 
-const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
-	const { nodes, edges, onNodesChange, onEdgesChange } = useStore(selector, shallow);
-
+const GraphPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
+	const { nodes, edges, onNodesChange, onEdgesChange, loadGraphData } = useStore(selector);
+	useEffect(() => {
+		loadGraphData('d5efb477-2756-4f90-85eb-4e3c4a41e8ef');
+	}, [loadGraphData]);
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
 
 	return (
@@ -93,15 +82,11 @@ const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 					}}
 				/>
 				<Background color="#ccc" />
-				<Controls>
-					<ControlButton
-						onClick={() => alert('Something magical just happened. ✨')}
-					></ControlButton>
-				</Controls>
+				<Controls></Controls>
 			</ReactFlow>
 			{/* <Button onClick={() => console.log(nodes, edges)}>+</Button> */}
 		</>
 	);
 };
 
-export default GraphTestPage;
+export default GraphPage;

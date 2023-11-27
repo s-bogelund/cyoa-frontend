@@ -10,18 +10,11 @@ import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuPortal,
-	DropdownMenuSeparator,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from '../shadcn/ui/dropdown-menu';
 import { Input } from '../shadcn/ui/input';
-import { PopoverComponent, PopoverContent, PopoverTrigger } from '../shadcn/ui/popover';
 
-type SheetChoiceItemPropsProps = {
+type SheetChoiceItemProps = {
 	choiceText?: string;
 	onChange: (value: string) => void;
 	onDelete: (id: string) => void;
@@ -32,16 +25,22 @@ type SheetChoiceItemPropsProps = {
 
 const MenuIcon: IconType = Icons.MenuDots;
 
-const SheetChoiceItemProps: FC<SheetChoiceItemPropsProps> = ({
+const SheetChoiceItem: FC<SheetChoiceItemProps> = ({
 	choiceText,
 	onChange,
 	nodeId,
 	onDelete,
 	onGoToSection,
-	justCreated,
 }) => {
 	const [value, setValue] = React.useState<string>(choiceText || '');
 	const [isFocused, setIsFocused] = React.useState<boolean>(false);
+
+	const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			setIsFocused(false);
+			onChange(value);
+		}
+	};
 
 	return (
 		<div className="h-14">
@@ -57,14 +56,15 @@ const SheetChoiceItemProps: FC<SheetChoiceItemPropsProps> = ({
 						onChange(value);
 					}}
 					placeholder="Hvad vælger karakteren?"
+					onKeyDown={handleKeyDown}
 				/>
 			) : (
 				<Card
-					className="grid grid-flow-row px-4 grid-cols-[85%,auto] w-full h-full border-2 border-white items-center justify-between"
+					className="grid grid-flow-row px-4 grid-cols-[85%,auto] w-full h-full border-2 border-white items-center justify-between cursor-pointer hover:bg-slate-500 hover:bg-opacity-20"
 					onClick={() => setIsFocused(true)}
 				>
 					<div className="w-[85%]">
-						{choiceText === 'New Node' ? 'Hvad vælger karakteren?' : choiceText}
+						{choiceText?.toLowerCase() === 'ingen titel' ? 'Hvad vælger karakteren?' : choiceText}
 					</div>
 					<div>
 						<ItemMenu
@@ -78,7 +78,7 @@ const SheetChoiceItemProps: FC<SheetChoiceItemPropsProps> = ({
 	);
 };
 
-export default SheetChoiceItemProps;
+export default SheetChoiceItem;
 
 type ItemMenuProps = {
 	onGoToSection: () => void;

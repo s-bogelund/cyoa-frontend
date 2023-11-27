@@ -1,9 +1,9 @@
-import { Search } from 'lucide-react';
-import React, { ChangeEvent, FC, FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
-import { Edge, useReactFlow } from 'reactflow';
+import { ChangeEvent, FC, FormEvent, ReactNode, useState } from 'react';
 
+import { AddStoryNodePayload } from '@/api/mutations/story-node/addStoryNode';
+import { UpdateStoryNodeOptionPayload } from '@/api/mutations/story-node-option/updateStoryNodeOptions';
 import useStore from '@/graphStore';
-import { ExtendedNode, StoryNodeType } from '@/types/graphTypes';
+import { StoryNodeType } from '@/types/graphTypes';
 
 import AlertDialog from '../generics/AlertDialog';
 import { Icons } from '../icons/Icons';
@@ -16,10 +16,8 @@ import {
 	Sheet,
 	SheetClose,
 	SheetContent,
-	SheetDescription,
 	SheetFooter,
 	SheetHeader,
-	SheetOverlay,
 	SheetTitle,
 	SheetTrigger,
 } from '../shadcn/ui/sheet';
@@ -32,74 +30,95 @@ const EditIcon = Icons.EditNode;
 
 type GraphSheetProps = {
 	onUpdate: (nodeInfo: StoryNodeType) => void;
-	onChildAdded?: () => void;
 	nodeInfo: StoryNodeType;
 	children: ReactNode;
-	hasMaxChildren: boolean;
 };
 
-const GraphSheet: FC<GraphSheetProps> = ({
-	children,
-	nodeInfo,
-	onUpdate,
-	hasMaxChildren,
-	onChildAdded,
-}) => {
+const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 	const [nodeState, setNodeState] = useState<StoryNodeType>(nodeInfo);
 	const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
+	const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+	const { updateStoryNodeOption } = useStore();
 	const addCustomNode = useStore(state => state.addCustomNode);
-	const addCustomEdge = useStore(state => state.addCustomEdge);
 	const getEdges = useStore(state => state.getEdgesByNodeId);
 	const getNode = useStore(state => state.getNodeById);
-	const [reRender, setRerender] = useState<boolean>(false);
-	// console.log('neighbours: ', getEdges);
 	const handleStoryTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		setNodeState(prev => ({ ...prev, storyText: event.target.value }));
+
+		// Clear existing timeout to reset the delay
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+
+		// Set a new timeout
+		const newTimeoutId = setTimeout(() => {
+			saveChanges(nodeState);
+		}, 4000);
+
+		setTimeoutId(newTimeoutId);
 	};
 
-	const saveChanges = () => {
-		console.log('Saving changes to node', nodeState);
-		onUpdate(nodeState);
-		setRerender(prev => !prev);
+	const handleChoiceUpdate = (choiceId: string, newText: string) => {
+		// Update the specific choice in the nodeState
+
+		setNodeState(prevState => {
+			const updatedOptions = prevState.storyNodeOptions?.map(choice => {
+				if (choice.id === choiceId) {
+					// Update the specific choice
+					return { ...choice, optionText: newText };
+				}
+				return choice;
+			});
+
+			return { ...prevState, storyNodeOptions: updatedOptions };
+		});
+
+		const option = nodeState.storyNodeOptions?.find(option => option.id === choiceId);
+
+		const mutation: UpdateStoryNodeOptionPayload = {
+			id: choiceId,
+			destinationNode: option?.destinationNode ?? '',
+			optionText: newText,
+		};
+
+		updateStoryNodeOption(mutation);
+	};
+
+	const saveChanges = (storyNode: StoryNodeType) => {
+		onUpdate(storyNode);
 	};
 
 	const handleTitleUpdate = (event: FormEvent<HTMLInputElement>) => {
 		const newTitle = event.currentTarget.value;
-		setNodeState(prev => ({ ...prev, title: newTitle }));
+		const newNodeState = { ...nodeState, title: newTitle };
+		setNodeState(newNodeState);
+
+		if (timeoutId) {
+			clearTimeout(timeoutId);
+		}
+
+		// Set a new timeout
+		const newTimeoutId = setTimeout(() => {
+			saveChanges(newNodeState);
+		}, 5000); // Delay of 1 second
+
+		setTimeoutId(newTimeoutId);
 	};
 
 	const handleEncounterUpdate = (encounter: string) => {
 		const newNodeState = { ...nodeState, encounterType: encounter };
 		setNodeState(newNodeState);
-		saveChanges();
+		saveChanges(newNodeState);
 	};
 
 	const renderChoices = () => {
-		const edges = getEdges(nodeState.id);
-		if (!edges) return;
-
-		const children = edges.map(edge => {
-			return getNode(edge.target);
-		});
-
-		if (children.length < 1) return;
-
-		const data: StoryNodeType[] = children.map(child => {
-			return child && child.data ? child.data : null;
-		});
-
-		// if (edges!.length === 0) return;
-		console.log('edges: ', edges);
-
-		const newChoices = data!.map(choice => {
+		const newOptions = nodeState.storyNodeOptions?.map(choice => {
 			return (
 				<SheetChoiceItem
 					nodeId={choice.id}
 					key={choice.id}
-					choiceText={choice.title}
-					onChange={(value: string) => {
-						console.log('changed choice', value);
-					}}
+					choiceText={choice.optionText}
+					onChange={(newText: string) => handleChoiceUpdate(choice.id, newText)}
 					onDelete={(id: string) => {
 						console.log('deleted choice', id);
 					}}
@@ -107,39 +126,28 @@ const GraphSheet: FC<GraphSheetProps> = ({
 						console.log('going to section', id);
 					}}
 				/>
-				// <div className="w-full h-12 bg-red-900">noget</div>
 			);
 		});
-		return newChoices;
+		// if (newOptions?.length! > 3) setHasMaxChildren(true);
+		return newOptions;
 	};
 
-	const addChoice = () => {
-		const newNodeId = `${Number(nodeState.id) + Math.random() * 2}`; // Generate a unique ID for the new node
-
+	const addChoice = async () => {
+		const edges = getEdges(nodeState.id);
+		console.log('edges', edges);
 		console.log('AddChoice called', nodeState);
 
-		const newNode: ExtendedNode = {
-			id: newNodeId,
-			type: 'testNode',
-			data: {
-				title: 'Nyt Afsnit',
-				id: newNodeId,
-				storyText: '',
-				encounterType: '',
-				isCheckpoint: false,
-			},
-			position: { x: 300, y: 300 }, // replace with desired position
+		const newNode: AddStoryNodePayload = {
+			title: 'Ingen titel',
+			storyText: '',
+			storyId: nodeState.storyId!,
+			encounterType: 'other',
+			isCheckpoint: false,
 		};
 
-		const newEdge: Edge = {
-			id: `${nodeState.id}-${newNodeId}`,
-			source: nodeState.id,
-			target: newNodeId,
-		};
-
-		addCustomNode(newNode);
-		addCustomEdge(newEdge);
-		onChildAdded?.();
+		await addCustomNode(newNode, nodeInfo.id);
+		const test = getNode(nodeInfo.id);
+		console.log('test', test);
 	};
 
 	return (
@@ -152,10 +160,12 @@ const GraphSheet: FC<GraphSheetProps> = ({
 							<Input
 								autoFocus
 								value={nodeState.title}
-								className="text-4xl !h-14 py-0 my-[4px] font-semibold w-full rounded-r-none"
+								className={`!h-14 py-0 my-[4px] font-semibold w-full rounded-r-none ${
+									nodeState.title.length > 18 ? 'text-3xl' : 'text-4xl'
+								}`}
 								onBlur={() => {
 									setIsEditingTitle(false);
-									saveChanges();
+									saveChanges(nodeState);
 								}}
 								onInput={event => {
 									handleTitleUpdate(event);
@@ -164,14 +174,21 @@ const GraphSheet: FC<GraphSheetProps> = ({
 									if (event.key === 'Enter') {
 										event.preventDefault();
 										setIsEditingTitle(false);
-										saveChanges();
+										saveChanges(nodeState);
 									}
 								}}
 								id="title-input"
 							/>
 						) : (
-							<SheetTitle onClick={() => setIsEditingTitle(true)} className="text-4xl w-full">
-								<Card className="border-[4px] p-2 !w-full rounded-r-none mr-[-16px]">
+							<SheetTitle
+								onClick={() => setIsEditingTitle(true)}
+								className={`w-full ${nodeState.title.length > 18 ? 'text-3xl' : 'text-4xl'}`}
+							>
+								<Card
+									className={`h-full flex items-center border-[4px] p-2 py-0 !w-full rounded-r-none mr-[-16px] ${
+										nodeState.title.length < 1 || nodeState.title.length > 18 ? '!h-16' : ''
+									}`}
+								>
 									{nodeState.title}
 								</Card>
 							</SheetTitle>
@@ -181,7 +198,6 @@ const GraphSheet: FC<GraphSheetProps> = ({
 								className="flex justify-center items-center rounded-md rounded-l-none bg-slate-700 bg-opacity-50 h-16 w-16 text-4xl"
 								onClick={() => setIsEditingTitle(true)}
 							>
-								{/* <Search width="42px" height="80px" /> */}
 								<EditIcon className="w-10 h-full" />
 							</div>
 						</Label>
@@ -193,7 +209,7 @@ const GraphSheet: FC<GraphSheetProps> = ({
 						placeholder="Skriv dit historieafsnit her..."
 						value={nodeState.storyText}
 						onChange={handleStoryTextChange}
-						onBlur={saveChanges}
+						onBlur={() => saveChanges(nodeState)}
 					/>
 					<div className="flex flex-col w-full gap-2">
 						<Label className="text-xl">Hvilken type er det her afsnit?</Label>
@@ -220,12 +236,14 @@ const GraphSheet: FC<GraphSheetProps> = ({
 					</div>
 					<div className="flex flex-col gap-4 w-full">
 						{renderChoices()}
-						{!hasMaxChildren && <SheetAddChoiceButton onClick={() => addChoice()} />}
+						{(nodeInfo.storyNodeOptions && nodeInfo.storyNodeOptions?.length > 3) || (
+							<SheetAddChoiceButton onClick={() => addChoice()} />
+						)}
 					</div>
 				</Card>
 				<SheetFooter>
 					<SheetClose asChild>
-						<Button onClick={saveChanges}>GEM</Button>
+						<Button onClick={() => console.log("This doesn't do anything really")}>GEM</Button>
 					</SheetClose>
 					<AlertDialog
 						title={'Er du sikker på, at du vil slette dette afsnit?'}
