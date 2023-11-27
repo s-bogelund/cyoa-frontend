@@ -17,7 +17,8 @@ const GET_STORY_FOR_STORY_PAGE = gql`
             difficulty
             storyNodes {
                 id
-            encounterType
+                encounterType
+                isRootNode
             }
             ratings {
                 ratingValue

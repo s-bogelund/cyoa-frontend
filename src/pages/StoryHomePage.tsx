@@ -1,13 +1,14 @@
 import { useQuery } from '@apollo/client';
 import React, { FC, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import GET_STORY_FOR_STORY_PAGE, { GetStoryForStoryPageQueryResult } from '@/api/queries/getStoryForStoryPage';
 import { Button } from '@/components/shadcn/ui/button';
 import { Card, CardContent, CardTitle } from '@/components/shadcn/ui/card';
 import StoryDescription from '@/components/story-homepage/StoryDescription';
 import StoryInfo from '@/components/story-homepage/StoryInfoContainer';
-import { Story } from '@/gql/graphql';
+import { Story, StoryNode } from '@/gql/graphql';
+import { GetStartNodeOfStoryQueryResult } from '@/api/queries/getStartNodeOfStory';
 
 // TODO: Should probably not be prop - should receive from backend/slug
 // TODO: Should check whether the story has already been started/completed by the user and display accordingly
@@ -22,6 +23,7 @@ const openStoryInNewTab = () => {
 const StoryPage: FC<StoryPageProps> = ({ title }) => {
 	const [hasStarted, setHasStarted] = useState(false);
 	const [searchParams, setSearchParams] = useSearchParams();
+	const navigate = useNavigate();
 
 	const {loading, error, data} = useQuery<GetStoryForStoryPageQueryResult>(
 		GET_STORY_FOR_STORY_PAGE,
@@ -29,15 +31,16 @@ const StoryPage: FC<StoryPageProps> = ({ title }) => {
 	);
 	
 	if (loading) {
-		console.log("loading", loading)
 		return <p>Loading...</p>;
 	} 
 	if (error) {
-		console.log("error", error)
-		return <p>Error: {error?.message}</p>;
+		return <p>Error: {error.message} </p>;
 	}
 	if (data) {
 		const story: Story = data.stories[0];
+		const startNode = story.storyNodes?.find(node => node.isRootNode === true);
+
+		console.log(story, startNode);
 
 		const ratings = story.ratings ? story.ratings : [];
 		const averageRating = ratings!.reduce((total, rating) => total + rating.ratingValue, 0) / ratings?.length;
@@ -69,7 +72,10 @@ const StoryPage: FC<StoryPageProps> = ({ title }) => {
 						className="w-full h-fit"
 						onClick={() => {
 							setHasStarted(true);
-							// openStoryInNewTab();
+							navigate({
+								pathname: "/playnode",
+								search: `?storyNodeId=${startNode?.id}`
+							});
 						}}
 					>
 						Start Historien!
@@ -82,15 +88,6 @@ const StoryPage: FC<StoryPageProps> = ({ title }) => {
 			</Card>
 		);
 	}
-};
-
-const dummy = {
-	rating: 4.5,
-	difficulty: 3,
-	deaths: 10,
-	playtime: 4,
-	ageRating: 12,
-	nodes: 210,
 };
 
 export default StoryPage;
