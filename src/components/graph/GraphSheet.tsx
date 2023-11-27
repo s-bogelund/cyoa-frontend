@@ -1,12 +1,10 @@
-import { Search } from 'lucide-react';
-import { title } from 'process';
-import React, { ChangeEvent, FC, FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
-import { Edge, useReactFlow } from 'reactflow';
+import { ChangeEvent, FC, FormEvent, ReactNode, useState } from 'react';
 
 import { AddStoryNodePayload } from '@/api/mutations/story-node/addStoryNode';
+import { UpdateStoryNodeOptionPayload } from '@/api/mutations/story-node-option/updateStoryNodeOptions';
 import useStore from '@/graphStore';
-import { ExtendedNode, StoryNodeOptionType, StoryNodeType } from '@/types/graphTypes';
-import { useApolloClient } from '@apollo/client';
+import { StoryNodeType } from '@/types/graphTypes';
+
 import AlertDialog from '../generics/AlertDialog';
 import { Icons } from '../icons/Icons';
 import { Button } from '../shadcn/ui/button';
@@ -27,7 +25,6 @@ import { Textarea } from '../shadcn/ui/textarea';
 import EncounterType from './EncounterType';
 import SheetAddChoiceButton from './SheetAddChoiceButton';
 import SheetChoiceItem from './SheetChoiceItem';
-import { UpdateStoryNodeOptionPayload } from '@/api/mutations/story-node-option/updateStoryNodeOptions';
 
 const EditIcon = Icons.EditNode;
 
@@ -42,7 +39,6 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 	const [isEditingTitle, setIsEditingTitle] = useState<boolean>(false);
 	const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 	const { updateStoryNodeOption } = useStore();
-	const [hasMaxChildren, setHasMaxChildren] = useState<boolean>(false);
 	const addCustomNode = useStore(state => state.addCustomNode);
 	const getEdges = useStore(state => state.getEdgesByNodeId);
 	const getNode = useStore(state => state.getNodeById);
@@ -57,7 +53,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 		// Set a new timeout
 		const newTimeoutId = setTimeout(() => {
 			saveChanges(nodeState);
-		}, 1000); // Delay of 1 second
+		}, 4000);
 
 		setTimeoutId(newTimeoutId);
 	};
@@ -104,7 +100,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 		// Set a new timeout
 		const newTimeoutId = setTimeout(() => {
 			saveChanges(newNodeState);
-		}, 500); // Delay of 1 second
+		}, 5000); // Delay of 1 second
 
 		setTimeoutId(newTimeoutId);
 	};
@@ -140,7 +136,6 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 		const edges = getEdges(nodeState.id);
 		console.log('edges', edges);
 		console.log('AddChoice called', nodeState);
-		// if (edges && edges.length >= 3) setHasMaxChildren(true);
 
 		const newNode: AddStoryNodePayload = {
 			title: 'Ingen titel',
@@ -170,6 +165,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 								}`}
 								onBlur={() => {
 									setIsEditingTitle(false);
+									saveChanges(nodeState);
 								}}
 								onInput={event => {
 									handleTitleUpdate(event);
@@ -178,6 +174,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 									if (event.key === 'Enter') {
 										event.preventDefault();
 										setIsEditingTitle(false);
+										saveChanges(nodeState);
 									}
 								}}
 								id="title-input"
@@ -212,6 +209,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 						placeholder="Skriv dit historieafsnit her..."
 						value={nodeState.storyText}
 						onChange={handleStoryTextChange}
+						onBlur={() => saveChanges(nodeState)}
 					/>
 					<div className="flex flex-col w-full gap-2">
 						<Label className="text-xl">Hvilken type er det her afsnit?</Label>

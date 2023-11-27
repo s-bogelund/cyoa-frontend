@@ -28,15 +28,15 @@ import {
 	ADD_STORY_NODE_OPTION_MUTATION,
 	AddStoryNodeOptionPayload,
 } from './api/mutations/story-node-option/addStoryNodeOption';
-import { GET_STORY_QUERY } from './api/queries/getStory';
-import { ExtendedNode } from './types/graphTypes';
-import { convertGqlNodes, createEdgesFromStoryNodes } from './utils/convertGraphTypes';
-import { saveGraphStateLS } from './utils/graph';
-import { StoryNodeOption } from './gql/graphql';
 import {
 	UPDATE_STORY_NODE_OPTION_MUTATION,
 	UpdateStoryNodeOptionPayload,
 } from './api/mutations/story-node-option/updateStoryNodeOptions';
+import { GET_STORY_QUERY } from './api/queries/getStory';
+import { StoryNodeOption } from './gql/graphql';
+import { ExtendedNode } from './types/graphTypes';
+import { convertGqlNodes, createEdgesFromStoryNodes } from './utils/convertGraphTypes';
+import { saveGraphStateLS } from './utils/graph';
 
 const client = new ApolloClient({
 	uri: 'http://localhost:5186/graphql/', // Replace with your GraphQL endpoint
@@ -104,6 +104,26 @@ const useStore = create<RFState>((set, get) => {
 				});
 
 				console.log('Result:', result);
+				set(state => {
+					const nodeIndex = state.nodes.findIndex(n => n.id === node.id);
+					if (nodeIndex === -1) return state;
+					const newNode = {
+						...state.nodes[nodeIndex],
+						data: {
+							...state.nodes[nodeIndex].data,
+							title: node.title,
+							storyText: node.storyText,
+							encounterType: node.encounterType,
+							isCheckpoint: node.isCheckpoint,
+						},
+					};
+					const newNodes = [...state.nodes];
+					newNodes[nodeIndex] = newNode;
+					return {
+						nodes: newNodes,
+						edges: state.edges,
+					};
+				});
 			} catch (error) {
 				console.error('Error updating node:', error);
 			}
@@ -125,9 +145,13 @@ const useStore = create<RFState>((set, get) => {
 			}
 		},
 		addCustomNode: async (node: AddStoryNodePayload, parentId: string) => {
+			console.log('AddCustomNode');
+
 			console.log(`Adding node ${node} with parent ${parentId}`);
 			console.log('Node:', node);
 			const parentNode = get().getNodeById(parentId);
+			console.log('ParentNode:', parentNode);
+
 			if (!parentNode) return;
 			try {
 				const result = await client.mutate({
@@ -146,7 +170,7 @@ const useStore = create<RFState>((set, get) => {
 				console.log('Result:', result.data.addStoryNode);
 
 				const createdNode = {
-					...node,
+					...result.data.addStoryNode,
 					id: result.data.addStoryNode.id,
 				};
 

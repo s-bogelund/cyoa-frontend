@@ -72,25 +72,10 @@ const StoryNode: FC<StoryNodeProps> = ({
 		};
 
 		await addCustomNode(newNode, nodeData.id);
-		// addCustomEdge(newEdge);
-		const { data } = await client.query({
-			query: GET_STORY_NODE_OPTIONS_QUERY,
-			variables: {
-				storyNodeId: nodeData.id,
-			},
-		});
-		console.log('data', data);
-		const currentNoOfChildren = store.getEdgesByNodeId(id)?.length || 0;
-
-		if (currentNoOfChildren > 3) {
-			console.log('Max children reached');
-
-			setHasMaxChildren(true);
-		}
 
 		const newStore = useStore.getState();
 		console.log('Added node', newStore);
-	}, [hasMaxChildren, nodeData.storyId, nodeData.id, addCustomNode, client, store, id]);
+	}, [hasMaxChildren, nodeData.storyId, nodeData.id, addCustomNode]);
 
 	const updateNodeInStore = (nodeInfo: StoryNodeType) => {
 		const mutation: UpdateStoryNodePayload = {
@@ -101,19 +86,6 @@ const StoryNode: FC<StoryNodeProps> = ({
 			isCheckpoint: nodeInfo.isCheckpoint,
 		};
 		store.updateStoryNode(mutation);
-		setNodes(nodes => {
-			const newNodes = nodes.map(node => {
-				if (node.id === nodeInfo.id) {
-					return {
-						...node,
-						data: nodeInfo,
-					};
-				}
-				return node;
-			});
-			return newNodes;
-		});
-		store.saveGraphState();
 	};
 
 	const decideBgColor = () => {
