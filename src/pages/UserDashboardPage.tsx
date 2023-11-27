@@ -5,6 +5,7 @@ import { Button } from '@/components/shadcn/ui/button'
 import { Card, CardContent, CardTitle } from '@/components/shadcn/ui/card'
 import DashboardReaderStorySummary from '@/components/user-dashboard/DashboardReaderStorySummary'
 import DashboardWriterStorySummary from '@/components/user-dashboard/DashboardWriterStorySummary'
+import { Playthrough } from '@/gql/graphql'
 
 type User = {
     firstName: string,
@@ -37,50 +38,48 @@ export type Story = {
     id: string,
     title: string,
     difficulty: string,
-    targetAge: number
+    targetAge: number,
+    playtime: number,
+    description: string
 }
 
 // TODO: Playthrough should instead use the story and storynode id's and then query for the respective story and storynode to put in the component
 // TODO: Playthrough is given from the parent, that should query for the user latest playthrough
 
-export type Playthrough = {
-    story: Story,
-    currentNode: StoryNode,
-    isOngoing: boolean,
-    isCompleted: boolean,
-    isPlayerDead: boolean
-}
+// export type Playthrough = {
+//     story: Story,
+//     currentNode: StoryNode,
+//     isOngoing: boolean,
+//     isCompleted: boolean,
+//     isPlayerDead: boolean
+// }
 
-const dummyPlaythrough: Playthrough = {
-    story: {
-        id: "123123123",
-        title: "Troldmanden fra Ildbjerget",
-        difficulty: "3",
-        targetAge: 10,
-    },
-    currentNode: {
-        id: "111",
-            title: "Et samtale-afsnit",
-            storyText: "Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer. Her kommer der til at stå en hel masse tekst, der gerne skulle blive kortet af, så brugeren kun ser en lille smule tekst og så 3 punktummer.",
-            encounterType: "Samtale",
-            isCheckpoint: true
-    },
-    isOngoing: true,
+
+
+const dummyPlaythrough: Playthrough = {     // Query for playthrough with latest "Modified"
     isCompleted: false,
-    isPlayerDead: false
+    isOngoing: true,
+    isDeleted: false,
+    currentNode: "f24c1777-3311-4a39-8662-27dd7190e2cd",
+    isPlayerDead: false,
+    storyId: "8e3cd742-dce3-48f8-b101-cd80ead59df9",
+    userId: "2c7418c1-eb16-4ed3-8c45-539bfbff224d",
+    createdAt: new Date(),
+    id: "2c7418c1-eb16-4ed3-8c45-539bfbff2211",     // This is a bogus value
+    modifiedAt: new Date()
 }
 
 const dummyLatestStory: Story = {
-    id: "3333333322",
+    id: "00f2e5e0-0db5-47fa-99ef-9b4da772f104",
     title: "Dødens Labyrint",
-    difficulty: "3",
-    targetAge: 16
+    difficulty: "medium",
+    targetAge: 16,
+    playtime: 4,
+    description: "Her er der en beskrivelse"
 }
 
 const UserDashboardPage: FC<UserDashboardProps> = () => {
     const navigate = useNavigate();
-
-    // TODO WIP: Alter layout based on viewport-width (xl: done, l: wip, md: wip)
 
   return (
     <Card className='flex flex-col w-full h-full mt-8 gap-10 md:w-[80%] lg:w-[75%] xl:min-w-[1000px] xl:w-[50%] '>
@@ -101,14 +100,14 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
             <Card className='flex flex-row justify-evenly p-6'>
                 <Button
                     className='h-32 text-lg w-[30%]'
-                    onClick={() => navigate("/search-story")}
+                    onClick={() => navigate("/browse")}
                 >
                     Finde en ny historie at læse
                 </Button>
                 {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
                 <Button
                     className='h-32 text-lg w-[30%]'
-                    onClick={() => navigate("/graph-test")}
+                    onClick={() => navigate("/writer-summary")}
                 >
                     Skrive en ny historie
                 </Button>
@@ -122,12 +121,15 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                 <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
                         <DashboardReaderStorySummary
-                            playthrough={dummyPlaythrough}
+                            currentNodeId={dummyPlaythrough.currentNode}
                         />
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
-                        onClick={() => navigate("/search-story")}
+                        onClick={() => navigate({
+                            pathname: "/playnode",
+                            search: `?storyNodeId=${dummyPlaythrough.currentNode}`
+                        })}
                         >
                         Fortsæt historien
                     </Button>
@@ -135,11 +137,14 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                 {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
                 <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
-                        <DashboardWriterStorySummary story={dummyLatestStory} />
+                        <DashboardWriterStorySummary storyId={dummyLatestStory.id} />
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
-                        onClick={() => navigate("/writer-story-summary")}
+                        onClick={() => navigate({
+                            pathname: "/writer-summary",
+                            search: `?storyId=${dummyLatestStory.id}`
+                        })}
                         >
                         Skriv videre
                     </Button>

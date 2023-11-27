@@ -17,19 +17,15 @@ const navbarElements = [
 	},
 	{
 		text: 'SearchPageView',
-		linkTo: '/search-story',
+		linkTo: '/browse',
 	},
 	{
 		text: 'GraphTestView',
-		linkTo: '/graph-test',
-	},
-	{
-		text: 'UserDashboard',
-		linkTo: '/user-dashboard',
+		linkTo: '/graph',
 	},
 	{
 		text: 'WriterStorySummary',
-		linkTo: '/writer-story-summary',
+		linkTo: '/writer-summary',
 	},
 ];
 

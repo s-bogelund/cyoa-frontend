@@ -1,12 +1,15 @@
 import React, { FC, ReactNode } from 'react';
 
 import OptionButton from './OptionButton';
+import { StoryNodeOption } from '@/gql/graphql';
+import { useNavigate } from 'react-router-dom';
 
 type NodeOptionsProps = {
-	options?: string[];
+	options?: StoryNodeOption[];
 };
 
 const NodeOptions: FC<NodeOptionsProps> = ({ options }) => {
+	const navigate = useNavigate();
 	let gridClass =
 		options && options.length % 2
 			? `grid-cols-1 grid-rows-${options.length} sm:grid-rows-2 sm:grid-cols-2`
@@ -16,8 +19,11 @@ const NodeOptions: FC<NodeOptionsProps> = ({ options }) => {
 		<div className={`grid h-fit w-full gap-2 ${gridClass}`}>
 			{options
 				? options.map((option, index) => (
-						<OptionButton key={index} onClick={() => console.log('Hello')} className="">
-							{option}
+						<OptionButton key={index} onClick={() => navigate({
+							pathname: "/playnode",
+							search: `?storyNodeId=${option.destinationNode}`
+						})}>
+							{option.optionText}
 						</OptionButton>
 				  ))
 				: renderFallBackOptions()}
