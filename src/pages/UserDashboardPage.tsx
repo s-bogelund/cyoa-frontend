@@ -5,114 +5,81 @@ import { Button } from '@/components/shadcn/ui/button'
 import { Card, CardContent, CardTitle } from '@/components/shadcn/ui/card'
 import DashboardReaderStorySummary from '@/components/user-dashboard/DashboardReaderStorySummary'
 import DashboardWriterStorySummary from '@/components/user-dashboard/DashboardWriterStorySummary'
-import { Playthrough } from '@/gql/graphql'
+import { Playthrough, Story, User } from '@/gql/graphql'
+import { useQuery } from '@apollo/client'
+import GET_USER_INFO_FOR_DASHBOARD, { GetUserInfoForDashboardQueryResult } from '@/api/queries/getUserInfoForDashboard'
 
-type User = {
-    firstName: string,
-    lastName: string,
-    sectionsRead: number,
-    sectionsWritten: number
-}
-
+// Can be setup to take in a user, when proper auth is implemented (out of scope)
 type UserDashboardProps = {
     // user: User;
 }
 
-const dummyUser: User = {
-    firstName: "Flemming",
-    lastName: "Flemmingsen",
-    sectionsRead: 189,
-    sectionsWritten: 565
-}
-
-// TODO: Use correct type definitions once codegen is setup
-export type StoryNode = {
-    id: string
-    title: string,
-    storyText: string,
-    encounterType: string,
-    isCheckpoint: boolean
-}
-
-export type Story = {
-    id: string,
-    title: string,
-    difficulty: string,
-    targetAge: number,
-    playtime: number,
-    description: string
-}
-
-// TODO: Playthrough should instead use the story and storynode id's and then query for the respective story and storynode to put in the component
-// TODO: Playthrough is given from the parent, that should query for the user latest playthrough
-
-// export type Playthrough = {
-//     story: Story,
-//     currentNode: StoryNode,
-//     isOngoing: boolean,
-//     isCompleted: boolean,
-//     isPlayerDead: boolean
-// }
-
-
-
-const dummyPlaythrough: Playthrough = {     // Query for playthrough with latest "Modified"
-    isCompleted: false,
-    isOngoing: true,
-    isDeleted: false,
-    currentNode: "f24c1777-3311-4a39-8662-27dd7190e2cd",
-    isPlayerDead: false,
-    storyId: "8e3cd742-dce3-48f8-b101-cd80ead59df9",
-    userId: "2c7418c1-eb16-4ed3-8c45-539bfbff224d",
-    createdAt: new Date(),
-    id: "2c7418c1-eb16-4ed3-8c45-539bfbff2211",     // This is a bogus value
-    modifiedAt: new Date()
-}
-
-const dummyLatestStory: Story = {
-    id: "00f2e5e0-0db5-47fa-99ef-9b4da772f104",
-    title: "Dødens Labyrint",
-    difficulty: "medium",
-    targetAge: 16,
-    playtime: 4,
-    description: "Her er der en beskrivelse"
-}
+const dummyUserId: string = "80e04691-dfd7-4c61-b65a-1b84c10e4659";
 
 const UserDashboardPage: FC<UserDashboardProps> = () => {
     const navigate = useNavigate();
 
-  return (
-    <Card className='flex flex-col w-full h-full mt-8 gap-10 md:w-[80%] lg:w-[75%] xl:min-w-[1000px] xl:w-[50%] '>
-        <Card className='text-center'>
-            <CardTitle className='text-4xl mb-8'>
-                Hej {dummyUser.firstName}!
-            </CardTitle>
-        </Card>
-        <Card>
-            <CardContent className=''>
-                Du har læst {dummyUser.sectionsRead} afsnit den seneste måned og selv skrevet {dummyUser.sectionsWritten} afsnit. Godt gået!
-            </CardContent>
-        </Card>
-        <Card className='border-2 p-4'>
-            <CardContent className='text-2xl'>
-                Hvad vil du gerne lave i dag?
-            </CardContent>
-            <Card className='flex flex-row justify-evenly p-6'>
-                <Button
-                    className='h-32 text-lg w-[30%]'
-                    onClick={() => navigate("/browse")}
-                >
-                    Finde en ny historie at læse
-                </Button>
-                {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
-                <Button
-                    className='h-32 text-lg w-[30%]'
-                    onClick={() => navigate("/writer-summary")}
-                >
-                    Skrive en ny historie
-                </Button>
+    const { loading, error, data } = useQuery<GetUserInfoForDashboardQueryResult>(
+        GET_USER_INFO_FOR_DASHBOARD,
+        { variables: {idInput: dummyUserId}}
+    )
+
+    if (loading) {
+		return <p>Loading...</p>;
+	} 
+	if (error) {
+		return <p>Error: {error.message} </p>;
+	}
+	if (data) {
+        const user = data.users[0];
+
+        // TODO: Find a cleaner way to calculate nodesRead and nodesWritten. Probably by using "Array.reduce"
+        let nodesRead: number = 0;
+        user.playthroughs?.forEach(playthrough => {playthrough.visitedStoryNodes?.forEach(visitedNode => nodesRead++)})
+        
+        let nodesWritten: number = 0;
+        user.stories?.forEach(story => {story.storyNodes?.forEach(storyNode => nodesWritten++)});
+
+        const latestPlaythrough = findLatestPlaythrough(user);
+        const latestStory = findLatestStory(user);
+
+        return (
+            <Card className='flex flex-col w-full h-full mt-8 gap-10 md:w-[80%] lg:w-[75%] xl:min-w-[1000px] xl:w-[50%] '>
+            <Card className='text-center'>
+                <CardTitle className='text-4xl mb-8'>
+                    Hej {user.firstName}!
+                </CardTitle>
             </Card>
-        </Card>
+            <Card>
+                <CardContent className=''>
+                    Du har læst {nodesRead} afsnit den seneste måned og selv skrevet {nodesWritten} afsnit. Godt gået!
+                </CardContent>
+            </Card>
+            <Card className='border-2 p-4'>
+                <CardContent className='text-2xl'>
+                    Hvad vil du gerne lave i dag?
+                </CardContent>
+                <Card className='flex flex-row justify-evenly p-6'>
+                    <Button
+                        className='h-32 text-lg w-[30%]'
+                        onClick={() => navigate("/browse")}
+                    >
+                        Finde en ny historie at læse
+                    </Button>
+                    {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
+                    <Button
+                        className='h-32 text-lg w-[30%]'
+                        onClick={() => {
+                            // Create new story for the user and get the ID.
+                            // Pass ID into URL for writer-summary page to read and query with
+                            // Update navigate below to also include search-params, based on the created story's ID
+                            navigate("/writer-summary")
+                        }}
+                    >
+                        Skrive en ny historie
+                    </Button>
+                </Card>
+            </Card>
         <Card className='border-2 p-4'>
             <CardContent className='text-2xl'>
                 Du kan også fortsætte, hvor du slap
@@ -121,14 +88,14 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                 <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
                         <DashboardReaderStorySummary
-                            currentNodeId={dummyPlaythrough.currentNode}
+                            currentNodeId={latestPlaythrough?.currentNode}    // TODO: Replace with latest playthrough when value is available
                         />
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
                         onClick={() => navigate({
                             pathname: "/playnode",
-                            search: `?storyNodeId=${dummyPlaythrough.currentNode}`
+                            search: `?storyNodeId=${latestPlaythrough!.currentNode}`
                         })}
                         >
                         Fortsæt historien
@@ -137,13 +104,14 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
                 {/* TODO: Below button should link to the writers story view, when this view has been made, and onClick should take an input with the id*/}
                 <Card className='flex flex-col justify-between w-full sm:w-[45%] border-2 p-4'>
                     <Card>
-                        <DashboardWriterStorySummary storyId={dummyLatestStory.id} />
+                        {/* TODO: Replace with id of latest modified story when value is available */}
+                        <DashboardWriterStorySummary storyId={latestStory!.id} />
                     </Card>
                     <Button
                         className='text-lg w-full mt-4 self-end'
                         onClick={() => navigate({
                             pathname: "/writer-summary",
-                            search: `?storyId=${dummyLatestStory.id}`
+                            search: `?storyId=${latestStory!.id}`
                         })}
                         >
                         Skriv videre
@@ -152,7 +120,28 @@ const UserDashboardPage: FC<UserDashboardProps> = () => {
             </Card>
         </Card>
     </Card>
-  )
+)
+}
 }
 
 export default UserDashboardPage;
+
+function findLatestPlaythrough(input: User): Playthrough | undefined {
+    const latestPlaythrough = input.playthroughs?.reduce((latest, current) => {
+        let currentDate = new Date(current.modifiedAt);
+        let latestDate = new Date(latest.modifiedAt);
+        return currentDate.getTime() > latestDate.getTime() ? current : latest;
+    }, input.playthroughs[0]);
+
+    return latestPlaythrough;
+}
+
+function findLatestStory(input: User): Story | undefined {
+    const latestStory = input.stories?.reduce((latest, current) => {
+        let currentDate = new Date(current.modifiedAt);
+        let latestDate = new Date(latest.modifiedAt);
+        return currentDate.getTime() > latestDate.getTime() ? current : latest;
+    }, input.stories[0]);
+
+    return latestStory;
+}

@@ -30,21 +30,29 @@ const DashboardReaderStorySummary: FC<DashboardReaderStorySummaryProps> = ({ cur
   }
   if (data) {
     const storyNode = data.storyNodes[0];
-    return (
-      <Card className='flex flex-col border-2 items-center p-2'>
-      <Card className='h-fit text-2xl mb-3'>
-        {data.storyNodes[0].story?.title}
-      </Card>
-      <ReaderStoryElements storyNode={storyNode} />
-      <Card className='flex gap-6 text-lg w-full'>
-        <Textarea
-          value={storyNode.storyText ? storyNode.storyText : ""}
-          readOnly
-          />
-      </Card>
-    </Card>
-  )
-} 
+    if (storyNode.title && storyNode.storyText) {
+      return (
+        <Card className='flex flex-col border-2 items-center p-2'>
+          <Card className='h-fit text-2xl mb-3'>
+            {storyNode.story?.title}
+          </Card>
+          <ReaderStoryElements storyNode={storyNode} />
+          <Card className='flex gap-6 text-lg w-full'>
+            <Textarea
+              value={storyNode.storyText ? storyNode.storyText : ""}
+              readOnly
+              />
+          </Card>
+        </Card>
+      )
+    } else {
+      return (
+        <Card>
+          Error while fetching data.
+        </Card>
+      )
+    }
+  } 
 }
 
 export default DashboardReaderStorySummary
