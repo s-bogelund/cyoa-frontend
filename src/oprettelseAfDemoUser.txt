@@ -1,0 +1,112 @@
+// Hav denne query klar (så du kan se alt hvad du har lavet på demo-user):
+
+
+
+// Opret user:
+
+mutation {
+  addUser (input: {
+    firstName: "Demo"
+    lastName: "User"
+    authZeroUserId: "111-222-333-444-555"
+  }) {
+    id
+    firstName
+    lastName
+    authZeroUserId
+  }
+}
+
+// Brug id fra user til at oprette 2 stories
+
+// Story 1
+
+mutation {
+  addStory (input: {
+    description: "This is the first demo-story, connected to the demo-user"
+    difficulty: "easy"
+    playtime: 360
+    targetAge: 14
+    title: "Demo story 1"
+    userId: "<indsæt userId>"
+  }) {
+    id
+    title
+    difficulty
+    targetAge
+    playtime
+    description
+    userId
+  }
+}
+
+// Opret 2 nodes for hver story (Node 1 er allerede lavet automatisk)
+
+mutation {
+  addStoryNode (input: {
+    storyId: "<indsæt storyId>"
+    encounterType: "conversation"
+    storyText: "This is story node 2 for demo story 1"
+    title: "Story node 2"
+    isCheckpoint: false
+  }) {
+    id
+    storyId
+    title
+    storyText
+  }
+}
+
+// Opret 2 options for hver story node
+
+mutation {
+  addStoryNodeOption(
+    input: {
+      storyNodeId: "<id for story node denne option skal tilføjes til>"
+      destinationNode: "<id for den node denne option fører til>"
+      optionText: "Go to node 2"
+    }
+  ) {
+    id
+    storyNodeId
+    destinationNode
+    optionText
+  }
+}
+
+// Opret 2 playthroughs for brugeren
+
+mutation {
+  addPlaythrough(
+    input: {
+      userId: "<demo-brugers id>"
+      storyId: "<demo-storys id>"
+      currentNode: "<id fra node i demo-story>"
+      isCompleted: false
+      isOngoing: true
+      isPlayerDead: false
+    }
+  ) {
+    userId
+    storyId
+    currentNode
+  }
+}
+
+// Opret visited nodes for de 2 playthroughs (hvis man står på en node lige nu, så tæller dem som en visited node)
+
+mutation {
+  addVisitedStoryNode(
+    input: {
+      playthroughId: "<playthrough id>"
+      previousNode: "<forrige nodes id (kun hvis det ikke er den første)>"
+      storyNodeId: "<id for den node man står på>"
+    }
+  ) {
+    id
+    playthroughId
+    storyNodeId
+    previousNode
+  }
+}
+
