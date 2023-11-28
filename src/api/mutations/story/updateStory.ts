@@ -9,7 +9,6 @@ export const UPDATE_STORY_MUTATION = gql`
 			targetAge
 			playtime
 			description
-			modifiedAt
 		}
 	}
 `;
