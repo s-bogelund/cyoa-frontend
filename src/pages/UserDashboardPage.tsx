@@ -14,7 +14,7 @@ type UserDashboardProps = {
     // user: User;
 }
 
-const dummyUserId: string = "80e04691-dfd7-4c61-b65a-1b84c10e4659";
+export const dummyUserId: string = "80e04691-dfd7-4c61-b65a-1b84c10e4659";
 
 const UserDashboardPage: FC<UserDashboardProps> = () => {
     const navigate = useNavigate();
