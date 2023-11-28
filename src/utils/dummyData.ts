@@ -1,91 +1,96 @@
-import { Edge, Node } from 'reactflow';
+import { Edge } from 'reactflow';
 
-export const gameInfos: GameInfo[] = [
-	{ title: 'Moonlit Sorcery', age: 4, rating: 1.2, completionTime: 1, difficulty: 1 },
-	{ title: 'Chronicles of the Lost Planet', age: 6, rating: 2.6, completionTime: 2, difficulty: 2 },
-	{ title: 'The Wizard’s Enigma', age: 8, rating: 3.2, completionTime: 3, difficulty: 3 },
-	{ title: 'Ghosts of the Nebula', age: 10, rating: 4.8, completionTime: 4, difficulty: 1 },
-	{
-		title: 'Dragons in the Ether and other stuff to make it longer',
-		age: 12,
-		rating: 4.9,
-		completionTime: 5,
-		difficulty: 2,
-	},
-	{ title: 'Echoes from the Abyss', age: 14, rating: 1.9, completionTime: 6, difficulty: 3 },
-	{ title: 'Forgotten Realms Reclaimed', age: 16, rating: 2.7, completionTime: 7, difficulty: 1 },
-	{ title: 'Celestial Knights', age: 18, rating: 3.6, completionTime: 8, difficulty: 2 },
-	{ title: 'Quest for the Mystic Relic', age: 4, rating: 4.1, completionTime: 9, difficulty: 3 },
-	{ title: 'Guardians of the Starlight', age: 6, rating: 4.4, completionTime: 10, difficulty: 1 },
-	{ title: 'Serpent’s Scale', age: 8, rating: 1.9, completionTime: 11, difficulty: 2 },
-	{ title: 'Temporal Nexus', age: 10, rating: 2.9, completionTime: 12, difficulty: 3 },
-	{ title: 'Winds of the Elders', age: 12, rating: 3.3, completionTime: 1, difficulty: 1 },
-	{ title: 'Eclipsing Shadows', age: 14, rating: 4.5, completionTime: 2, difficulty: 2 },
-	{ title: 'Oaths in the Dark', age: 16, rating: 4.6, completionTime: 3, difficulty: 3 },
-];
+import { ExtendedNode } from '@/types/graphTypes';
 
-const position = { x: 0, y: 0 };
-
-// export const initialNodes: Node[] = [
+// export const gameInfos: GameInfo[] = [
+// 	{ title: 'Moonlit Sorcery', age: 4, rating: 1.2, completionTime: 1, difficulty: 1 },
+// 	{ title: 'Chronicles of the Lost Planet', age: 6, rating: 2.6, completionTime: 2, difficulty: 2 },
+// 	{ title: 'The Wizard’s Enigma', age: 8, rating: 3.2, completionTime: 3, difficulty: 3 },
+// 	{ title: 'Ghosts of the Nebula', age: 10, rating: 4.8, completionTime: 4, difficulty: 1 },
 // 	{
-// 		id: '1',
-// 		type: 'testNode',
-// 		data: { label: 'Input' },
-// 		position: position,
+// 		title: 'Dragons in the Ether and other stuff to make it longer',
+// 		age: 12,
+// 		rating: 4.9,
+// 		completionTime: 5,
+// 		difficulty: 2,
 // 	},
-// 	{
-// 		id: '2',
-// 		type: 'testNode',
-// 		data: { label: 'Default' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '3',
-// 		type: 'testNode',
-// 		data: { label: 'Output' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '4',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 1' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '5',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 2' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '6',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 3' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '7',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 4' },
-// 		position: position,
-// 	},
-// 	{
-// 		id: '8',
-// 		type: 'testNode',
-// 		data: { label: 'New Node 5' },
-// 		position: position,
-// 	},
+// 	{ title: 'Echoes from the Abyss', age: 14, rating: 1.9, completionTime: 6, difficulty: 3 },
+// 	{ title: 'Forgotten Realms Reclaimed', age: 16, rating: 2.7, completionTime: 7, difficulty: 1 },
+// 	{ title: 'Celestial Knights', age: 18, rating: 3.6, completionTime: 8, difficulty: 2 },
+// 	{ title: 'Quest for the Mystic Relic', age: 4, rating: 4.1, completionTime: 9, difficulty: 3 },
+// 	{ title: 'Guardians of the Starlight', age: 6, rating: 4.4, completionTime: 10, difficulty: 1 },
+// 	{ title: 'Serpent’s Scale', age: 8, rating: 1.9, completionTime: 11, difficulty: 2 },
+// 	{ title: 'Temporal Nexus', age: 10, rating: 2.9, completionTime: 12, difficulty: 3 },
+// 	{ title: 'Winds of the Elders', age: 12, rating: 3.3, completionTime: 1, difficulty: 1 },
+// 	{ title: 'Eclipsing Shadows', age: 14, rating: 4.5, completionTime: 2, difficulty: 2 },
+// 	{ title: 'Oaths in the Dark', age: 16, rating: 4.6, completionTime: 3, difficulty: 3 },
 // ];
 
-// export const initialEdges: Edge[] = [
-// 	{ id: 'e1-2', source: '1', target: '2' },
-// 	{ id: 'e2-3', source: '2', target: '3' },
-// 	{ id: 'e1-4', source: '1', target: '4' },
-// 	{ id: 'e1-5', source: '1', target: '5' },
-// 	{ id: 'e1-6', source: '1', target: '6' },
-// 	{ id: 'e1-7', source: '1', target: '7' },
-// 	{ id: 'e1-8', source: '1', target: '8' },
-// ] as Edge[];
+// Dummy nodes data
+export const nodes: ExtendedNode[] = [
+	{
+		id: '1',
+		type: 'testNode',
+		position: { x: 250, y: 5 },
+		data: {
+			id: '1',
+			title: 'Start',
+			storyText: 'The adventure begins...',
+			encounterType: 'conversation',
+			isCheckpoint: true,
+		},
+	},
+	{
+		id: '2',
+		type: 'testNode',
+		position: { x: 100, y: 100 },
+		data: {
+			id: '2',
+			title: 'Crossroad',
+			storyText: 'You arrive at a crossroad.',
+			encounterType: 'combat',
+			isCheckpoint: false,
+		},
+	},
+	{
+		id: '3',
+		type: 'testNode',
+		position: { x: 400, y: 100 },
+		data: {
+			id: '3',
+			title: 'Old Tree',
+			storyText: 'A mysterious tree whispers secrets of the past.',
+			encounterType: 'conversation',
+			isCheckpoint: false,
+		},
+	},
+	{
+		id: '4',
+		type: 'testNode',
+		position: { x: 250, y: 200 },
+		data: {
+			id: '4',
+			title: 'Cave Entrance',
+			storyText: 'A dark cave looms before you. Dare you enter?',
+			encounterType: 'death',
+			isCheckpoint: false,
+		},
+	},
+];
+
+// Dummy edges data
+const edges: Edge[] = [
+	{ id: 'e1-2', source: '1', target: '2' },
+	{ id: 'e1-3', source: '1', target: '3' },
+	{ id: 'e2-4', source: '2', target: '4' },
+	{ id: 'e3-4', source: '3', target: '4' },
+];
+
+// Combine nodes and edges into a graph structure
+export const dummyGraph = {
+	nodes,
+	edges,
+};
 
 export const jsonGraph = {
 	nodes: [

@@ -1,23 +1,14 @@
-import ELK, { ElkNode } from 'elkjs/lib/elk.bundled.js';
-import { useCallback, useMemo, useState } from 'react';
-import ReactFlow, {
-	Edge,
-	applyEdgeChanges,
-	applyNodeChanges,
-	Node,
-	NodeTypes,
-	useReactFlow,
-	NodeChange,
-	MiniMap,
-	Background,
-	Controls,
-	ControlButton,
-} from 'reactflow';
-import BasicStoryNode from '@/components/graph/CustomNode';
-import useStore, { RFState } from '@/graphStore';
-import { shallow } from 'zustand/shallow';
-import { Button } from '@/components/shadcn/ui/button';
 import dagre from 'dagre';
+import { useEffect, useMemo, useState } from 'react';
+import ReactFlow, { Background, Controls, Edge, MiniMap, Node, NodeTypes } from 'reactflow';
+import { shallow } from 'zustand/shallow';
+
+import useStore, { RFState } from '@/graphStore';
+import { useQuery } from '@apollo/client';
+import { GET_STORY_QUERY } from '@/api/queries/getStory';
+import { StoryNode } from '@/gql/graphql';
+import { convertGqlNodes } from '@/utils/convertGraphTypes';
+import { useSearchParams } from 'react-router-dom';
 
 const selector = (state: RFState) => ({
 	nodes: state.nodes,
@@ -25,6 +16,8 @@ const selector = (state: RFState) => ({
 	onNodesChange: state.onNodesChange,
 	onEdgesChange: state.onEdgesChange,
 	onConnect: state.onConnect,
+	loadGraphData: state.loadGraphData,
+	subscribe: state.subscribe,
 });
 
 const layoutGraph = (nodes: Node[], edges: Edge[]) => {
@@ -57,11 +50,29 @@ const layoutGraph = (nodes: Node[], edges: Edge[]) => {
 	});
 };
 
-const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
-	const { nodes, edges, onNodesChange, onEdgesChange } = useStore(selector, shallow);
-
+const GraphPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
+	const { nodes, edges, onNodesChange, onEdgesChange, loadGraphData, subscribe } =
+		useStore(selector);
+	const [searchParams, setSearchParams] = useSearchParams();
+	useEffect(() => {
+		let storyId = searchParams.get('storyId');
+		if (storyId) {
+			loadGraphData(storyId);
+		}
+	}, [loadGraphData, searchParams]);
+	const [version, setVersion] = useState(0);
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
 
+	useEffect(() => {
+		const unsubscribe = subscribe(() => {
+			// Update the state to trigger re-render
+			console.log('Store updated');
+			setVersion(v => v + 1);
+		});
+		return () => {
+			unsubscribe();
+		};
+	}, [subscribe]);
 	return (
 		<>
 			<ReactFlow
@@ -71,8 +82,8 @@ const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 				onEdgesChange={onEdgesChange}
 				fitView
 				nodeTypes={nodeTypes}
-				className="h-[90vh]"
 				proOptions={{ hideAttribution: true }}
+				minZoom={0.25}
 			>
 				<MiniMap
 					zoomable
@@ -88,15 +99,11 @@ const GraphTestPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 					}}
 				/>
 				<Background color="#ccc" />
-				<Controls>
-					<ControlButton
-						onClick={() => alert('Something magical just happened. ✨')}
-					></ControlButton>
-				</Controls>
+				<Controls></Controls>
 			</ReactFlow>
 			{/* <Button onClick={() => console.log(nodes, edges)}>+</Button> */}
 		</>
 	);
 };
 
-export default GraphTestPage;
+export default GraphPage;

@@ -24,7 +24,7 @@ module.exports = {
 		'sort-imports': 'off',
 		'simple-import-sort/imports': 'warn',
 		'@typescript-eslint/explicit-module-boundary-types': 0,
-		'unused-imports/no-unused-imports': 'warn',
+		'unused-imports/no-unused-imports': 'off',
 		'react-hooks/exhaustive-deps': 'error',
 	},
 };

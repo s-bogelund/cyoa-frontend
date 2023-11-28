@@ -1,5 +1,10 @@
 import { AiOutlineNodeIndex } from 'react-icons/ai';
-import { PiClock, PiCross } from 'react-icons/pi';
+import { BiEdit } from 'react-icons/bi';
+import { CgAddR } from 'react-icons/cg';
+import { HiDotsVertical } from 'react-icons/hi';
+import { MdQuestionMark } from 'react-icons/md';
+import { PiClock, PiCross, PiSword } from 'react-icons/pi';
+import { SlBubbles } from 'react-icons/sl';
 export type IconProps = { text?: string } & React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
@@ -85,13 +90,46 @@ export const Icons = {
 	Death: (props: IconProps) => <PiCross {...props} />,
 	Playtime: (props: IconProps) => <PiClock {...props} />,
 	Nodes: (props: IconProps) => <AiOutlineNodeIndex {...props} />,
+	Sword: (props: IconProps) => <PiSword {...props} />,
+	Speech: (props: IconProps) => <SlBubbles {...props} />,
+	MenuDots: (props: IconProps) => <HiDotsVertical {...props} />,
+	QuestionMark: (props: IconProps) => <MdQuestionMark {...props} />,
+	AddNode: (props: IconProps) => <CgAddR {...props} />,
+	EditNode: (props: IconProps) => <BiEdit {...props} />,
 };
 
-export const getDifficultyIcon = (difficulty: number, className: string) => {
-	const skulls = Array.from({ length: difficulty }, (_, i) => (
-		<Icons.Skull className={className} key={i} />
-	));
-
+export const getDifficultyIcon = (difficulty: number | string, className: string) => {
+	let skulls: JSX.Element | JSX.Element[];
+	if (typeof difficulty !== 'string') {
+		skulls = Array.from({ length: difficulty }, (_, i) => (
+			<Icons.Skull className={className} key={i} />
+		));
+	} else {
+		switch (difficulty) {
+			case 'easy':
+				skulls = <Icons.Skull className={className} />;
+				break;
+			case 'medium':
+				skulls = (
+					<>
+						<Icons.Skull className={className} />
+						<Icons.Skull className={className} />
+					</>
+				);
+				break;
+			case 'hard':
+				skulls = (
+					<>
+						<Icons.Skull className={className} />
+						<Icons.Skull className={className} />
+						<Icons.Skull className={className} />
+					</>
+				);
+				break;
+			default:
+				skulls = <Icons.Skull className={className} />;
+		}
+	}
 	const DifficultyIcon = () => <>{skulls}</>;
 
 	return DifficultyIcon;

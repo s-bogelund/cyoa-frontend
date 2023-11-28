@@ -15,8 +15,7 @@ import { Toaster } from './components/shadcn/ui/toaster.tsx';
 import i18n from './i18n.ts';
 
 const client = new ApolloClient({
-	// TODO: Change below to the real API
-	uri: 'https://flyby-router-demo.herokuapp.com/',
+	uri: 'http://localhost:5186/graphql/',
 	cache: new InMemoryCache(),
 });
 

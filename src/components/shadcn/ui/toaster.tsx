@@ -1,10 +1,5 @@
 import {
-	Toast,
-	ToastClose,
-	ToastDescription,
-	ToastProvider,
-	ToastTitle,
-	ToastViewport,
+    Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport
 } from '@/components/shadcn/ui/toast';
 import { useToast } from '@/components/shadcn/ui/use-toast';
 

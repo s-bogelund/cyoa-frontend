@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+graphql.schema.json
+src/utils/__pycache__/

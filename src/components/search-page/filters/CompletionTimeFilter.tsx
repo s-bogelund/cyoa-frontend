@@ -1,10 +1,12 @@
 import React, { FC, useState } from 'react';
-import FilterWrapper from './FilterWrapper';
+
 import { Label } from '@/components/shadcn/ui/label';
 import { Slider } from '@/components/shadcn/ui/slider';
 
+import FilterWrapper from './FilterWrapper';
+
 type CompletionTimeFilterProps = {
-	onChange: (value: number | boolean) => void;
+	onChange: (value: number) => void;
 	isSet?: boolean;
 };
 
@@ -17,7 +19,7 @@ const CompletionTimeFilter: FC<CompletionTimeFilterProps> = ({ onChange }) => {
 			setIsSet(true);
 			onChange(value);
 		} else {
-			onChange(false);
+			onChange(18);
 			setIsSet(false);
 		}
 		setTime(value);

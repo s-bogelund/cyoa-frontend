@@ -1,10 +1,12 @@
-import React, { FC, useState } from 'react';
-import FilterWrapper from './FilterWrapper';
-import { Slider } from '@/components/shadcn/ui/slider';
 import { Label } from '@radix-ui/react-label';
+import React, { FC, useState } from 'react';
+
+import { Slider } from '@/components/shadcn/ui/slider';
+
+import FilterWrapper from './FilterWrapper';
 
 type AgeFilterProps = {
-	onChange: (value: number | boolean) => void;
+	onChange: (value: number) => void;
 	isSet?: boolean;
 };
 
@@ -17,7 +19,7 @@ const AgeFilter: FC<AgeFilterProps> = ({ onChange }) => {
 			setIsSet(true);
 			onChange(value);
 		} else {
-			onChange(false);
+			onChange(Infinity);
 			setIsSet(false);
 		}
 		setAge(value);

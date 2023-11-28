@@ -14,8 +14,8 @@
 		"sortOptions": {
 			"completionTime": "Gennemførelsestid",
 			"difficulty": "Sværhedsgrad",
-			"age": "Alder",
-			"rating": "Bedømmelse",
+			"targetAge": "Alder",
+			"ratings": "Bedømmelse",
 			"descending": "Faldende",
 			"ascending": "Stigende"
 		}

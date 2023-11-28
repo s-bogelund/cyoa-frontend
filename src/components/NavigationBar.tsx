@@ -2,10 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import {
-	NavigationMenu,
-	NavigationMenuItem,
-	NavigationMenuList,
-	navigationMenuTriggerStyle,
+    NavigationMenu, NavigationMenuItem, NavigationMenuList, navigationMenuTriggerStyle
 } from '@/components/shadcn/ui/navigation-menu';
 
 export type NavigationBarElement = {
@@ -44,13 +41,13 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ elements }) => {
 						className={`${navigationMenuTriggerStyle()}`}
 						onClick={() => navigate('/login')}
 					>
-						LoginView
+						Log ind
 					</NavigationMenuItem>
 					<NavigationMenuItem
 						className={navigationMenuTriggerStyle()}
 						onClick={() => navigate('/sign-up')}
 					>
-						SignUpView
+						Opret bruger
 					</NavigationMenuItem>
 				</NavigationMenuList>
 			</NavigationMenu>
