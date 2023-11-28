@@ -10,7 +10,7 @@ type StoryInfoContainerProps = {
 	difficulty?: string;
 	deaths?: number;
 	playtime?: number;
-	ageRating?: number;
+	ageRating?: number;		// Is targetAge from story
 	nodes?: number;
 };
 
