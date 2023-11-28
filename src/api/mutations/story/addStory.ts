@@ -16,7 +16,7 @@ export const ADD_STORY_MUTATION = gql`
 				storyText
 				encounterType
 				isCheckpoint
-				isRoot
+				isRootNode
 			}
 		}
 	}

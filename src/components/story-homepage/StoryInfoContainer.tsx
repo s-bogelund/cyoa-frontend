@@ -10,7 +10,7 @@ type StoryInfoContainerProps = {
 	difficulty?: string;
 	deaths?: number;
 	playtime?: number;
-	ageRating?: number;		// Is targetAge from story
+	ageRating?: number;
 	nodes?: number;
 };
 
@@ -44,7 +44,7 @@ const StoryInfo: FC<StoryInfoContainerProps> = ({
 				/>
 				<StoryInfoElement
 					icon={getAgeIcon(ageRating ? ageRating : 4)}
-					description={`Recommended age: ${ageRating || 6}+`}
+					description={`Recommended age: ${ageRating || 4}+`}
 					isAgeIcon
 					className="justify-center"
 				/>
@@ -52,13 +52,13 @@ const StoryInfo: FC<StoryInfoContainerProps> = ({
 					icon={Icons.Death}
 					description="No of possible deaths"
 					className="justify-end"
-					text={`${deaths || 7}`}
+					text={`${deaths || 0}`}
 				/>
 				<StoryInfoElement
 					description="Total number of story nodes"
 					icon={Icons.Nodes}
 					className="justify-end"
-					text={`${nodes || 130}`}
+					text={`${nodes || 0}`}
 				/>
 			</CardContent>
 		</Card>
