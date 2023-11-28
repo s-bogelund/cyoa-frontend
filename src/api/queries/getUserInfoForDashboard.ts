@@ -9,6 +9,7 @@ const GET_USER_INFO_FOR_DASHBOARD = gql`
 	query GetUserInfoForDashboard($idInput: UUID) {
         users (where: {id: {eq: $idInput}}) {
             id
+            firstName
             stories {
                 id
                 modifiedAt

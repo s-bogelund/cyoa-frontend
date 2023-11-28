@@ -41,13 +41,13 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ elements }) => {
 						className={`${navigationMenuTriggerStyle()}`}
 						onClick={() => navigate('/login')}
 					>
-						LoginView
+						Log ind
 					</NavigationMenuItem>
 					<NavigationMenuItem
 						className={navigationMenuTriggerStyle()}
 						onClick={() => navigate('/sign-up')}
 					>
-						SignUpView
+						Opret bruger
 					</NavigationMenuItem>
 				</NavigationMenuList>
 			</NavigationMenu>

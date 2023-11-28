@@ -4,25 +4,13 @@ import NavigationBar from './NavigationBar';
 
 const navbarElements = [
 	{
-		text: 'Home',
+		text: 'Hjem',
 		linkTo: '/',
 	},
 	{
-		text: 'StoryPageView',
-		linkTo: '/story-page',
-	},
-	{
-		text: 'SearchPageView',
+		text: 'Find historie',
 		linkTo: '/browse',
-	},
-	{
-		text: 'GraphTestView',
-		linkTo: '/graph',
-	},
-	{
-		text: 'WriterStorySummary',
-		linkTo: '/writer-summary',
-	},
+	}
 ];
 
 const AppContainer: FC<HTMLProps<HTMLDivElement>> = ({ children }) => {

@@ -1,5 +1,5 @@
 import dagre from 'dagre';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import ReactFlow, { Background, Controls, Edge, MiniMap, Node, NodeTypes } from 'reactflow';
 import { shallow } from 'zustand/shallow';
 
@@ -8,6 +8,7 @@ import { useQuery } from '@apollo/client';
 import { GET_STORY_QUERY } from '@/api/queries/getStory';
 import { StoryNode } from '@/gql/graphql';
 import { convertGqlNodes } from '@/utils/convertGraphTypes';
+import { useSearchParams } from 'react-router-dom';
 
 const selector = (state: RFState) => ({
 	nodes: state.nodes,
@@ -16,6 +17,7 @@ const selector = (state: RFState) => ({
 	onEdgesChange: state.onEdgesChange,
 	onConnect: state.onConnect,
 	loadGraphData: state.loadGraphData,
+	subscribe: state.subscribe,
 });
 
 const layoutGraph = (nodes: Node[], edges: Edge[]) => {
@@ -49,13 +51,28 @@ const layoutGraph = (nodes: Node[], edges: Edge[]) => {
 };
 
 const GraphPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
-	const { nodes, edges, onNodesChange, onEdgesChange, loadGraphData } = useStore(selector, shallow);
+	const { nodes, edges, onNodesChange, onEdgesChange, loadGraphData, subscribe } =
+		useStore(selector);
+	const [searchParams, setSearchParams] = useSearchParams();
 	useEffect(() => {
-		// Replace '67ca999d-884a-487f-b03b-c6f15c276958' with the actual ID
-		loadGraphData('67ca999d-884a-487f-b03b-c6f15c276958');
-	}, [loadGraphData]);
+		let storyId = searchParams.get('storyId');
+		if (storyId) {
+			loadGraphData(storyId);
+		}
+	}, [loadGraphData, searchParams]);
+	const [version, setVersion] = useState(0);
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
 
+	useEffect(() => {
+		const unsubscribe = subscribe(() => {
+			// Update the state to trigger re-render
+			console.log('Store updated');
+			setVersion(v => v + 1);
+		});
+		return () => {
+			unsubscribe();
+		};
+	}, [subscribe]);
 	return (
 		<>
 			<ReactFlow

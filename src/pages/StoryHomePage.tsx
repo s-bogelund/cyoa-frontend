@@ -12,15 +12,13 @@ import { GetStartNodeOfStoryQueryResult } from '@/api/queries/getStartNodeOfStor
 
 // TODO: Should probably not be prop - should receive from backend/slug
 // TODO: Should check whether the story has already been started/completed by the user and display accordingly
-type StoryPageProps = {
-	title?: string;
-};
+type StoryPageProps = {};
 
 const openStoryInNewTab = () => {
 	window.open('/node', '_blank');
 };
 
-const StoryPage: FC<StoryPageProps> = ({ title }) => {
+const StoryPage: FC<StoryPageProps> = () => {
 	const [hasStarted, setHasStarted] = useState(false);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const navigate = useNavigate();
