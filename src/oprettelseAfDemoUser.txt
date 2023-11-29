@@ -1,5 +1,40 @@
 // Hav denne query klar (så du kan se alt hvad du har lavet på demo-user):
-
+query {
+  users (where: {id: {eq: "80e04691-dfd7-4c61-b65a-1b84c10e4659"}}) {
+    id
+    firstName
+    lastName
+    stories {
+      id
+      userId
+      title
+      modifiedAt
+      storyNodes {
+        id
+        storyId
+        title
+        storyNodeOptions {
+          id
+          storyNodeId
+          optionText
+          destinationNode
+        }
+      }
+    }
+    playthroughs {
+      id
+      userId
+      storyId
+      currentNode
+      modifiedAt
+      visitedStoryNodes {
+        id
+        storyNodeId
+        previousNode
+      }
+    }
+  }
+}
 
 
 // Opret user:

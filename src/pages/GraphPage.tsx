@@ -17,7 +17,6 @@ const selector = (state: RFState) => ({
 	onEdgesChange: state.onEdgesChange,
 	onConnect: state.onConnect,
 	loadGraphData: state.loadGraphData,
-	subscribe: state.subscribe,
 });
 
 const layoutGraph = (nodes: Node[], edges: Edge[]) => {
@@ -60,7 +59,6 @@ const GraphPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 			loadGraphData(storyId);
 		}
 	}, [loadGraphData, searchParams]);
-
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
 
 	return (
