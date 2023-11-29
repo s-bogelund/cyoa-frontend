@@ -1,12 +1,10 @@
-import { Search } from 'lucide-react';
-import { title } from 'process';
 import React, { ChangeEvent, FC, FormEvent, ReactNode, useEffect, useMemo, useState } from 'react';
-import { Edge, useReactFlow } from 'reactflow';
 
 import { AddStoryNodePayload } from '@/api/mutations/story-node/addStoryNode';
+import { UpdateStoryNodeOptionPayload } from '@/api/mutations/story-node-option/updateStoryNodeOptions';
 import useStore from '@/graphStore';
-import { ExtendedNode, StoryNodeOptionType, StoryNodeType } from '@/types/graphTypes';
-import { useApolloClient } from '@apollo/client';
+import { StoryNodeType } from '@/types/graphTypes';
+
 import AlertDialog from '../generics/AlertDialog';
 import { Icons } from '../icons/Icons';
 import { Button } from '../shadcn/ui/button';
@@ -27,7 +25,6 @@ import { Textarea } from '../shadcn/ui/textarea';
 import EncounterType from './EncounterType';
 import SheetAddChoiceButton from './SheetAddChoiceButton';
 import SheetChoiceItem from './SheetChoiceItem';
-import { UpdateStoryNodeOptionPayload } from '@/api/mutations/story-node-option/updateStoryNodeOptions';
 
 const EditIcon = Icons.EditNode;
 

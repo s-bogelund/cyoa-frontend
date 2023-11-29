@@ -28,15 +28,14 @@ import {
 	ADD_STORY_NODE_OPTION_MUTATION,
 	AddStoryNodeOptionPayload,
 } from './api/mutations/story-node-option/addStoryNodeOption';
-import { GET_STORY_QUERY } from './api/queries/getStory';
-import { ExtendedNode } from './types/graphTypes';
-import { convertGqlNodes, createEdgesFromStoryNodes } from './utils/convertGraphTypes';
-import { saveGraphStateLS } from './utils/graph';
-import { StoryNodeOption } from './gql/graphql';
 import {
 	UPDATE_STORY_NODE_OPTION_MUTATION,
 	UpdateStoryNodeOptionPayload,
 } from './api/mutations/story-node-option/updateStoryNodeOptions';
+import { GET_STORY_QUERY } from './api/queries/getStory';
+import { StoryNodeOption } from './gql/graphql';
+import { ExtendedNode } from './types/graphTypes';
+import { convertGqlNodes, createEdgesFromStoryNodes } from './utils/convertGraphTypes';
 
 const client = new ApolloClient({
 	uri: 'http://localhost:5186/graphql/', // Replace with your GraphQL endpoint
@@ -55,19 +54,12 @@ export type RFState = {
 	getNodeById: (id: string) => Node | undefined;
 	getEdgesByNodeId: (id: string) => Edge[] | undefined;
 	getAllNeighbours: (id: string) => Node[];
-	saveGraphState: () => void;
 	loadGraphData: (storyId: string) => Promise<void>;
 	updateStoryNode: (node: UpdateStoryNodePayload) => void;
 	updateStoryNodeOption: (option: UpdateStoryNodeOptionPayload) => void;
-	subscribe: (callback: () => void) => () => void;
 };
 
 const useStore = create<RFState>((set, get) => {
-	const subscribers = new Set<() => void>();
-
-	const notifySubscribers = () => {
-		subscribers.forEach(callback => callback());
-	};
 	return {
 		storyId: '',
 		nodes: [],
@@ -204,8 +196,6 @@ const useStore = create<RFState>((set, get) => {
 				set(state => ({
 					edges: [...state.edges, edge],
 				}));
-
-				notifySubscribers();
 			} catch (error) {
 				console.error('Error adding node:', error);
 			}
@@ -232,9 +222,6 @@ const useStore = create<RFState>((set, get) => {
 			}
 			return [];
 		},
-		saveGraphState: () => {
-			saveGraphStateLS(get());
-		},
 		loadGraphData: async (storyId: string) => {
 			set({ storyId: storyId });
 
@@ -256,10 +243,6 @@ const useStore = create<RFState>((set, get) => {
 			} catch (error) {
 				console.error('Error fetching story data:', error);
 			}
-		},
-		subscribe: (callback: () => void) => {
-			subscribers.add(callback);
-			return () => subscribers.delete(callback);
 		},
 	};
 });

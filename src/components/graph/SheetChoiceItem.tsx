@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { IconType } from 'react-icons';
 
-import Badge from '../generics/Badge';
 import { Icons } from '../icons/Icons';
 import { Button } from '../shadcn/ui/button';
 import { Card } from '../shadcn/ui/card';
@@ -10,16 +9,9 @@ import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuPortal,
-	DropdownMenuSeparator,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from '../shadcn/ui/dropdown-menu';
 import { Input } from '../shadcn/ui/input';
-import { PopoverComponent, PopoverContent, PopoverTrigger } from '../shadcn/ui/popover';
 
 type SheetChoiceItemProps = {
 	choiceText?: string;
@@ -38,7 +30,6 @@ const SheetChoiceItem: FC<SheetChoiceItemProps> = ({
 	nodeId,
 	onDelete,
 	onGoToSection,
-	justCreated,
 }) => {
 	const [value, setValue] = React.useState<string>(choiceText || '');
 	const [isFocused, setIsFocused] = React.useState<boolean>(false);

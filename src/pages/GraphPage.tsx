@@ -23,15 +23,15 @@ const selector = (state: RFState) => ({
 const layoutGraph = (nodes: Node[], edges: Edge[]) => {
 	const g = new dagre.graphlib.Graph();
 	g.setGraph({
-		rankdir: 'LR',
-		ranker: 'shortest-path',
-		nodesep: 30,
-		ranksep: 100,
+		rankdir: 'LR', // direction
+		ranker: 'shortest-path', // layout algorithm
+		nodesep: 30, // minimum vertical distance between nodes
+		ranksep: 100, // horizontal distance between nodes
 	});
 	g.setDefaultEdgeLabel(() => ({}));
 
 	nodes.forEach(node => {
-		// CustomNode geometry is 128x96
+		// This was set to fit the custom node size
 		g.setNode(node.id, { width: 128, height: 96 });
 	});
 
@@ -51,28 +51,18 @@ const layoutGraph = (nodes: Node[], edges: Edge[]) => {
 };
 
 const GraphPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
-	const { nodes, edges, onNodesChange, onEdgesChange, loadGraphData, subscribe } =
-		useStore(selector);
-	const [searchParams, setSearchParams] = useSearchParams();
+	const { nodes, edges, onNodesChange, onEdgesChange, loadGraphData } = useStore(selector);
+	const [searchParams] = useSearchParams();
+
 	useEffect(() => {
 		let storyId = searchParams.get('storyId');
 		if (storyId) {
 			loadGraphData(storyId);
 		}
 	}, [loadGraphData, searchParams]);
-	const [version, setVersion] = useState(0);
+
 	const dagreNodes = useMemo(() => layoutGraph(nodes, edges), [nodes, edges]);
 
-	useEffect(() => {
-		const unsubscribe = subscribe(() => {
-			// Update the state to trigger re-render
-			console.log('Store updated');
-			setVersion(v => v + 1);
-		});
-		return () => {
-			unsubscribe();
-		};
-	}, [subscribe]);
 	return (
 		<>
 			<ReactFlow
@@ -99,9 +89,7 @@ const GraphPage = ({ nodeTypes }: { nodeTypes: NodeTypes }) => {
 					}}
 				/>
 				<Background color="#ccc" />
-				<Controls></Controls>
 			</ReactFlow>
-			{/* <Button onClick={() => console.log(nodes, edges)}>+</Button> */}
 		</>
 	);
 };

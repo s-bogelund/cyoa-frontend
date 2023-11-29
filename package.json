@@ -31,7 +31,6 @@
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.0.0",
 		"dagre": "^0.8.5",
-		"elkjs": "^0.8.2",
 		"graphql": "^16.8.1",
 		"i18next": "^23.5.1",
 		"i18next-browser-languagedetector": "^6.1.5",
