@@ -1,6 +1,6 @@
 // Hav denne query klar (så du kan se alt hvad du har lavet på demo-user):
 query {
-  users (where: {id: {eq: "80e04691-dfd7-4c61-b65a-1b84c10e4659"}}) {
+  users (where: {id: {eq: "11849e3c-7362-4d9c-b068-300fa967eac7"}}) {
     id
     firstName
     lastName

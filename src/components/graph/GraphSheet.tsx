@@ -43,8 +43,10 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 	const addCustomNode = useStore(state => state.addCustomNode);
 	const getEdges = useStore(state => state.getEdgesByNodeId);
 	const getNode = useStore(state => state.getNodeById);
-	const handleStoryTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-		setNodeState(prev => ({ ...prev, storyText: event.target.value }));
+
+	const handleStoryTextChange = (event: FormEvent<HTMLInputElement>) => {
+		const newNode = { ...nodeState, storyText: event.currentTarget.value };
+		setNodeState(prev => newNode);
 
 		// Clear existing timeout to reset the delay
 		if (timeoutId) {
@@ -53,7 +55,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 
 		// Set a new timeout
 		const newTimeoutId = setTimeout(() => {
-			saveChanges(nodeState);
+			saveChanges(newNode);
 		}, 1000); // Delay of 1 second
 
 		setTimeoutId(newTimeoutId);
@@ -208,7 +210,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 						className="h-48 text-lg"
 						placeholder="Skriv dit historieafsnit her..."
 						value={nodeState.storyText}
-						onChange={handleStoryTextChange}
+						onInput={handleStoryTextChange}
 					/>
 					<div className="flex flex-col w-full gap-2">
 						<Label className="text-xl">Hvilken type er det her afsnit?</Label>
