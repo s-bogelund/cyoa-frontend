@@ -46,7 +46,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 
 	const handleStoryTextChange = (event: FormEvent<HTMLTextAreaElement>) => {
 		const newNode = { ...nodeState, storyText: event.currentTarget.value };
-		setNodeState(prev => newNode);
+		setNodeState(newNode);
 
 		// Clear existing timeout to reset the delay
 		if (timeoutId) {
@@ -134,7 +134,6 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 				/>
 			);
 		});
-		// if (newOptions?.length! > 3) setHasMaxChildren(true);
 		return newOptions;
 	};
 
@@ -142,7 +141,6 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 		const edges = getEdges(nodeState.id);
 		console.log('edges', edges);
 		console.log('AddChoice called', nodeState);
-		// if (edges && edges.length >= 3) setHasMaxChildren(true);
 
 		const newNode: AddStoryNodePayload = {
 			title: 'Ingen titel',
