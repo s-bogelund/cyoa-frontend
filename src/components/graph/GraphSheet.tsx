@@ -44,7 +44,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 	const getEdges = useStore(state => state.getEdgesByNodeId);
 	const getNode = useStore(state => state.getNodeById);
 
-	const handleStoryTextChange = (event: FormEvent<HTMLInputElement>) => {
+	const handleStoryTextChange = (event: FormEvent<HTMLTextAreaElement>) => {
 		const newNode = { ...nodeState, storyText: event.currentTarget.value };
 		setNodeState(prev => newNode);
 
@@ -116,17 +116,20 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 
 	const renderChoices = () => {
 		const newOptions = nodeState.storyNodeOptions?.map(choice => {
+			const nodeTitle = getNode(choice.destinationNode)?.data.title ?? 'Ingen titel';
 			return (
 				<SheetChoiceItem
 					nodeId={choice.id}
 					key={choice.id}
+					destinationNode={choice.destinationNode}
+					destinationNodeTitle={nodeTitle}
 					choiceText={choice.optionText}
 					onChange={(newText: string) => handleChoiceUpdate(choice.id, newText)}
 					onDelete={(id: string) => {
 						console.log('deleted choice', id);
 					}}
 					onGoToSection={(id: string) => {
-						console.log('going to section', id);
+						console.log('going to section', choice.destinationNode);
 					}}
 				/>
 			);
@@ -210,7 +213,7 @@ const GraphSheet: FC<GraphSheetProps> = ({ children, nodeInfo, onUpdate }) => {
 						className="h-48 text-lg"
 						placeholder="Skriv dit historieafsnit her..."
 						value={nodeState.storyText}
-						onInput={handleStoryTextChange}
+						onInput={e => handleStoryTextChange(e)}
 					/>
 					<div className="flex flex-col w-full gap-2">
 						<Label className="text-xl">Hvilken type er det her afsnit?</Label>

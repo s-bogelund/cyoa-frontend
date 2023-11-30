@@ -12,12 +12,15 @@ import {
 	DropdownMenuTrigger,
 } from '../shadcn/ui/dropdown-menu';
 import { Input } from '../shadcn/ui/input';
+import Tooltip from '../generics/Tooltip';
 
 type SheetChoiceItemProps = {
 	choiceText?: string;
+	destinationNode?: string;
 	onChange: (value: string) => void;
 	onDelete: (id: string) => void;
 	onGoToSection: (id: string) => void;
+	destinationNodeTitle?: string;
 	justCreated?: boolean;
 	nodeId: string;
 };
@@ -30,6 +33,8 @@ const SheetChoiceItem: FC<SheetChoiceItemProps> = ({
 	nodeId,
 	onDelete,
 	onGoToSection,
+	destinationNodeTitle,
+	destinationNode,
 }) => {
 	const [value, setValue] = React.useState<string>(choiceText || '');
 	const [isFocused, setIsFocused] = React.useState<boolean>(false);
@@ -58,20 +63,24 @@ const SheetChoiceItem: FC<SheetChoiceItemProps> = ({
 					onKeyDown={handleKeyDown}
 				/>
 			) : (
-				<Card
-					className="grid grid-flow-row px-4 grid-cols-[85%,auto] w-full h-full border-2 border-white items-center justify-between cursor-pointer hover:bg-slate-500 hover:bg-opacity-20"
-					onClick={() => setIsFocused(true)}
-				>
-					<div className="w-[85%]">
-						{choiceText?.toLowerCase() === 'ingen titel' ? 'Hvad vælger karakteren?' : choiceText}
-					</div>
-					<div>
-						<ItemMenu
-							onGoToSection={() => onGoToSection(nodeId)}
-							onDelete={() => onDelete(nodeId)}
-						/>
-					</div>
-				</Card>
+				<Tooltip text={'Går til afsnit: ' + destinationNodeTitle || 'Ingen titel'}>
+					<Card
+						className="grid grid-flow-row px-4 grid-cols-[85%,auto] w-full h-full border-2 border-white items-center justify-between cursor-pointer hover:bg-slate-500 hover:bg-opacity-20"
+						onClick={() => setIsFocused(true)}
+					>
+						<div className="w-[85%]">
+							{choiceText?.toLowerCase() === 'ingen titel' || ''
+								? 'Hvad vælger karakteren?'
+								: choiceText}
+						</div>
+						<div>
+							<ItemMenu
+								onGoToSection={() => onGoToSection(nodeId)}
+								onDelete={() => onDelete(nodeId)}
+							/>
+						</div>
+					</Card>
+				</Tooltip>
 			)}
 		</div>
 	);
